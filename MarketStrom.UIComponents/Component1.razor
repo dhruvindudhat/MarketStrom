@@ -1,0 +1,85 @@
+﻿@page "/"
+@using MarketStrom.UIComponents.Models;
+@using MarketStrom.UIComponents.Services;
+@inject NavigationManager NavigationManager
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <h4 class="card-header text-white bg-primary text-center">MarketStorm</h4>
+                <div class="card-body">
+                    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                        <DataAnnotationsValidator />
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroupPrepend"></span>
+                            <InputText @bind-Value="model.Username" class="form-control" placeholder="Username" aria-describedby="inputGroupPrepend" required />
+                            <ValidationMessage For="@(() => model.Username)" />
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroupPrependLock">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <InputText @bind-Value="model.Password" type="password" class="form-control" placeholder="Password" aria-describedby="inputGroupPrependLock" required />
+                            <ValidationMessage For="@(() => model.Password)" />
+                        </div>
+
+                        <button disabled="@loading" class="btn btn-primary btn-block">
+                            @if (loading)
+                            {
+                                <span class="spinner-border spinner-border-sm mr-1"></span>
+                            }
+                            Login
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Login model = new Login();
+    private bool loading;
+
+    private async void OnValidSubmit()
+    {
+        // reset alerts on submit
+        //AlertService.Clear();
+        DatabaseService db = new DatabaseService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
+        Person person = new Person()
+            {
+                FirstName = "Dhruvin",
+                LastName = "Dudhat",
+                MobileNo = "7575088440",
+                CreatedOn = DateTime.Now,
+                CreatedBy = 1
+            };
+        Category category = new Category() { Name = "Potato" };
+        SubCategory subCategory = new SubCategory() { Name = "Vikas", CategoryId = 1 };
+        SubCategory subCategory2 = new SubCategory() { Name = "Ujjval", CategoryId = 1 };
+        db.InsertPerson(person);
+        db.InsertCategory(category);
+        db.InsertSubCategory(subCategory);
+        db.InsertSubCategory(subCategory2);
+
+        var result = db.GetAllCategory();
+
+        loading = true;
+        //try
+        //{
+        //    await AccountService.Login(model);
+        //    var returnUrl = NavigationManager.QueryString("returnUrl") ?? "";
+        //    NavigationManager.NavigateTo(returnUrl);
+        //}
+        //catch (Exception ex)
+        //{
+        //    AlertService.Error(ex.Message);
+        //    loading = false;
+        //    StateHasChanged();
+        //}
+    }
+}
