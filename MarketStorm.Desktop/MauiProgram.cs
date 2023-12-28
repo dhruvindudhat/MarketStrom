@@ -1,6 +1,7 @@
-﻿using MarketStorm.Desktop.Data;
+﻿using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using MarketStrom.UIComponents.Services;
-using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace MarketStorm.Desktop
 {
@@ -15,13 +16,13 @@ namespace MarketStorm.Desktop
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
-
+            builder.Services.AddBlazorise(options => { options.Immediate = true; }).AddBootstrapProviders().AddFontAwesomeIcons();
             builder.Services.AddMauiBlazorWebView();
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-            //builder.Services.AddSingleton<DatabaseService>();
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<DatabaseService>();
+            //builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();
         }

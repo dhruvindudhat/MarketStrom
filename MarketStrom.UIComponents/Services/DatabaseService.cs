@@ -15,6 +15,9 @@ namespace MarketStrom.UIComponents.Services
                 Load(filename);
             else
                 CreateNew(filename);
+        }
+        public DatabaseService()
+        {
 
         }
 
@@ -23,9 +26,6 @@ namespace MarketStrom.UIComponents.Services
             _db = new SQLiteConnection(filepath);
 
             CreateTables();
-
-            // Create root hiearchy
-            //InsertHierarchy(new Hierarchy() { Name = Path.GetFileNameWithoutExtension(filepath), Level = HierarchyLevel.Root }, out _);
 
             return true;
         }
@@ -45,26 +45,61 @@ namespace MarketStrom.UIComponents.Services
             _db.CreateTable<SubCategory>();
         }
 
+        #region Person
+
         public void InsertPerson(Person person)
         {
             _db.Insert(person);
         }
 
+        public void UpdatePerson(Person person)
+        {
+            _db.Update(person);
+        }
+
+        #endregion Person
+
+        #region Category
+
         public void InsertCategory(Category category)
         {
             _db.Insert(category);
         }
+
+        public void UpdateCategory(Category category)
+        {
+            _db.Update(category);
+        }
+
+        #endregion Category
+
+        #region SubCategory
+
         public void InsertSubCategory(SubCategory subCategory)
         {
             _db.Insert(subCategory);
         }
+        public void UpdateSubCategory(SubCategory subCategory)
+        {
+            _db.Update(subCategory);
+        }
+
+        #endregion SubCategory
 
         public List<Category>? GetAllCategory()
         {
             return _db.GetAllWithChildren<Category>().ToList();
         }
 
+        public void DeleteRecord(int id, string table)
+        {
+            _db.Execute($"UPDATE {table} SET IsDeleted WHERE Id ={id};"); //SOFT DELETE RECORD
+        }
 
+        public List<Person> GetAllPerson()
+        {
+          return  _db.GetAllWithChildren<Person>().ToList();
+        }
         public void Dispose()
         {
             _db.Close();
