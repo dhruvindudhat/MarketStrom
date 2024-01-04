@@ -8,10 +8,13 @@ namespace MarketStrom.UIComponents.Pages
     {
         [Inject]
         public DatabaseService DatabaseService { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
-            DatabaseService = new DatabaseService(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
+            DatabaseService = new DatabaseService();
+            DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
             Person person = new Person()
             {
                 FirstName = "Dhruvin",
@@ -31,10 +34,16 @@ namespace MarketStrom.UIComponents.Pages
             //db.DeleteRecord(subCategory.Id, "SubCategory");
             var result = DatabaseService.GetAllCategory();
 
-            base.OnInitializedAsync();
+            // base.OnInitializedAsync();
+        }
+
+
+        public void AddCustomer()
+        {
+            NavigationManager.NavigateTo("/addperson");
         }
 
         public List<Person> Customers { get; set; }
-        public Blazorise.DataGrid.DataGrid<Person> bgrid { get; set; }
+        //  public Blazorise.DataGrid.DataGrid<Person> bgrid { get; set; }
     }
 }

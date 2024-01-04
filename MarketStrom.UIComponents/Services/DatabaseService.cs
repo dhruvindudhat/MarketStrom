@@ -9,31 +9,20 @@ namespace MarketStrom.UIComponents.Services
         private SQLiteConnection _db;
         private bool _isModified;
 
-        public DatabaseService(string filename)
-        {
-            if (File.Exists(filename))
-                Load(filename);
-            else
-                CreateNew(filename);
-        }
         public DatabaseService()
         {
 
         }
 
-        public bool CreateNew(string filepath)
-        {
-            _db = new SQLiteConnection(filepath);
-
-            CreateTables();
-
-            return true;
-        }
 
         public bool Load(string filepath)
         {
             _db = new SQLiteConnection(filepath);
 
+            if (!File.Exists(filepath))
+            {
+                CreateTables();
+            }
             return true;
         }
 
@@ -98,7 +87,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<Person> GetAllPerson()
         {
-          return  _db.GetAllWithChildren<Person>().ToList();
+            return _db.GetAllWithChildren<Person>().ToList();
         }
         public void Dispose()
         {

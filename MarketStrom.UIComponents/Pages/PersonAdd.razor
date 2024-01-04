@@ -1,0 +1,80 @@
+﻿@page "/AddPerson"
+@page "/EditPerson/{Id}"
+
+
+<PageTitle>Add/Edit Doctor</PageTitle>
+
+<style>
+    .underline-input {
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+        width: 90%; /* Adjust the width to your preference */
+        max-width: 100%;
+    }
+
+        .underline-input:focus {
+            border-bottom: 1px solid #9bcc94; /* Remove the underline on focus */
+        }
+
+    select.form-control {
+        color: #495057;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-title">Add/Edit Person Profile</p>
+                        <div class="d-flex align-items-center">
+                            <a href="/doctorprofile" class="mr-2 no-underline">
+                                <div class="card card-green">
+                                    <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
+                                        <NavLink href="/PersonList" Match="NavLinkMatch.All"> <i class="ti-arrow-left"></i></NavLink>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row pb-4">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 col-form-label align-self-center">Name</label>
+                            <div class="col-sm-5 d-flex align-items-center">
+                                <input type="text" class="form-control" id="firstname" @bind-value=@Person.FirstName placeholder="First Name">
+                            </div>
+                            <div class="col-sm-5 d-flex align-items-center">
+                                <input type="text" class="form-control" id="lastname" @bind-value=@Person.LastName placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mobileno" class="col-sm-2 col-form-label">Mobile No.</label>
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <input type="text" class="form-control" id="mobileno" @bind-value=@Person.MobileNo placeholder="Mobile No.">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="city" class="col-sm-2 col-form-label">City</label>
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <input type="text" class="form-control" id="mobileno" @bind-value=@Person.MobileNo placeholder="City">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary mr-2" @onclick=@( () => SavePerson())>Submit</button>
+                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
+                        <button type="button" class="btn btn-light" @onclick=@Cancel>Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+}

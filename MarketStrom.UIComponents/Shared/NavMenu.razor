@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<div class="@NavMenuCssClass">
     <nav class="sidebar sidebar-offcanvas">
         <ul class="nav">
             <li class="nav-item">
@@ -39,7 +39,7 @@
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool collapseNavMenu = false;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
