@@ -16,24 +16,34 @@ namespace MarketStrom.UIComponents.Pages
         [Parameter]
         public string Id { get; set; }
 
-        protected async override Task OnInitializedAsync()
+        [Parameter]
+        public string PersonRole { get; set; }
+
+        protected override void OnParametersSet()
         {
-            await base.OnInitializedAsync();
+            if (!String.IsNullOrEmpty(Id))
+            {
+                int id = Int32.Parse(Id);
+                Person = DatabaseService.GetPerson(id);
+            }
+            base.OnParametersSet();
         }
+
         public Person Person { get; set; } = new();
 
-        public void SavePerson(bool IsSupplier = false)
+        public void SavePerson()
         {
+            Enum.TryParse(PersonRole, out Role role);
             if (String.IsNullOrEmpty(Id))
             {
-                Person.Role = IsSupplier ? (int)Role.Supplier : (int)Role.Customer;
+                Person.Role = (int)role;
                 DatabaseService.InsertPerson(Person);
             }
             else
             {
-                Person.Id = Int32.Parse(Id);
                 DatabaseService.UpdatePerson(Person);
             }
+            NavigationManager.NavigateTo("/PersonList/" + PersonRole);
         }
 
         public void Restore()
@@ -43,7 +53,7 @@ namespace MarketStrom.UIComponents.Pages
 
         public void Cancel()
         {
-            NavigationManager.NavigateTo("/PersonList");
+            NavigationManager.NavigateTo("/PersonList/" + PersonRole);
         }
     }
 }

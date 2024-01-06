@@ -1,4 +1,5 @@
-﻿using MarketStrom.UIComponents.Models;
+﻿using MarketStrom.UIComponents.Enums;
+using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -10,40 +11,33 @@ namespace MarketStrom.UIComponents.Pages
         public DatabaseService DatabaseService { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Parameter]
+        public string PersonRole { get; set; }
+
+        protected override void OnParametersSet()
+        {
+            AllPerson = GetAllPerson();
+        }
 
         protected async override Task OnInitializedAsync()
         {
-            DatabaseService = new DatabaseService();
             DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
-            Person person = new Person()
-            {
-                FirstName = "Dhruvin",
-                LastName = "Dudhat",
-                MobileNo = "7575088440",
-                CreatedOn = DateTime.Now,
-                CreatedBy = 1
-            };
-            Category category = new Category() { Name = "Potato" };
-            SubCategory subCategory = new SubCategory() { Name = "Vikas", CategoryId = 1 };
-            SubCategory subCategory2 = new SubCategory() { Name = "Ujjval", CategoryId = 1 };
-            //DatabaseService.InsertPerson(person);
-            //DatabaseService.InsertCategory(category);
-            //DatabaseService.InsertSubCategory(subCategory);
-            //DatabaseService.InsertSubCategory(subCategory2);
-            Customers = DatabaseService.GetAllPerson();
-            //db.DeleteRecord(subCategory.Id, "SubCategory");
-            var result = DatabaseService.GetAllCategory();
-
-            // base.OnInitializedAsync();
+            //AllPerson = GetAllPerson();
         }
 
-
-        public void AddCustomer()
+        public void DeleteCustomer(int id)
         {
-            NavigationManager.NavigateTo("/addperson");
+            //TODO:ADD DELETE CONFIRMATION POPUP
+            DatabaseService.DeleteRecord(id, "Person");
+            AllPerson = GetAllPerson();
         }
 
-        public List<Person> Customers { get; set; }
-        //  public Blazorise.DataGrid.DataGrid<Person> bgrid { get; set; }
+        private List<Person> GetAllPerson()
+        {
+            Enum.TryParse(PersonRole, out Role role);
+            return DatabaseService.GetAllPerson().Where(o => o.IsDeleted == false && o.Role == (int)role).ToList();
+        }
+
+        public List<Person> AllPerson { get; set; }
     }
 }

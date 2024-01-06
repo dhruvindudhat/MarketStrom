@@ -1,5 +1,5 @@
-﻿@page "/AddPerson"
-@page "/EditPerson/{Id}"
+﻿@page "/AddPerson/{PersonRole}"
+@page "/EditPerson/{PersonRole}/{Id}"
 
 
 <PageTitle>Add/Edit Doctor</PageTitle>
@@ -28,15 +28,13 @@
             <div class="card-body">
                 <form>
                     <div class="d-flex justify-content-between">
-                        <p class="card-title">Add/Edit Person Profile</p>
+                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") @PersonRole Profile</p>
                         <div class="d-flex align-items-center">
-                            <a href="/doctorprofile" class="mr-2 no-underline">
-                                <div class="card card-green">
-                                    <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                        <NavLink href="/PersonList" Match="NavLinkMatch.All"> <i class="ti-arrow-left"></i></NavLink>
-                                    </div>
+                            <div class="card card-green">
+                                <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
+                                    <NavLink href="@($"/PersonList/{PersonRole}")" Match="NavLinkMatch.All"> <i class="ti-arrow-left"></i></NavLink>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
 
@@ -59,7 +57,7 @@
                         <div class="form-group row">
                             <label for="city" class="col-sm-2 col-form-label">City</label>
                             <div class="col-sm-10 d-flex align-items-center">
-                                <input type="text" class="form-control" id="mobileno" @bind-value=@Person.MobileNo placeholder="City">
+                                <input type="text" class="form-control" id="city" @bind-value=@Person.City placeholder="City">
                             </div>
                         </div>
                     </div>

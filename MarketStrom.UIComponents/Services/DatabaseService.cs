@@ -41,6 +41,11 @@ namespace MarketStrom.UIComponents.Services
             _db.Insert(person);
         }
 
+        public Person GetPerson(int id)
+        {
+            return _db.Get<Person>(id);
+        }
+
         public void UpdatePerson(Person person)
         {
             _db.Update(person);
@@ -82,13 +87,14 @@ namespace MarketStrom.UIComponents.Services
 
         public void DeleteRecord(int id, string table)
         {
-            _db.Execute($"UPDATE {table} SET IsDeleted WHERE Id ={id};"); //SOFT DELETE RECORD
+            _db.Execute($"UPDATE {table} SET IsDeleted = 1 WHERE Id ={id};"); //SOFT DELETE RECORD
         }
 
         public List<Person> GetAllPerson()
         {
             return _db.GetAllWithChildren<Person>().ToList();
         }
+
         public void Dispose()
         {
             _db.Close();

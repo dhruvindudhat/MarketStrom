@@ -1,58 +1,17 @@
-﻿@page "/PersonList"
-@*
-@using Blazorise;
-@using Blazorise.Bootstrap;
-@using Blazorise.Icons.FontAwesome;
-@using Blazorise.DataGrid
-@using MarketStrom.UIComponents.Models;
-
-
-<DataGrid TItem="Person" Navigable Data="@Customers" @ref="bgrid"
-          SelectionMode="Blazorise.DataGrid.DataGridSelectionMode.Multiple" Bordered
-          RowContextMenuPreventDefault="true"
-          Class="custom-grid-class" Sortable SortMode="DataGridSortMode.Single" Filterable FilterMode="DataGridFilterMode.Menu" Responsive FixedHeader>
-
-            <DataGridMultiSelectColumn Width="30px"></DataGridMultiSelectColumn>
-    <DataGridCommandColumn />
-    <DataGridColumn DisplayOrder="1" Caption="#" Filterable="false" Sortable="false" TextAlignment="TextAlignment.Center">
-        <DisplayTemplate>
-            @(((bgrid?.DisplayData.ToList().IndexOf(bgrid?.DisplayData.Where(x => x.Id == context.Id).FirstOrDefault())) + 1))
-        </DisplayTemplate>
-    </DataGridColumn>
-    <DataGridColumn DisplayOrder="2" Field="FirstName" Caption="Customer Name" TextAlignment="TextAlignment.Start">
-        <DisplayTemplate>
-            @context.FirstName @context.LastName
-        </DisplayTemplate>
-    </DataGridColumn>
-    <DataGridColumn DisplayOrder="3" Field="MobileNo" Caption="Mobile No." TextAlignment="TextAlignment.Start">
-        <DisplayTemplate>
-            @context.MobileNo
-        </DisplayTemplate>
-    </DataGridColumn>
-    <DataGridColumn DisplayOrder="4" Field="City" Caption="City" TextAlignment="TextAlignment.Start">
-        <DisplayTemplate>
-            @context.City
-        </DisplayTemplate>
-    </DataGridColumn>
-</DataGrid>
-
-*@
-
+﻿@page "/PersonList/{PersonRole}"
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <p class="card-title">Person Profile</p>
+                    <p class="card-title">@PersonRole List</p>
                     <div class="d-flex align-items-center">
-                        <a href="/adddoctor" class="mr-2 no-underline">
-                            <div class="card card-green">
-                                <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                    <NavLink href="/AddPerson" Match="NavLinkMatch.All"><i class="ti-plus"></i></NavLink>
-                                </div>
+                        <div class="card card-green">
+                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
+                                <NavLink href="@($"/AddPerson/{PersonRole}")" Match="NavLinkMatch.All"><i class="ti-plus"></i></NavLink>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
                 @{
@@ -70,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var data in Customers)
+                            @foreach (var data in AllPerson)
                             {
                                 <tr id="@("row"+data.Id)">
                                     <td>@serialNumber</td>
@@ -79,9 +38,9 @@
                                     <td>@data.City</td>
                                     <td>
                                         <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2">
-                                            <NavLink href="@($"/EditPerson/{data.Id}")">  <i class="ti-pencil m-0"></i></NavLink>
+                                            <NavLink href="@($"/EditPerson/{PersonRole}/{data.Id}")">  <i class="ti-pencil m-0"></i></NavLink>
                                         </button>
-                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5">
+                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
                                             <i class="ti-trash m-0"></i>
                                         </button>
                                     </td>
