@@ -1,4 +1,5 @@
-﻿using MarketStrom.UIComponents.Enums;
+﻿using Blazored.Toast.Services;
+using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -11,8 +12,12 @@ namespace MarketStrom.UIComponents.Pages
         public DatabaseService DatabaseService { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public IToastService ToastService { get; set; }
         [Parameter]
         public string PersonRole { get; set; }
+
+        protected AlertBase AlertBase { get; set; }
 
         protected override void OnParametersSet()
         {
@@ -22,14 +27,22 @@ namespace MarketStrom.UIComponents.Pages
         protected async override Task OnInitializedAsync()
         {
             DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
-            //AllPerson = GetAllPerson();
+        }
+
+        private void ConfirmDelete(bool deleteConfirmed)
+        {
+            if (deleteConfirmed)
+            {
+                DatabaseService.DeleteRecord(PersonId, "Person");
+                AllPerson = GetAllPerson();
+                ToastService.ShowSuccess(PersonRole + " Deleted SuccessFully!!");
+            }
         }
 
         public void DeleteCustomer(int id)
         {
-            //TODO:ADD DELETE CONFIRMATION POPUP
-            DatabaseService.DeleteRecord(id, "Person");
-            AllPerson = GetAllPerson();
+            AlertBase.Show();
+            PersonId = id;
         }
 
         private List<Person> GetAllPerson()
@@ -39,5 +52,6 @@ namespace MarketStrom.UIComponents.Pages
         }
 
         public List<Person> AllPerson { get; set; }
+        public int PersonId { get; set; }
     }
 }

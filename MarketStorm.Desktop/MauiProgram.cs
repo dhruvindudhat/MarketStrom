@@ -1,4 +1,5 @@
-﻿using Blazorise;
+﻿using Blazored.Toast;
+using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using MarketStrom.UIComponents.Services;
@@ -22,8 +23,9 @@ namespace MarketStorm.Desktop
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
             builder.Services.AddSingleton<DatabaseService>();
+            builder.Services.AddBlazoredToast();
             //builder.Services.AddSingleton<WeatherForecastService>();
-
+          
             return builder.Build();
         }
     }

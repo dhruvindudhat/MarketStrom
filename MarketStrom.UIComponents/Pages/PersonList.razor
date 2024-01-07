@@ -54,3 +54,7 @@
         </div>
     </div>
 </div>
+
+<CommonAlert @ref="AlertBase" ConfirmationChanged="ConfirmDelete"
+             ConfirmationMessage=@($"Are you sure you want to delete this person?")>
+</CommonAlert>

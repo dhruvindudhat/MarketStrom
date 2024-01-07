@@ -1,4 +1,5 @@
-﻿using MarketStrom.UIComponents.Enums;
+﻿using Blazored.Toast.Services;
+using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -12,6 +13,9 @@ namespace MarketStrom.UIComponents.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public IToastService ToastService { get; set; }
 
         [Parameter]
         public string Id { get; set; }
@@ -38,10 +42,12 @@ namespace MarketStrom.UIComponents.Pages
             {
                 Person.Role = (int)role;
                 DatabaseService.InsertPerson(Person);
+                ToastService.ShowSuccess(PersonRole + " Added SuccessFully!!");
             }
             else
             {
                 DatabaseService.UpdatePerson(Person);
+                ToastService.ShowSuccess(PersonRole + " Updated SuccessFully!!");
             }
             NavigationManager.NavigateTo("/PersonList/" + PersonRole);
         }
@@ -49,6 +55,11 @@ namespace MarketStrom.UIComponents.Pages
         public void Restore()
         {
             Person = new Person();
+        }
+
+        public void InvalidSubmission()
+        {
+            // StateHasChanged();
         }
 
         public void Cancel()
