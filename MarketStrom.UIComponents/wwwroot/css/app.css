@@ -82,3 +82,46 @@ a, .btn-link {
 		padding-left: env(safe-area-inset-left);
 	}
 }
+
+.closeBtnSpan {
+    cursor: pointer;
+}
+
+.fade {
+    background: rgba(0, 0, 0, 0.6);
+}
+.modal-content {
+    background: #FFFFFF;
+    border: 1px solid #8ED7B6;
+    box-shadow: 0px 24px 48px -12px rgb(16 24 40 / 18%);
+    border-radius: 8px;
+    box-sizing: border-box;
+    position: absolute;
+}
+.popupName {
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.16px;
+    font-weight: 700;
+}
+
+.popupDetail {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.32px;
+    color: #596173;
+}
+.pupupheaderDiv {
+    width: 100%;
+}
+.popupHeader {
+    background: #F1F1F1;
+    border-radius: 8px 8px 0px 0px;
+    padding: 0;
+    height: 40px;
+    letter-spacing: 0.16px;
+    font-feature-settings: 'cv08' on;
+    color: #596173;
+    font-family: 'Arial';
+    font-style: normal;
+}

@@ -1,15 +1,16 @@
-﻿@page "/PersonList/{PersonRole}"
+﻿@page "/Category"
+
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <p class="card-title">@PersonRole List</p>
+                    <p class="card-title">Category List</p>
                     <div class="d-flex align-items-center">
                         <div class="card card-green">
                             <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                <NavLink href="@($"/AddPerson/{PersonRole}")" Match="NavLinkMatch.All"><i class="ti-plus"></i></NavLink>
+                                <NavLink href="@($"/AddCategory")" Match="NavLinkMatch.All"><i class="ti-plus"></i></NavLink>
                             </div>
                         </div>
                     </div>
@@ -22,25 +23,21 @@
                         <thead>
                             <tr>
                                 <th>Sr. No.</th>
-                                <th>Person Name</th>
-                                <th>Mobile No.</th>
-                                <th>City</th>
+                                <th>Category Name</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var data in AllPerson)
+                            @foreach (var data in Catogories)
                             {
                                 <tr id="@("row"+data.Id)">
                                     <td>@serialNumber</td>
-                                    <td>@data.FirstName  @data.LastName</td>
-                                    <td>@data.MobileNo</td>
-                                    <td>@data.City</td>
+                                    <td>@data.Name</td>
                                     <td>
                                         <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2">
-                                            <NavLink href="@($"/EditPerson/{PersonRole}/{data.Id}")">  <i class="ti-pencil m-0"></i></NavLink>
+                                            @* <NavLink href="@($"/EditPerson/{PersonRole}/{data.Id}")">*@  <i class="ti-pencil m-0"></i>@*</NavLink>*@
                                         </button>
-                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
+                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5">
                                             <i class="ti-trash m-0"></i>
                                         </button>
                                     </td>

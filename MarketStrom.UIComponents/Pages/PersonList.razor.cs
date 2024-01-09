@@ -14,10 +14,13 @@ namespace MarketStrom.UIComponents.Pages
         public NavigationManager NavigationManager { get; set; }
         [Inject]
         public IToastService ToastService { get; set; }
+        [Inject]
+        public ModelDialogService ModelDialogService { get; set; }
+
         [Parameter]
         public string PersonRole { get; set; }
 
-        protected AlertBase AlertBase { get; set; }
+        // protected AlertBase AlertBase { get; set; }
 
         protected override void OnParametersSet()
         {
@@ -29,20 +32,16 @@ namespace MarketStrom.UIComponents.Pages
             DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
         }
 
-        private void ConfirmDelete(bool deleteConfirmed)
+        public async Task DeleteCustomer(int id)
         {
-            if (deleteConfirmed)
+            var result = await ModelDialogService.WarningDialog("Warning", "Do you want to delete this person? ");
+
+            if (result.Confirmed)
             {
-                DatabaseService.DeleteRecord(PersonId, "Person");
+                DatabaseService.DeleteRecord(id, "Person");
                 AllPerson = GetAllPerson();
                 ToastService.ShowSuccess(PersonRole + " Deleted SuccessFully!!");
             }
-        }
-
-        public void DeleteCustomer(int id)
-        {
-            AlertBase.Show();
-            PersonId = id;
         }
 
         private List<Person> GetAllPerson()
@@ -52,6 +51,5 @@ namespace MarketStrom.UIComponents.Pages
         }
 
         public List<Person> AllPerson { get; set; }
-        public int PersonId { get; set; }
     }
 }
