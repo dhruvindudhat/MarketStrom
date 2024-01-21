@@ -24,6 +24,17 @@ namespace MarketStrom.UIComponents.Pages
             Catogories = DatabaseService.GetAllCategory();
         }
 
+        public async Task AddCategory(int id)
+        {
+            var result = await ModelDialogService.AddUpdateCategoryDialog((id == 0) ? string.Empty : id.ToString());
+            if (result.Confirmed)
+            {
+                Catogories = DatabaseService.GetAllCategory();
+                StateHasChanged();
+                ToastService.ShowSuccess(((id != 0) ? "Category Updated SuccessFully!!" : "Category Added SuccessFully!!"));
+            }
+        }
+
         public async Task DeleteCategory(Category category)
         {
             var result = await ModelDialogService.WarningDialog("Warning", string.Format("Do you want to delete {0} Category? ", category.Name));

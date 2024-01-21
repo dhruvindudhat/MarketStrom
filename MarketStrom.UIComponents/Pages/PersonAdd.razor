@@ -4,33 +4,6 @@
 
 <PageTitle>Add/Edit Person</PageTitle>
 
-<style>
-    .underline-input {
-        border: none;
-        border-bottom: 1px solid black;
-        outline: none;
-        width: 90%; /* Adjust the width to your preference */
-        max-width: 100%;
-    }
-
-        .underline-input:focus {
-            border-bottom: 1px solid #9bcc94; /* Remove the underline on focus */
-        }
-
-    select.form-control {
-        color: #495057;
-    }
-
-    .closebtn {
-        background-color: #fff;
-        border: #fff
-    }
-
-    .padding-top-nill {
-        padding-top: 0;
-    }
-</style>
-
 <div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -80,7 +53,7 @@
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                         <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
-                                        <button type="button" class="btn btn-light" @onclick=@Cancel>Cancel</button>
+                                        <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
                                     </div>
                                 </EditForm>
                             </div>

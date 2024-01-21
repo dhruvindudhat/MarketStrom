@@ -65,6 +65,11 @@ namespace MarketStrom.UIComponents.Services
             _db.Update(category);
         }
 
+        public Category GetCategory(int id)
+        {
+            return _db.Get<Category>(id);
+        }
+
         #endregion Category
 
         #region SubCategory

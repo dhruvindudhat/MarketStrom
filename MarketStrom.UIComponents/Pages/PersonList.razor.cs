@@ -49,7 +49,7 @@ namespace MarketStrom.UIComponents.Pages
 
         public async Task AddPerson(int id)
         {
-            var result = await ModelDialogService.PersonAddDialog((id == 0) ? string.Empty : id.ToString(), PersonRole);
+            var result = await ModelDialogService.AddUpdatePersonDialog((id == 0) ? string.Empty : id.ToString(), PersonRole);
             if (result.Confirmed)
             {
                 AllPerson = GetAllPerson();

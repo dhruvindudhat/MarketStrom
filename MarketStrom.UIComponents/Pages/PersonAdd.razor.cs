@@ -53,17 +53,12 @@ namespace MarketStrom.UIComponents.Pages
 
         public void Restore()
         {
-            Person = new Person();
+            Person = new();
         }
 
         public void InvalidSubmission()
         {
             ToastService.ShowError("Please Submit Valid Details!!");
-        }
-
-        public void Cancel()
-        {
-            NavigationManager.NavigateTo("/PersonList/" + PersonRole);
         }
     }
 }

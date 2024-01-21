@@ -24,13 +24,23 @@ namespace MarketStrom.UIComponents.Services
             return result;
         }
 
-        public async Task<ModalResult> PersonAddDialog(string id, string personRole)
+        public async Task<ModalResult> AddUpdatePersonDialog(string id, string personRole)
         {
             ModalOptions options = new ModalOptions { UseCustomLayout = true };
             ModalParameters parameters = new ModalParameters();
             parameters.Add(nameof(PersonAdd.Id), id);
             parameters.Add(nameof(PersonAdd.PersonRole), personRole);
             var modalReference = _modelService.Show<PersonAdd>(string.Empty, parameters, options);
+            var result = await modalReference.Result;
+            return result;
+        }
+
+        public async Task<ModalResult> AddUpdateCategoryDialog(string id)
+        {
+            ModalOptions options = new ModalOptions { UseCustomLayout = true };
+            ModalParameters parameters = new ModalParameters();
+            parameters.Add(nameof(CategoryAdd.Id), id);
+            var modalReference = _modelService.Show<CategoryAdd>(string.Empty, parameters, options);
             var result = await modalReference.Result;
             return result;
         }

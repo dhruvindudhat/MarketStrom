@@ -1,35 +1,45 @@
-﻿<div class="row">
-    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-              @*  <EditForm Model="@Person" OnValidSubmit="SavePerson" OnInvalidSubmit="InvalidSubmission">
-                    <DataAnnotationsValidator />
-                    <div class="d-flex justify-content-between">
-                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") @PersonRole Profile</p>
-                        <div class="d-flex align-items-center">
-                            <div class="card card-green">
-                                <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                    <NavLink href="@($"/PersonList/{PersonRole}")" Match="NavLinkMatch.All"> <i class="ti-arrow-left"></i></NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+﻿@page "/AddCategory"
+@page "/EditCategory/{Id}"
+@inherits Base.PopupMasterComponent
 
-                    <div class="row pb-4">
-                        <div class="form-group row">
-                            <label for="mobileno" class="col-sm-2 col-form-label">Mobile No.</label>
-                            <div class="col-sm-10">
-                                <InputText class="form-control" id="mobileno" @bind-Value=@Person.MobileNo placeholder="Mobile No." required />
-                                <ValidationMessage For="@(() => Person.MobileNo)" />
+<div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0 m-0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <button type="button" class="close closebtn btn-lg p-0" aria-label="Close" @onclick=ModalCancel>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <EditForm Model="@Category" OnValidSubmit="SaveCategory" OnInvalidSubmit="InvalidSubmission">
+                                    <DataAnnotationsValidator />
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") Category</p>
+                                    </div>
+
+                                    <div class="row pb-4 pt-4">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Category Name</label>
+                                            <div class="col-sm-8">
+                                                <InputText class="form-control" id="mobileno" @bind-Value=@Category.Name placeholder="Name" required />
+                                                <ValidationMessage For="@(() => Category.Name)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
+                                        <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
+                                    </div>
+                                </EditForm>
                             </div>
                         </div>
                     </div>
-                    <div class="float-right">
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
-                        <button type="button" class="btn btn-light" @onclick=@Cancel>Cancel</button>
-                    </div>
-                </EditForm>*@
+                </div>
             </div>
         </div>
     </div>
