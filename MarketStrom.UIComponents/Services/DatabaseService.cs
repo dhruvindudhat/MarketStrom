@@ -80,9 +80,14 @@ namespace MarketStrom.UIComponents.Services
 
         #endregion SubCategory
 
-        public List<Category>? GetAllCategory()
+        public List<Category> GetAllCategory()
         {
             return _db.GetAllWithChildren<Category>().ToList();
+        }
+
+        public void DeleteCategory(Category category)
+        {
+            _db.Delete(category);
         }
 
         public void DeleteRecord(int id, string table)

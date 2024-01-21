@@ -45,6 +45,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Blazored.Modal" Version="7.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\MarketStrom.UIComponents\MarketStrom.UIComponents.csproj" />
     </ItemGroup>
 

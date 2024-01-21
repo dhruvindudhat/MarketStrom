@@ -8,8 +8,8 @@
                     <p class="card-title">@PersonRole List</p>
                     <div class="d-flex align-items-center">
                         <div class="card card-green">
-                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                <NavLink href="@($"/AddPerson/{PersonRole}")" Match="NavLinkMatch.All"><i class="ti-plus"></i></NavLink>
+                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddPerson(0)">
+                                <i class="ti-plus"></i>
                             </div>
                         </div>
                     </div>
@@ -37,8 +37,8 @@
                                     <td>@data.MobileNo</td>
                                     <td>@data.City</td>
                                     <td>
-                                        <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2">
-                                            <NavLink href="@($"/EditPerson/{PersonRole}/{data.Id}")">  <i class="ti-pencil m-0"></i></NavLink>
+                                        <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddPerson(data.Id)">
+                                            <i class="ti-pencil m-0"></i>
                                         </button>
                                         <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
                                             <i class="ti-trash m-0"></i>

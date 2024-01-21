@@ -41,7 +41,7 @@ namespace MarketStrom.UIComponents.Base
         /// Submit and close dialog
         /// </summary>
         /// <returns></returns>
-        public async Task ModelSubmit()
+        public async Task ModalSubmit()
         {
             //Return ModelData as True to identify "Yes" Button Clicked
             await BlazoredModal.CloseAsync(ModalResult.Ok(true));
@@ -51,7 +51,7 @@ namespace MarketStrom.UIComponents.Base
         /// Set Response as No and close dialog
         /// </summary>
         /// <returns></returns>
-        public async Task ModelNo()
+        public async Task ModalNo()
         {
             //Return ModelData as False to identify "No" Button Clicked
             await BlazoredModal.CloseAsync(ModalResult.Ok(false));

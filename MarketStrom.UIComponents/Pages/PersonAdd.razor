@@ -1,6 +1,6 @@
 ﻿@page "/AddPerson/{PersonRole}"
 @page "/EditPerson/{PersonRole}/{Id}"
-
+@inherits Base.PopupMasterComponent
 
 <PageTitle>Add/Edit Person</PageTitle>
 
@@ -20,64 +20,74 @@
     select.form-control {
         color: #495057;
     }
+
+    .closebtn {
+        background-color: #fff;
+        border: #fff
+    }
+
+    .padding-top-nill {
+        padding-top: 0;
+    }
 </style>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <EditForm Model="@Person" OnValidSubmit="SavePerson" OnInvalidSubmit="InvalidSubmission">
-                    <DataAnnotationsValidator />
-                    <div class="d-flex justify-content-between">
-                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") @PersonRole Profile</p>
-                        <div class="d-flex align-items-center">
-                            <div class="card card-green">
-                                <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;">
-                                    <NavLink href="@($"/PersonList/{PersonRole}")" Match="NavLinkMatch.All"> <i class="ti-arrow-left"></i></NavLink>
+<div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0 m-0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card card p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <button type="button" class="close closebtn btn-lg p-0" aria-label="Close" @onclick=ModalCancel>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                                <EditForm Model="@Person" OnValidSubmit="SavePerson" OnInvalidSubmit="InvalidSubmission">
+                                    <DataAnnotationsValidator />
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") @PersonRole Profile</p>
+                                    </div>
 
-                    <div class="row pb-4">
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label align-self-center">Name</label>
-                            <div class="col-sm-5">
-                                <InputText class="form-control" id="firstname" @bind-Value=@Person.FirstName placeholder="First Name" required />
-                                <ValidationMessage For="@(() => Person.FirstName)" />
-                            </div>
-                            <div class="col-sm-5">
-                                <InputText class="form-control" id="lastname" @bind-Value=@Person.LastName placeholder="Last Name" />
-                                <ValidationMessage For="@(() => Person.LastName)" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="mobileno" class="col-sm-2 col-form-label">Mobile No.</label>
-                            <div class="col-sm-10">
-                                <InputText class="form-control" id="mobileno" @bind-Value=@Person.MobileNo placeholder="Mobile No." required />
-                                <ValidationMessage For="@(() => Person.MobileNo)" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="city" class="col-sm-2 col-form-label">City</label>
-                            <div class="col-sm-10">
-                                <InputText type="text" class="form-control" id="city" @bind-Value=@Person.City placeholder="City" required />
-                                <ValidationMessage For="@(() => Person.City)" />
+                                    <div class="row pb-4 pt-4">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label padding-top-nill">Name</label>
+                                            <div class="col-sm-4">
+                                                <InputText class="form-control" id="firstname" @bind-Value=@Person.FirstName placeholder="First Name" required />
+                                                <ValidationMessage For="@(() => Person.FirstName)" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <InputText class="form-control" id="lastname" @bind-Value=@Person.LastName placeholder="Last Name" />
+                                                <ValidationMessage For="@(() => Person.LastName)" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Mobile No.</label>
+                                            <div class="col-sm-8">
+                                                <InputText class="form-control" id="mobileno" @bind-Value=@Person.MobileNo placeholder="Mobile No." required />
+                                                <ValidationMessage For="@(() => Person.MobileNo)" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="city" class="col-sm-3 col-form-label padding-top-nill">City</label>
+                                            <div class="col-sm-8">
+                                                <InputText type="text" class="form-control" id="city" @bind-Value=@Person.City placeholder="City" required />
+                                                <ValidationMessage For="@(() => Person.City)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
+                                        <button type="button" class="btn btn-light" @onclick=@Cancel>Cancel</button>
+                                    </div>
+                                </EditForm>
                             </div>
                         </div>
                     </div>
-                    <div class="float-right">
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
-                        <button type="button" class="btn btn-light" @onclick=@Cancel>Cancel</button>
-                    </div>
-                </EditForm>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
-@code {
-
-}

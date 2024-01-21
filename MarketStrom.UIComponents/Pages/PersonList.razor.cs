@@ -26,7 +26,10 @@ namespace MarketStrom.UIComponents.Pages
         {
             AllPerson = GetAllPerson();
         }
-
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+        }
         protected async override Task OnInitializedAsync()
         {
             DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
@@ -41,6 +44,17 @@ namespace MarketStrom.UIComponents.Pages
                 DatabaseService.DeleteRecord(id, "Person");
                 AllPerson = GetAllPerson();
                 ToastService.ShowSuccess(PersonRole + " Deleted SuccessFully!!");
+            }
+        }
+
+        public async Task AddPerson(int id)
+        {
+            var result = await ModelDialogService.PersonAddDialog((id == 0) ? string.Empty : id.ToString(), PersonRole);
+            if (result.Confirmed)
+            {
+                AllPerson = GetAllPerson();
+                StateHasChanged();
+                ToastService.ShowSuccess(PersonRole + ((id != 0) ? " Updated SuccessFully!!" : " Added SuccessFully!!"));
             }
         }
 

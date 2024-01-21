@@ -13947,7 +13947,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
 
 .modal {
   --bs-modal-zindex: 1055;
-  --bs-modal-width: 500px;
+  --bs-modal-width: 600px;
   --bs-modal-padding: 0.9375rem;
   --bs-modal-margin: 10px;
   --bs-modal-color: ;
@@ -14072,9 +14072,10 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
 }
 
 .modal-body {
-  position: relative;
-  flex: 1 1 auto;
-  padding: var(--bs-modal-padding);
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--bs-modal-padding);
+    background-color: #F4F5F7 !important;
 }
 
 .modal-footer {
@@ -21027,7 +21028,7 @@ code {
 
 /* Utilities */
 .grid-margin {
-  margin-bottom: 1.5rem;
+  /*margin-bottom: 1.5rem;*/
 }
 
 @media (min-width: 576px) {
@@ -25354,9 +25355,9 @@ dl li {
 }
 
 /* Modals */
-.modal .modal-dialog {
+/*.modal .modal-dialog {
   margin-top: 100px;
-}
+}*/
 .modal .modal-dialog .modal-content .modal-header {
   padding: 25px 26px;
 }

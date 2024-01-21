@@ -35,20 +35,19 @@ namespace MarketStrom.UIComponents.Pages
 
         public Person Person { get; set; } = new();
 
-        public void SavePerson()
+        public async Task SavePerson()
         {
             Enum.TryParse(PersonRole, out Role role);
             if (String.IsNullOrEmpty(Id))
             {
                 Person.Role = (int)role;
                 DatabaseService.InsertPerson(Person);
-                ToastService.ShowSuccess(PersonRole + " Added SuccessFully!!");
             }
             else
             {
                 DatabaseService.UpdatePerson(Person);
-                ToastService.ShowSuccess(PersonRole + " Updated SuccessFully!!");
             }
+            await ModalSubmit();
             NavigationManager.NavigateTo("/PersonList/" + PersonRole);
         }
 
@@ -59,7 +58,7 @@ namespace MarketStrom.UIComponents.Pages
 
         public void InvalidSubmission()
         {
-            // StateHasChanged();
+            ToastService.ShowError("Please Submit Valid Details!!");
         }
 
         public void Cancel()
