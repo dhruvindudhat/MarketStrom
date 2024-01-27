@@ -1,5 +1,4 @@
 ﻿using Blazored.Toast.Services;
-using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -46,6 +45,16 @@ namespace MarketStrom.UIComponents.Pages
         public void Restore()
         {
             Category = new();
+        }
+
+        public void AddDefaultSubCategory()
+        {
+            Category.SubCategories.Add(new Models.SubCategory());
+        }
+
+        public void DeleteSubCategory(Models.SubCategory subcategory)
+        {
+            Category.SubCategories.Remove(subcategory);
         }
 
         public void InvalidSubmission()

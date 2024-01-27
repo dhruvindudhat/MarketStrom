@@ -21,7 +21,7 @@
                                         <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") Category</p>
                                     </div>
 
-                                    <div class="row pb-4 pt-4">
+                                    <div class="row pt-4">
                                         <div class="form-group row">
                                             <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Category Name</label>
                                             <div class="col-sm-8">
@@ -30,6 +30,40 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="container">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <th class="text-center" colspan="2">
+                                                        Subcategories
+                                                    </th>
+                                                </tr>
+                                                @foreach (var subcatgory in Category.SubCategories)
+                                                {
+                                                    <tr class="rowClass">
+                                                        <td class="row-index text-center">
+                                                            <InputText class="form-control" id="mobileno" @bind-Value=@subcatgory.Name placeholder="Name" required />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button class="close closebtn btn-lg p-0" aria-label="Close" @onclick="()=> { DeleteSubCategory(subcatgory);}"
+                                                                    type="button">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                        <div class="text-center mb-3">
+                                            <button class="btn btn-sm btn-primary"
+                                                    id="addBtn" type="button" @onclick=AddDefaultSubCategory>
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+
+
                                     <div class="float-right">
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                         <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>

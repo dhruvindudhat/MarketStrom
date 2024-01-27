@@ -57,17 +57,24 @@ namespace MarketStrom.UIComponents.Services
 
         public void InsertCategory(Category category)
         {
-            _db.Insert(category);
+            _db.InsertWithChildren(category, true);
         }
 
         public void UpdateCategory(Category category)
         {
-            _db.Update(category);
+            try
+            {
+                _db.InsertOrReplaceWithChildren(category, true);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public Category GetCategory(int id)
         {
-            return _db.Get<Category>(id);
+            return _db.GetWithChildren<Category>(id);
         }
 
         #endregion Category
@@ -92,7 +99,7 @@ namespace MarketStrom.UIComponents.Services
 
         public void DeleteCategory(Category category)
         {
-            _db.Delete(category);
+            _db.Delete(category, true);
         }
 
         public void DeleteRecord(int id, string table)
