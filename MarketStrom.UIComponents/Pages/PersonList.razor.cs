@@ -30,10 +30,6 @@ namespace MarketStrom.UIComponents.Pages
         {
             base.OnAfterRender(firstRender);
         }
-        protected async override Task OnInitializedAsync()
-        {
-            DatabaseService.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MarketStorm", "default.mkt"));
-        }
 
         public async Task DeleteCustomer(int id)
         {

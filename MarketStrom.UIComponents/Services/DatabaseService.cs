@@ -17,12 +17,14 @@ namespace MarketStrom.UIComponents.Services
 
         public bool Load(string filepath)
         {
+            bool databaseExists = File.Exists(filepath);
             _db = new SQLiteConnection(filepath);
 
-            if (!File.Exists(filepath))
+            if (!databaseExists)
             {
                 CreateTables();
             }
+
             return true;
         }
 
@@ -32,6 +34,7 @@ namespace MarketStrom.UIComponents.Services
             _db.CreateTable<Category>();
             _db.CreateTable<Order>();
             _db.CreateTable<SubCategory>();
+            _db.CreateTable<Login>();
         }
 
         #region Person
@@ -110,6 +113,16 @@ namespace MarketStrom.UIComponents.Services
         public List<Person> GetAllPerson()
         {
             return _db.GetAllWithChildren<Person>().ToList();
+        }
+
+        public void SaveUser(Login loginData)
+        {
+            _db.Insert(loginData);
+        }
+
+        public Login GetUser(string username)
+        {
+            return _db.Table<Login>().FirstOrDefault(x => x.Username == username);
         }
 
         public void Dispose()

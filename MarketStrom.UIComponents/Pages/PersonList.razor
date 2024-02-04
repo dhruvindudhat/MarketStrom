@@ -29,23 +29,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var data in AllPerson)
+                            @if (AllPerson.Count > 0)
                             {
-                                <tr id="@("row"+data.Id)">
-                                    <td>@serialNumber</td>
-                                    <td>@data.FirstName  @data.LastName</td>
-                                    <td>@data.MobileNo</td>
-                                    <td>@data.City</td>
-                                    <td>
-                                        <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddPerson(data.Id)">
-                                            <i class="ti-pencil m-0"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
-                                            <i class="ti-trash m-0"></i>
-                                        </button>
-                                    </td>
+                                @foreach (var data in AllPerson)
+                                {
+                                    <tr id="@("row"+data.Id)">
+                                        <td>@serialNumber</td>
+                                        <td>@data.FirstName  @data.LastName</td>
+                                        <td>@data.MobileNo</td>
+                                        <td>@data.City</td>
+                                        <td>
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddPerson(data.Id)">
+                                                <i class="ti-pencil m-0"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
+                                                <i class="ti-trash m-0"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    serialNumber++;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center"> There Is No @(PersonRole + "s") To Display</td>
                                 </tr>
-                                serialNumber++;
                             }
                         </tbody>
                     </table>

@@ -1,6 +1,5 @@
 ﻿@using Blazored.Toast
 @inherits LayoutComponentBase
-@page "/Main"
 
 @if (!IsLogin)
 {
@@ -12,7 +11,7 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                             <div class="brand-logo">
-                                <h4 class="card-header text-white bg-primary text-center">MarketStorm</h4>
+                                <h2 class="card-header text-white bg-primary text-center">MarketStorm</h2>
                                 @*<img src="../../assets/images/logo.svg" alt="logo">*@
                             </div>
 
@@ -25,20 +24,14 @@
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    @*                   <span class="input-group-text" id="inputGroupPrependLock">
-                                <i class="bi bi-lock"></i>
-                                </span>*@
                                     <InputText @bind-Value="model.Password" type="password" class="form-control form-control-lg" placeholder="Password" aria-describedby="inputGroupPrependLock" required />
                                     <ValidationMessage For="@(() => model.Password)" />
                                 </div>
 
                                 <button class="btn btn-primary btn-block">
-                                    @* @if (IsLogin)
-                                {
-                                <span class="spinner-border spinner-border-sm mr-1"></span>
-                                }*@
                                     Login
                                 </button>
+                                @*<button class="btn btn-primary btn-block" @onclick=Adduser>Add User</button>*@
                             </EditForm>
                         </div>
                     </div>
@@ -48,6 +41,7 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
+    <BlazoredToasts />
 }
 else
 {
@@ -57,9 +51,9 @@ else
         </div>
 
         <main>
-            @*            <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>*@
+            <div class="top-row px-4">
+                @*<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>*@
+            </div>
 
             <article class="content px-4">
                 @Body

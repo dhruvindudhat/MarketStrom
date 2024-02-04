@@ -28,22 +28,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var data in Catogories)
+                            @if (Catogories.Count > 0)
                             {
-                                <tr id="@("row"+data.Id)">
-                                    <td>@serialNumber</td>
-                                    <td>@data.Name</td>
-                                    <td>
-                                        <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddCategory(data.Id)">
-                                            <i class="ti-pencil m-0"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCategory(data)">
-                                            <i class="ti-trash m-0"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                serialNumber++;
+                                @foreach (var data in Catogories)
+                                {
+                                    <tr id="@("row"+data.Id)">
+                                        <td>@serialNumber</td>
+                                        <td>@data.Name</td>
+                                        <td>
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddCategory(data.Id)">
+                                                <i class="ti-pencil m-0"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCategory(data)">
+                                                <i class="ti-trash m-0"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    serialNumber++;
+                                }
                             }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center"> There Is No Categories To Display</td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
