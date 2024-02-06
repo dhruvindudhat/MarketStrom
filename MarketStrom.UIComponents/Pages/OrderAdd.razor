@@ -1,0 +1,114 @@
+﻿@inherits Base.PopupMasterComponent
+@using Blazorise.Components
+@using UIComponents.Models
+
+<div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0 m-0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <button type="button" class="close closebtn btn-lg p-0" aria-label="Close" @onclick=ModalCancel>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <EditForm Model="@Order" OnValidSubmit="SaveOrder" OnInvalidSubmit="InvalidSubmission">
+                                    <DataAnnotationsValidator />
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") Purchase Order</p>
+                                    </div>
+
+                                    <div class="row pt-2">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Supplier Name</label>
+                                            <div class="col-sm-6">
+                                                <Autocomplete TItem="Person" TValue="Person" Placeholder="Type to search..." Data="@Suppliers"
+                                                              TextField="@(( item ) => item.FirstName + " " + item.LastName)" ValueField="@(( item ) => item)"
+                                                @bind-SelectedValue="@SelectedSupplier" FreeTyping>
+                                                </Autocomplete>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Quantity</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="quantity" @bind-Value=@Order.Quantity placeholder="Quantity" />
+                                                <ValidationMessage For="@(() => Order.Quantity)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Price</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price" />
+                                                <ValidationMessage For="@(() => Order.Quantity)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Commission/Labour</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="Price" />
+                                                <ValidationMessage For="@(() => Order.Quantity)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Total Amount</label>
+                                            <div class="col-sm-6">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @* <div class="container">
+                                    <div class="table-responsive">
+                                    <table class="table">
+                                    <tr>
+                                    <th class="text-center" colspan="2">
+                                    Subcategories
+                                    </th>
+                                    </tr>
+                                    @foreach (var subcatgory in Category.SubCategories)
+                                    {
+                                    <tr class="rowClass">
+                                    <td class="row-index text-center">
+                                    <InputText class="form-control" id="mobileno" @bind-Value=@subcatgory.Name placeholder="Name" required />
+                                    </td>
+                                    <td class="text-center">
+                                    <button class="close closebtn btn-lg p-0" aria-label="Close" @onclick="()=> { DeleteSubCategory(subcatgory);}"
+                                    type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </td>
+                                    </tr>
+                                    }
+                                    </table>
+                                    </div>
+                                    </div>*@
+
+
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
+                                        <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

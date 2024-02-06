@@ -16,9 +16,10 @@ namespace MarketStrom.UIComponents.Models
         [Required]
         [RegularExpression(@"^(0|91|\+91)?-?[789]\d{9}$", ErrorMessage = "Invalid mobile number")]
         public string MobileNo { get; set; }
-        public int Role { get; set; }
+
         [Required]
         public string City { get; set; }
+        public int Role { get; set; }
         public DateTime CreatedOn { get; set; }
         public int CreatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }

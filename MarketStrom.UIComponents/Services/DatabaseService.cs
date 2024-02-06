@@ -93,8 +93,6 @@ namespace MarketStrom.UIComponents.Services
             _db.Update(subCategory);
         }
 
-        #endregion SubCategory
-
         public List<Category> GetAllCategory()
         {
             return _db.GetAllWithChildren<Category>().ToList();
@@ -104,6 +102,32 @@ namespace MarketStrom.UIComponents.Services
         {
             _db.Delete(category, true);
         }
+
+        #endregion SubCategory
+
+        #region Order
+
+        public List<Order> GetAllOrders()
+        {
+            return _db.GetAllWithChildren<Order>().ToList();
+        }
+
+        public void InsertOrder(Order order)
+        {
+            _db.Insert(order);
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            _db.Update(order);
+        }
+
+        public Order GetOrder(int id)
+        {
+            return _db.GetWithChildren<Order>(id);
+        }
+
+        #endregion
 
         public void DeleteRecord(int id, string table)
         {

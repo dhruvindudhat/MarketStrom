@@ -10,6 +10,9 @@ namespace MarketStrom.UIComponents.Models
 
         [ForeignKey(typeof(SubCategory))]
         public int SubCategoryId { get; set; }
+
+        [ForeignKey(typeof(Person))]
+        public int PersonId { get; set; }
         public int? Quantity { get; set; }
         public double? Kg { get; set; }
         public double Price { get; set; }

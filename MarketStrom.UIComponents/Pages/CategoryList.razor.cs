@@ -15,10 +15,6 @@ namespace MarketStrom.UIComponents.Pages
         [Inject]
         public IToastService ToastService { get; set; }
 
-        protected async override Task OnInitializedAsync()
-        {
-
-        }
         protected override void OnParametersSet()
         {
             Catogories = DatabaseService.GetAllCategory();

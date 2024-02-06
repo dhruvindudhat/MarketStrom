@@ -45,5 +45,14 @@ namespace MarketStrom.UIComponents.Services
             return result;
         }
 
+        public async Task<ModalResult> AddUpdateOrderDialog(string id)
+        {
+            ModalOptions options = new ModalOptions { UseCustomLayout = true };
+            ModalParameters parameters = new ModalParameters();
+            parameters.Add(nameof(OrderAdd.Id), id);
+            var modalReference = _modelService.Show<OrderAdd>(string.Empty, parameters, options);
+            var result = await modalReference.Result;
+            return result;
+        }
     }
 }
