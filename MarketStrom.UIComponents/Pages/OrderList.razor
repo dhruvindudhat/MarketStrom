@@ -21,13 +21,15 @@
                 <div class="table-responsive pt-3">
                     <table id="doctorList" class="table expandable-table">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>Sr. No.</th>
                                 <th>Supplier</th>
+                                <th>Item</th>
                                 <th>Quantity</th>
+                                <th>Weight (Kg)</th>
                                 <th>Price</th>
-                                <th>Commison/Labour</th>
-                                <th>Total Amount</th>
+                                <th>Labour</th>
+                                <th>Total Amount (Rs)</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -36,14 +38,17 @@
                             {
                                 @foreach (var data in Orders)
                                 {
-                                    <tr id="@("row"+data.Id)">
+                                    <tr id="@("row"+data.Id)" class="text-center">
                                         <td>@serialNumber</td>
-                                        <td>@data.Quantity</td>
+                                        <td>@data.PersonName</td>
+                                        <td>@data.SubCategoryName</td>
+                                        <td>@(data.Quantity == null ? "-" : data.Quantity)</td>
+                                        <td>@(data.Kg == null ? "-" : data.Kg)</td>
                                         <td>@data.Price</td>
-                                        <td>@data.Labour</td>
+                                        <td>@(data.Labour == null ? "-" : data.Labour)</td>
                                         <td>@data.TotalAmount</td>
                                         <td>
-                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2">
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddOrder(data.Id)">
                                                 <i class="ti-pencil m-0"></i>
                                             </button>
                                             <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5">

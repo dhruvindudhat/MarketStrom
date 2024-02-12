@@ -22,16 +22,21 @@ namespace MarketStrom.UIComponents.Pages
         protected override void OnParametersSet()
         {
             Suppliers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Supplier).ToList();
+            Categories = DatabaseService.GetAllCategory();
+            SelectedCategoy = Categories.FirstOrDefault();
             if (!String.IsNullOrEmpty(Id))
             {
                 int id = Int32.Parse(Id);
                 Order = DatabaseService.GetOrder(id);
+                SelectedSupplier = Suppliers.Where(o => o.Id == Order.PersonId).FirstOrDefault();
             }
-            // base.OnParametersSet();
         }
 
         public async Task SaveOrder()
         {
+            Order.PersonId = SelectedSupplier.Id;
+            Order.SubCategoryId = SelectedSubCategoy.Id;
+            Order.CreatedOn = DateTime.Now;
             if (String.IsNullOrEmpty(Id))
             {
                 DatabaseService.InsertOrder(Order);
@@ -48,33 +53,36 @@ namespace MarketStrom.UIComponents.Pages
         {
             ToastService.ShowError("Please Submit Valid Details!!");
         }
-        public void Restore()
-        {
-            Order = new();
-        }
-
-        public string CalculateTotalAmont()
-        {
-            double totalAmount = 0;
-            if (Order.Kg != null)
-            {
-                totalAmount = (double)(Order.Kg * Order.Price);
-            }
-            else if (Order.Quantity != null)
-            {
-                totalAmount = (double)(Order.Quantity * Order.Price);
-            }
-
-            if (Order.Labour != null)
-            {
-                totalAmount = totalAmount + (double)Order.Labour;
-            }
-            return totalAmount.ToString();
-        }
-
 
         public Order Order { get; set; } = new();
         public List<Person> Suppliers { get; set; } = new();
-        public Person SelectedSupplier { get; set; }
+        public List<Category> Categories { get; set; } = new();
+        public List<SubCategory> SubCategories { get; set; } = new();
+        public Models.SubCategory? SelectedSubCategoy { get; set; } = new();
+
+        private Category? _selectedCategory;
+        public Category? SelectedCategoy
+        {
+            get
+            {
+                return _selectedCategory;
+            }
+            set
+            {
+                _selectedCategory = value;
+                SelectedSubCategoy = _selectedCategory?.SubCategories.FirstOrDefault();
+            }
+        }
+
+        private Person? _selectedSupplier;
+        public Person? SelectedSupplier
+        {
+            get { return _selectedSupplier; }
+            set
+            {
+                _selectedSupplier = value;
+                Order.PersonId = _selectedSupplier.Id;
+            }
+        }
     }
 }

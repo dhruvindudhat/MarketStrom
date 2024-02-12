@@ -57,7 +57,7 @@ namespace MarketStrom.UIComponents.Pages
         private List<Person> GetAllPerson()
         {
             Enum.TryParse(PersonRole, out Role role);
-            return DatabaseService.GetAllPerson().Where(o => o.IsDeleted == false && o.Role == (int)role).ToList();
+            return DatabaseService.GetAllPerson().Where(o => o.Role == (int)role).ToList();
         }
 
         public List<Person> AllPerson { get; set; }

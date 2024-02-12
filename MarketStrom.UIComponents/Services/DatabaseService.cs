@@ -1,4 +1,6 @@
-﻿using MarketStrom.UIComponents.Models;
+﻿using Blazorise;
+using MarketStrom.UIComponents.DTO;
+using MarketStrom.UIComponents.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 
@@ -107,9 +109,10 @@ namespace MarketStrom.UIComponents.Services
 
         #region Order
 
-        public List<Order> GetAllOrders()
+        public List<OrderDTO> GetAllOrders()
         {
-            return _db.GetAllWithChildren<Order>().ToList();
+            string query = $"SELECT `Order`.*, SubCategory.Name AS SubCategoryName, Person.FirstName || ' ' || Person.LastName AS PersonName FROM" + "`Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Person ON Person.Id = `Order`.PersonId;";
+            return _db.Query<OrderDTO>(query);
         }
 
         public void InsertOrder(Order order)
@@ -136,7 +139,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<Person> GetAllPerson()
         {
-            return _db.GetAllWithChildren<Person>().ToList();
+            return _db.GetAllWithChildren<Person>().Where(o => o.IsDeleted == false).ToList();
         }
 
         public void SaveUser(Login loginData)

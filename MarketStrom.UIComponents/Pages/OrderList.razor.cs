@@ -1,4 +1,5 @@
 ﻿using Blazored.Toast.Services;
+using MarketStrom.UIComponents.DTO;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -30,7 +31,7 @@ namespace MarketStrom.UIComponents.Pages
             }
         }
 
-        public List<Order> Orders { get; set; }
+        public List<OrderDTO> Orders { get; set; }
 
         public Order Order { get; set; } = new();
     }
