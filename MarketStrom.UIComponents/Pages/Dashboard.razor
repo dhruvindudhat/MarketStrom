@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using MarketStrom.UIComponents.DTO;
 <PageTitle>Dashboard</PageTitle>
 
 
@@ -6,45 +7,19 @@
     <div class="row col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
         <h2 class="m-3"> Dashboard </h2>
         <div class="row">
-            <div class="col-3 card m-3">
-                <div class="row card-body text-center pb-0">
-                    <h4><strong> BT-75 </strong></h4>
-                    <p>(Potato)</p>
+
+            @foreach (OrderDTO order in AvailableOrders)
+            {
+                <div class="col-3 card m-3">
+                    <div class="row card-body text-center pb-0">
+                        <h4><strong> @order.SubCategoryName </strong></h4>
+                        <p>(@order.CategoryName)</p>
+                    </div>
+                    <div class="text-center pb-3">
+                        <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
+                    </div>
                 </div>
-                <div class="text-center pb-3">
-                    <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
-                </div>
-            </div>
-            <div class="col-3 card m-3">
-                <div class="row card-body text-center pb-0">
-                    <h4><strong>RM-43</strong></h4>
-                    <p>(Potato)</p>
-                </div>
-                <div class="text-center pb-3">
-                    <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
-                </div>
-            </div>
-            <div class="col-3 card m-3">
-                <div class="row card-body text-center pb-0">
-                    <h4><strong> Indori </strong></h4>
-                    <p>(Onion)</p>
-                </div>
-                <div class="text-center pb-3">
-                    <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
-                </div>
-            </div>
-            <div class="col-3 card m-3">
-                <div class="row card-body text-center pb-0">
-                    <h4> <strong>Green </strong></h4>
-                    <p>(Onion)</p>
-                </div>
-                <div class="text-center pb-3">
-                    <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
-                </div>
-            </div>
-            <div class="col-1 m-3 text-center d-flex align-items-center">
-                <button class="btn btn-primary"> <i class="ti-plus"></i></button>
-            </div>
+            }
         </div>
     </div>
 </div>

@@ -27,7 +27,19 @@ namespace MarketStrom.UIComponents.Pages
             {
                 Orders = DatabaseService.GetAllOrders();
                 StateHasChanged();
-                ToastService.ShowSuccess(((id != 0) ? "Order Updated SuccessFully!!" : "Order Added SuccessFully!!"));
+                ToastService.ShowSuccess((id != 0) ? "Order Updated SuccessFully!!" : "Order Added SuccessFully!!");
+            }
+        }
+
+        public async Task DeleteOrder(int orderId)
+        {
+            var result = await ModelDialogService.WarningDialog("Warning", string.Format("Do You Want To Delete This Order?"));
+
+            if (result.Confirmed)
+            {
+                DatabaseService.DeleteOrder(orderId);
+                Orders = DatabaseService.GetAllOrders();
+                ToastService.ShowSuccess("Order Deleted SuccessFully!!");
             }
         }
 

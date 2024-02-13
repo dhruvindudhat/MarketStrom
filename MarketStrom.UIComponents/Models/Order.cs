@@ -8,18 +8,21 @@ namespace MarketStrom.UIComponents.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
         [Required]
         [ForeignKey(typeof(SubCategory))]
         public int SubCategoryId { get; set; }
 
         [Required]
         [ForeignKey(typeof(Person))]
-        [Range(1, int.MaxValue, ErrorMessage = ".Please Select Person")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please Select Person!!")]
         public int PersonId { get; set; }
 
+
+        private double _price;
         [Required]
-        private double? _price;
-        public double? Price
+        [Range(0.1, double.MaxValue, ErrorMessage = "Price must be above 0.")]
+        public double Price
         {
             get { return _price; }
             set
@@ -29,7 +32,6 @@ namespace MarketStrom.UIComponents.Models
             }
         }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Price must be above 0.")]
         private int? _quantity;
         public int? Quantity
         {
@@ -73,11 +75,11 @@ namespace MarketStrom.UIComponents.Models
         public void CalculateTotalAmont()
         {
             TotalAmount = 0;
-            if (Kg != null && Price != null)
+            if (Kg != null)
             {
                 TotalAmount = (double)(Kg * Price);
             }
-            else if (Quantity != null && Price != null)
+            else if (Quantity != null)
             {
                 TotalAmount = (double)(Quantity * Price);
             }

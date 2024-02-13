@@ -1,5 +1,4 @@
-﻿using Blazorise;
-using MarketStrom.UIComponents.DTO;
+﻿using MarketStrom.UIComponents.DTO;
 using MarketStrom.UIComponents.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
@@ -9,13 +8,6 @@ namespace MarketStrom.UIComponents.Services
     public class DatabaseService
     {
         private SQLiteConnection _db;
-        private bool _isModified;
-
-        public DatabaseService()
-        {
-
-        }
-
 
         public bool Load(string filepath)
         {
@@ -67,14 +59,7 @@ namespace MarketStrom.UIComponents.Services
 
         public void UpdateCategory(Category category)
         {
-            try
-            {
-                _db.InsertOrReplaceWithChildren(category, true);
-            }
-            catch (Exception e)
-            {
-
-            }
+            _db.InsertOrReplaceWithChildren(category, true);
         }
 
         public Category GetCategory(int id)
@@ -125,9 +110,39 @@ namespace MarketStrom.UIComponents.Services
             _db.Update(order);
         }
 
+        public void DeleteOrder(int orderId)
+        {
+            _db.Delete<Order>(orderId);
+        }
+
         public Order GetOrder(int id)
         {
             return _db.GetWithChildren<Order>(id);
+        }
+
+        #endregion
+
+        #region User
+
+        public void SaveUser(Login loginData)
+        {
+            _db.Insert(loginData);
+        }
+
+        public Login GetUser(string username)
+        {
+            return _db.Table<Login>().FirstOrDefault(x => x.Username == username);
+        }
+
+
+        #endregion User
+
+        #region DashBoard
+
+        public List<OrderDTO> GetAvailableOrders()
+        {
+            string query = $"SELECT o.*, s.Name AS SubCategoryName, p.FirstName || ' ' || p.LastName AS PersonName, c.Name AS CategoryName FROM `Order` o INNER JOIN SubCategory s ON o.SubCategoryId = s.Id INNER JOIN Person p ON p.Id = o.PersonId INNER JOIN Category c ON s.CategoryId = c.Id WHERE ((o.Quantity IS NOT NULL AND o.Quantity > 0) OR(o.Kg IS NOT Null AND o.Kg > 0)); ";
+            return _db.Query<OrderDTO>(query);
         }
 
         #endregion
@@ -140,16 +155,6 @@ namespace MarketStrom.UIComponents.Services
         public List<Person> GetAllPerson()
         {
             return _db.GetAllWithChildren<Person>().Where(o => o.IsDeleted == false).ToList();
-        }
-
-        public void SaveUser(Login loginData)
-        {
-            _db.Insert(loginData);
-        }
-
-        public Login GetUser(string username)
-        {
-            return _db.Table<Login>().FirstOrDefault(x => x.Username == username);
         }
 
         public void Dispose()

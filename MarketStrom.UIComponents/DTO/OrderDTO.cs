@@ -6,5 +6,6 @@ namespace MarketStrom.UIComponents.DTO
     {
         public string SubCategoryName { get; set; }
         public string PersonName { get; set; }
+        public string CategoryName { get; set; }
     }
 }
