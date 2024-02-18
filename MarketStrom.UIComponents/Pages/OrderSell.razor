@@ -1,0 +1,128 @@
+﻿@inherits Base.PopupMasterComponent
+@using Blazorise.Components
+@using UIComponents.Models
+
+<div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0 m-0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <button type="button" class="close closebtn btn-lg p-0" aria-label="Close" @onclick=ModalCancel>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <EditForm Model="@SellOrderDetails" OnValidSubmit="SellOrder" OnInvalidSubmit="InvalidSubmission">
+                                    <DataAnnotationsValidator />
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">Sell Order</p>
+                                    </div>
+
+                                    <div class="row pt-2">
+                                        <div class="form-group row">
+                                            <label for="customers" class="col-sm-3 col-form-label padding-top-nill fw-bold">Customer Name</label>
+                                            <div class="col-sm-6">
+                                                <Autocomplete TItem="Person" TValue="Person" Placeholder="Type to search..." Data="@Customers"
+                                                              TextField="@(( item ) => item.FirstName + " " + item.LastName)" ValueField="@(( item ) => item)"
+                                                @bind-SelectedValue="@SelectedCustomer" FreeTyping AutoPreSelect=true CloseOnSelection=true Filter="AutocompleteFilter.Contains">
+                                                </Autocomplete>
+                                                <ValidationMessage For="@(() => SellOrderDetails.PersonId)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="category" class="col-sm-3 col-form-label padding-top-nill fw-bold">Category</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="categoryName" value="@(AvailableStock.CategoryName)" readonly />
+                                            </div>
+                                            <label for="subcategory" class="col-sm-3 col-form-label padding-top-nill fw-bold">SubCategory</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="subCategoryName" value="@(AvailableStock.SubCategoryName)" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="quantity" class="col-sm-3 col-form-label padding-top-nill fw-bold">Quantity</label>
+                                            <div class="col-sm-8">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <InputNumber class="form-control" id="quantity" @bind-Value=@SellOrderDetails.Quantity placeholder="Quantity (Pic)" />
+                                                        </div>
+                                                        <label class="col-4 fs-3">@((AvailableStock.Quantity != null) ? "/" + @AvailableStock.Quantity : "")</label>
+                                                    </div>
+                                                </div>
+                                                <ValidationMessage For="@(() => SellOrderDetails.Quantity)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="kg" class="col-sm-3 col-form-label padding-top-nill fw-bold">Weight</label>
+                                            <div class="col-sm-8">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <InputNumber class="form-control" id="kg" @bind-Value=@SellOrderDetails.Kg placeholder="Weight (Kg)" />
+                                                        </div>
+                                                        <label class="col-4 fs-3">@((AvailableStock.Kg != null) ? "/" + @AvailableStock.Kg : "")</label>
+                                                    </div>
+                                                </div>
+                                                <ValidationMessage For="@(() => SellOrderDetails.Kg)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="labour" class="col-sm-3 col-form-label padding-top-nill fw-bold">Labour</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@SellOrderDetails.Labour placeholder="Commission/Labour (Rs)" />
+                                                <ValidationMessage For="@(() => SellOrderDetails.Labour)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="price" class="col-sm-3 col-form-label padding-top-nill fw-bold">Price</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@SellOrderDetails.Price placeholder="Price (Rs)" />
+                                                <ValidationMessage For="@(() => SellOrderDetails.Price)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="text-danger">@ErrorMsg</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="totalAmount" class="col-sm-3 col-form-label padding-top-nill fw-bold">Total Amount</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="totalAmount" value="@(SellOrderDetails.TotalAmount + " Rs")" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-right mt-3">
+                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                        <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

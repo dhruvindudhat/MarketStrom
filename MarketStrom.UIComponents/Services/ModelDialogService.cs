@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
+using MarketStrom.UIComponents.DTO;
 using MarketStrom.UIComponents.Pages;
 
 namespace MarketStrom.UIComponents.Services
@@ -51,6 +52,16 @@ namespace MarketStrom.UIComponents.Services
             ModalParameters parameters = new ModalParameters();
             parameters.Add(nameof(OrderAdd.Id), id);
             var modalReference = _modelService.Show<OrderAdd>(string.Empty, parameters, options);
+            var result = await modalReference.Result;
+            return result;
+        }
+
+        public async Task<ModalResult> SellOrderDialog(OrderDTO availableStock)
+        {
+            ModalOptions options = new ModalOptions { UseCustomLayout = true };
+            ModalParameters parameters = new ModalParameters();
+            parameters.Add(nameof(OrderSell.AvailableStock), availableStock);
+            var modalReference = _modelService.Show<OrderSell>(string.Empty, parameters, options);
             var result = await modalReference.Result;
             return result;
         }

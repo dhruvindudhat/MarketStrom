@@ -67,9 +67,6 @@ namespace MarketStrom.UIComponents.Models
 
         public double TotalAmount { get; set; }
 
-
-        [Ignore]
-        public string SubCategoryName { get; set; }
         public DateTime CreatedOn { get; set; }
 
         public void CalculateTotalAmont()

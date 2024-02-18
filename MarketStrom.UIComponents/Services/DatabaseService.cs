@@ -141,7 +141,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<OrderDTO> GetAvailableOrders()
         {
-            string query = $"SELECT o.*, s.Name AS SubCategoryName, p.FirstName || ' ' || p.LastName AS PersonName, c.Name AS CategoryName FROM `Order` o INNER JOIN SubCategory s ON o.SubCategoryId = s.Id INNER JOIN Person p ON p.Id = o.PersonId INNER JOIN Category c ON s.CategoryId = c.Id WHERE ((o.Quantity IS NOT NULL AND o.Quantity > 0) OR(o.Kg IS NOT Null AND o.Kg > 0)); ";
+            string query = $"Select rowdata.* from (SELECT o.SubCategoryId, s.Name AS SubCategoryName, c.Name AS CategoryName, sum(o.Quantity) as Quantity, sum(o.Kg) as Kg,(sum(o.TotalAmount)+ sum(o.Labour)) as FinalTotal FROM `Order` o INNER JOIN SubCategory s ON o.SubCategoryId = s.Id INNER JOIN Person p ON p.Id = o.PersonId INNER JOIN Category c ON s.CategoryId = c.Id WHERE ((o.Quantity IS NOT NULL) OR(o.Kg IS NOT Null)) GROUP By o.SubCategoryId) as rowdata WHERE (rowdata.quantity IS NULL OR rowdata.Kg IS NULL) OR (rowdata.Quantity > 0 OR rowdata.Kg > 0);";
             return _db.Query<OrderDTO>(query);
         }
 

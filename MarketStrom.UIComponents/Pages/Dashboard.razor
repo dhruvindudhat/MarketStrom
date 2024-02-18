@@ -16,7 +16,7 @@
                         <p>(@order.CategoryName)</p>
                     </div>
                     <div class="text-center pb-3">
-                        <button class="col-6 btn btn-danger btn-rounded btn-md">Sell</button>
+                        <button class="col-6 btn btn-danger btn-rounded btn-md" @onclick="() => {SellOrder(order);}">Sell</button>
                     </div>
                 </div>
             }

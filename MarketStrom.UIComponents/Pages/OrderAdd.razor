@@ -23,7 +23,7 @@
 
                                     <div class="row pt-2">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Supplier Name</label>
+                                            <label for="supplier" class="col-sm-3 col-form-label padding-top-nill">Supplier Name</label>
                                             <div class="col-sm-6">
                                                 <Autocomplete TItem="Person" TValue="Person" Placeholder="Type to search..." Data="@Suppliers"
                                                               TextField="@(( item ) => item.FirstName + " " + item.LastName)" ValueField="@(( item ) => item)"
@@ -36,7 +36,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label">Category</label>
+                                            <label for="category" class="col-sm-3 col-form-label">Category</label>
                                             <div class="col-sm-3">
                                                 <DropdownList TItem="Category" TValue="Category"
                                                               Data="@Categories"
@@ -47,7 +47,7 @@
                                                     @SelectedCategoy.Name
                                                 </DropdownList>
                                             </div>
-                                            <label for="mobileno" class="col-sm-3 col-form-label ">SubCategory</label>
+                                            <label for="subcategory" class="col-sm-3 col-form-label ">SubCategory</label>
                                             <div class="col-sm-3">
                                                 <DropdownList TItem="Models.SubCategory" TValue="Models.SubCategory"
                                                               Data="@SelectedCategoy.SubCategories"
@@ -63,7 +63,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Quantity</label>
+                                            <label for="quantity" class="col-sm-3 col-form-label padding-top-nill">Quantity</label>
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="quantity" @bind-Value=@Order.Quantity placeholder="Quantity (Pic)" />
                                                 <ValidationMessage For="@(() => Order.Quantity)" />
@@ -73,7 +73,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Weight</label>
+                                            <label for="kg" class="col-sm-3 col-form-label padding-top-nill">Weight</label>
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="kg" @bind-Value=@Order.Kg placeholder="Weight (Kg)" />
                                                 <ValidationMessage For="@(() => Order.Kg)" />
@@ -83,7 +83,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Price</label>
+                                            <label for="price" class="col-sm-3 col-form-label padding-top-nill">Price</label>
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price (Rs)" />
                                                 <ValidationMessage For="@(() => Order.Price)" />
@@ -93,7 +93,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Labour</label>
+                                            <label for="labour" class="col-sm-3 col-form-label padding-top-nill">Labour</label>
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="Commission/Labour (Rs)" />
                                                 <ValidationMessage For="@(() => Order.Labour)" />
@@ -103,7 +103,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Total Amount</label>
+                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill">Total Amount</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" id="totalAmount" value="@(Order.TotalAmount + " Rs")" readonly />
                                             </div>
