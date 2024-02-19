@@ -53,10 +53,10 @@
                                             <div class="col-sm-8">
                                                 <div class="container">
                                                     <div class="row">
-                                                        <div class="col-8">
+                                                        <div class="col-8 p-0">
                                                             <InputNumber class="form-control" id="quantity" @bind-Value=@SellOrderDetails.Quantity placeholder="Quantity (Pic)" />
                                                         </div>
-                                                        <label class="col-4 fs-3">@((AvailableStock.Quantity != null) ? "/" + @AvailableStock.Quantity : "")</label>
+                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.Quantity != null) ? "/" + @AvailableStock.Quantity : "")</label>
                                                     </div>
                                                 </div>
                                                 <ValidationMessage For="@(() => SellOrderDetails.Quantity)" />
@@ -70,10 +70,10 @@
                                             <div class="col-sm-8">
                                                 <div class="container">
                                                     <div class="row">
-                                                        <div class="col-8">
+                                                        <div class="col-8  p-0">
                                                             <InputNumber class="form-control" id="kg" @bind-Value=@SellOrderDetails.Kg placeholder="Weight (Kg)" />
                                                         </div>
-                                                        <label class="col-4 fs-3">@((AvailableStock.Kg != null) ? "/" + @AvailableStock.Kg : "")</label>
+                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.Kg != null) ? "/" + @AvailableStock.Kg : "")</label>
                                                     </div>
                                                 </div>
                                                 <ValidationMessage For="@(() => SellOrderDetails.Kg)" />

@@ -96,7 +96,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<OrderDTO> GetAllOrders()
         {
-            string query = $"SELECT `Order`.*, SubCategory.Name AS SubCategoryName, Person.FirstName || ' ' || Person.LastName AS PersonName FROM" + "`Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Person ON Person.Id = `Order`.PersonId;";
+            string query = $"SELECT `Order`.*, SubCategory.Name AS SubCategoryName, Person.FirstName || ' ' || Person.LastName AS PersonName FROM" + "`Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Person ON Person.Id = `Order`.PersonId WHERE Person.Role = 4;";
             return _db.Query<OrderDTO>(query);
         }
 
@@ -141,7 +141,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<OrderDTO> GetAvailableOrders()
         {
-            string query = $"Select rowdata.* from (SELECT o.SubCategoryId, s.Name AS SubCategoryName, c.Name AS CategoryName, sum(o.Quantity) as Quantity, sum(o.Kg) as Kg,(sum(o.TotalAmount)+ sum(o.Labour)) as FinalTotal FROM `Order` o INNER JOIN SubCategory s ON o.SubCategoryId = s.Id INNER JOIN Person p ON p.Id = o.PersonId INNER JOIN Category c ON s.CategoryId = c.Id WHERE ((o.Quantity IS NOT NULL) OR(o.Kg IS NOT Null)) GROUP By o.SubCategoryId) as rowdata WHERE (rowdata.quantity IS NULL OR rowdata.Kg IS NULL) OR (rowdata.Quantity > 0 OR rowdata.Kg > 0);";
+            string query = $"Select rowdata.* from (SELECT o.SubCategoryId, s.Name AS SubCategoryName, c.Name AS CategoryName, sum(o.Quantity) as Quantity, sum(o.Kg) as Kg,(sum(o.TotalAmount)+ sum(o.Labour)) as FinalTotal FROM `Order` o INNER JOIN SubCategory s ON o.SubCategoryId = s.Id LEFT JOIN Person p ON p.Id = o.PersonId LEFT JOIN Category c ON s.CategoryId = c.Id WHERE ((o.Quantity IS NOT NULL) OR(o.Kg IS NOT Null)) GROUP By o.SubCategoryId) as rowdata WHERE (rowdata.quantity IS NULL OR rowdata.Kg IS NULL) OR (rowdata.Quantity > 0 OR rowdata.Kg > 0);";
             return _db.Query<OrderDTO>(query);
         }
 
