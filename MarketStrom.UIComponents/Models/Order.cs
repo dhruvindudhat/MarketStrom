@@ -18,6 +18,7 @@ namespace MarketStrom.UIComponents.Models
         [Range(1, int.MaxValue, ErrorMessage = "Please Select Person!!")]
         public int PersonId { get; set; }
 
+        public string OrderNumber { get; set; }
 
         private double _price;
         [Required]
@@ -39,6 +40,7 @@ namespace MarketStrom.UIComponents.Models
             set
             {
                 _quantity = value;
+                CalculateWeight();
                 CalculateTotalAmont();
             }
         }
@@ -65,6 +67,28 @@ namespace MarketStrom.UIComponents.Models
             }
         }
 
+        private double? _comission;
+        public double? Comission
+        {
+            get { return _comission; }
+            set
+            {
+                _comission = value;
+                CalculateTotalAmont();
+            }
+        }
+
+        private double? _fare;
+        public double? Fare
+        {
+            get { return _fare; }
+            set
+            {
+                _fare = value;
+                CalculateTotalAmont();
+            }
+        }
+
         public double TotalAmount { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -72,13 +96,22 @@ namespace MarketStrom.UIComponents.Models
         public void CalculateTotalAmont()
         {
             TotalAmount = 0;
-            if (Kg != null)
-            {
-                TotalAmount = (double)(Kg * Price);
-            }
-            else if (Quantity != null)
+            if (IsByQty && Quantity != null)
             {
                 TotalAmount = (double)(Quantity * Price);
+            }
+            else if (IsByWeight && Kg != null)
+            {
+                if (Price > 0)
+                {
+                    TotalAmount = Price / 20 * Kg.Value;
+                }
+            }
+
+            if (Comission != null && Price > 0)
+            {
+                ComissionInRs = Price * (Comission.Value / 100);
+                TotalAmount = TotalAmount + ComissionInRs.Value;
             }
 
             if (Labour != null)
@@ -87,5 +120,37 @@ namespace MarketStrom.UIComponents.Models
             }
             TotalAmount = Math.Round(TotalAmount, 2);
         }
+
+        public void CalculateWeight()
+        {
+            if (IsByQty)
+            {
+                if (IsPotato)
+                {
+                    Kg = Quantity * 50;
+                }
+                else if (IsGarlic)
+                {
+                    Kg = Quantity * 40;
+                }
+                else if (IsOnion)
+                {
+                    Kg = Quantity * 10;
+                }
+            }
+        }
+
+        [Ignore]
+        public bool IsPotato { get; set; }
+        [Ignore]
+        public bool IsOnion { get; set; }
+        [Ignore]
+        public bool IsGarlic { get; set; }
+        [Ignore]
+        public bool IsByQty { get; set; }
+        [Ignore]
+        public bool IsByWeight { get; set; }
+        [Ignore]
+        public double? ComissionInRs { get; set; }
     }
 }

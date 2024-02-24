@@ -120,6 +120,11 @@ namespace MarketStrom.UIComponents.Services
             return _db.GetWithChildren<Order>(id);
         }
 
+        public int GetLastOrderNumber()
+        {
+            string query = $"SELECT id From `Order` ORDER BY Id DESC LIMIT 1;";
+            return _db.ExecuteScalar<int>(query);
+        }
         #endregion
 
         #region User

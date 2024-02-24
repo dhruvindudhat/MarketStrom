@@ -21,6 +21,15 @@
                                         <p class="card-title">@(String.IsNullOrEmpty(Id) ? "Add" : "Edit") Purchase Order</p>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill">Order Number</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="totalAmount" value="@(Order.OrderNumber)" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row pt-2">
                                         <div class="form-group row">
                                             <label for="supplier" class="col-sm-3 col-form-label padding-top-nill">Supplier Name</label>
@@ -35,9 +44,9 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group row">
+                                        <div class="form-group row col-12">
                                             <label for="category" class="col-sm-3 col-form-label">Category</label>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-4">
                                                 <DropdownList TItem="Category" TValue="Category"
                                                               Data="@Categories"
                                                               TextField="@((item)=>item.Name)"
@@ -47,7 +56,7 @@
                                                     @SelectedCategoy.Name
                                                 </DropdownList>
                                             </div>
-                                            <label for="subcategory" class="col-sm-3 col-form-label ">SubCategory</label>
+                                            <label for="subcategory" class="col-sm-2 col-form-label ">SubCategory</label>
                                             <div class="col-sm-3">
                                                 <DropdownList TItem="Models.SubCategory" TValue="Models.SubCategory"
                                                               Data="@SelectedCategoy.SubCategories"
@@ -75,7 +84,14 @@
                                         <div class="form-group row">
                                             <label for="kg" class="col-sm-3 col-form-label padding-top-nill">Weight</label>
                                             <div class="col-sm-6">
-                                                <InputNumber class="form-control" id="kg" @bind-Value=@Order.Kg placeholder="Weight (Kg)" />
+                                                @if (Order.IsByQty)
+                                                {
+                                                    <InputNumber class="form-control" id="kg" @bind-Value=@Order.Kg placeholder="Weight (Kg)" readonly />
+                                                }
+                                                else
+                                                {
+                                                    <InputNumber class="form-control" id="kg" @bind-Value=@Order.Kg placeholder="Weight (Kg)" />
+                                                }
                                                 <ValidationMessage For="@(() => Order.Kg)" />
                                             </div>
                                         </div>
@@ -91,15 +107,31 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="form-group row">
-                                            <label for="labour" class="col-sm-3 col-form-label padding-top-nill">Labour</label>
-                                            <div class="col-sm-6">
-                                                <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="Commission/Labour (Rs)" />
-                                                <ValidationMessage For="@(() => Order.Labour)" />
+                                    @if (Order.IsByQty)  //Enable for Quantity based deals
+                                    {
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <label for="labour" class="col-sm-3 col-form-label padding-top-nill">Labour</label>
+                                                <div class="col-sm-6">
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="Labour (Rs)" />
+                                                    <ValidationMessage For="@(() => Order.Labour)" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
+
+                                    @if (Order.IsByWeight && (Order.IsGarlic || Order.IsOnion)) //For onion and garlic only in deals with weight
+                                    {
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <label for="comission" class="col-sm-3 col-form-label padding-top-nill">Commission</label>
+                                                <div class="col-sm-6">
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Comission placeholder="Commission (Percentage)" />
+                                                    <ValidationMessage For="@(() => Order.Comission)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
 
                                     <div class="row">
                                         <div class="form-group row">

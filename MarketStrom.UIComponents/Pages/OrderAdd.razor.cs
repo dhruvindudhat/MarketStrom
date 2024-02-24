@@ -23,12 +23,18 @@ namespace MarketStrom.UIComponents.Pages
         {
             Suppliers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Supplier).ToList();
             Categories = DatabaseService.GetAllCategory();
-            SelectedCategoy = Categories.FirstOrDefault();
+            Order.OrderNumber = (DatabaseService.GetLastOrderNumber() + 1001).ToString(); //1000 Incremented As Per Requirement
             if (!String.IsNullOrEmpty(Id))
             {
                 int id = Int32.Parse(Id);
                 Order = DatabaseService.GetOrder(id);
                 SelectedSupplier = Suppliers.Where(o => o.Id == Order.PersonId).FirstOrDefault();
+                SelectedCategoy = Categories.Where(o => o.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault() != null).First();
+                SelectedSubCategoy = SelectedCategoy.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault();
+            }
+            else
+            {
+                SelectedCategoy = Categories.FirstOrDefault();
             }
         }
 
@@ -58,7 +64,21 @@ namespace MarketStrom.UIComponents.Pages
         public List<Person> Suppliers { get; set; } = new();
         public List<Category> Categories { get; set; } = new();
         public List<SubCategory> SubCategories { get; set; } = new();
-        public Models.SubCategory? SelectedSubCategoy { get; set; } = new();
+
+        private Models.SubCategory? _selectedSubCategory;
+        public Models.SubCategory? SelectedSubCategoy
+        {
+            get
+            {
+                return _selectedSubCategory;
+            }
+            set
+            {
+                _selectedSubCategory = value;
+                Order.IsByQty = _selectedSubCategory.Name.ToLower().Contains("quantity");
+                Order.IsByWeight = _selectedSubCategory.Name.ToLower().Contains("weight");
+            }
+        }
 
         private Category? _selectedCategory;
         public Category? SelectedCategoy
@@ -70,6 +90,9 @@ namespace MarketStrom.UIComponents.Pages
             set
             {
                 _selectedCategory = value;
+                Order.IsPotato = _selectedCategory.Name.ToLower().Contains("potato");
+                Order.IsOnion = _selectedCategory.Name.ToLower().Contains("onion");
+                Order.IsGarlic = _selectedCategory.Name.ToLower().Contains("garlic");
                 SelectedSubCategoy = _selectedCategory?.SubCategories.FirstOrDefault();
             }
         }

@@ -23,7 +23,6 @@ namespace MarketStrom.UIComponents.Pages
         protected override void OnParametersSet()
         {
             Customers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
-
         }
 
         public async Task SellOrder()
