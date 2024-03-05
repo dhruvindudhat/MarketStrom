@@ -31,42 +31,73 @@
                                         </div>
                                     </div>
 
-                                    <div class="container">
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <tr>
-                                                    <th class="text-center" colspan="2">
-                                                        Subcategories
-                                                    </th>
-                                                </tr>
-                                                @foreach (var subcatgory in Category.SubCategories)
-                                                {
-                                                    <tr class="rowClass">
-                                                        <td class="row-index text-center">
-                                                            <InputText class="form-control" id="mobileno" @bind-Value=@subcatgory.Name placeholder="Name" required />
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button class="close closebtn btn-lg p-0" aria-label="Close" @onclick="()=> { DeleteSubCategory(subcatgory);}"
-                                                                    type="button">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                        <div class="text-center mb-3">
-                                            <button class="btn btn-sm btn-primary"
-                                                    id="addBtn" type="button" @onclick=AddDefaultSubCategory>
-                                                Add
-                                            </button>
+                                    <div class="row pt-4">
+                                        <div class="form-group row">
+                                            <label for="mobileno" class="col-sm-3 col-form-label padding-top-nill">Default Weight</label>
+                                            <div class="col-sm-8">
+                                                <InputNumber class="form-control" id="defaultweight" @bind-Value=@Category.DefaultWeight placeholder="Default Weight" required />
+                                                <ValidationMessage For="@(() => Category.Name)" />
+                                            </div>
                                         </div>
                                     </div>
 
+                                    <table class="table">
+                                        <tr>
+                                            <th class="col-12">
+                                                Subcategories
+                                            </th>
+                                        </tr>
+                                        @foreach (var subcatgory in Category.SubCategories)
+                                        {
+                                            <tr>
+                                                <td class="text-center p-0">
+                                                    <div class="text-center col-4">
+                                                        <input type="text" class="form-control text-center" id="name" value="@subcatgory.Name" readonly />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
 
-                                    <div class="float-right">
+                                    @*  <div class="container">
+                                    <div class="table-responsive">
+                                    <table class="table">
+                                    <tr>
+                                    <th class="text-center" colspan="2">
+                                    Subcategories
+                                    </th>
+                                    </tr>
+                                    @foreach (var subcatgory in Category.SubCategories)
+                                    {
+                                    @* <tr class="rowClass">
+                                    <td class="row-index text-center">
+                                    <InputText class="form-control" id="mobileno" @bind-Value=@subcatgory.Name placeholder="Name" required />
+                                    </td>
+                                    <td class="text-center">
+                                    <button class="close closebtn btn-lg p-0" aria-label="Close" @onclick="()=> { DeleteSubCategory(subcatgory);}"
+                                    type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </td>
+                                    </tr>
+                                    <tr class="rowClass">
+                                    <input type="text" class="form-control" id="name" value="@subcatgory.Name" readonly />
+                                    </tr>
+                                    }
+                                    </table>
+                                    </div>
+                                    <div class="text-center mb-3">
+                                    <button class="btn btn-sm btn-primary"
+                                    id="addBtn" type="button" @onclick=AddDefaultSubCategory>
+                                    Add
+                                    </button>
+                                    </div>
+                                    </div>*@
+
+
+                                    <div class="float-right mt-3">
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                        <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>
+                                       @* <button type="button" class="btn btn-info mr-2" @onclick=@Restore>Restore Values</button>*@
                                         <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
                                     </div>
                                 </EditForm>

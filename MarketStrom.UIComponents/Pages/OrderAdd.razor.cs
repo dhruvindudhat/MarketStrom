@@ -23,7 +23,6 @@ namespace MarketStrom.UIComponents.Pages
         {
             Suppliers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Supplier).ToList();
             Categories = DatabaseService.GetAllCategory();
-            Order.OrderNumber = (DatabaseService.GetLastOrderNumber() + 1001).ToString(); //1000 Incremented As Per Requirement
             if (!String.IsNullOrEmpty(Id))
             {
                 int id = Int32.Parse(Id);
@@ -31,9 +30,11 @@ namespace MarketStrom.UIComponents.Pages
                 SelectedSupplier = Suppliers.Where(o => o.Id == Order.PersonId).FirstOrDefault();
                 SelectedCategoy = Categories.Where(o => o.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault() != null).First();
                 SelectedSubCategoy = SelectedCategoy.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault();
+                Quantity = Order.Quantity;
             }
             else
             {
+                Order.OrderNumber = (DatabaseService.GetLastOrderNumber() + 1001).ToString(); //1000 Incremented As Per Requirement
                 SelectedCategoy = Categories.FirstOrDefault();
             }
         }
@@ -60,6 +61,23 @@ namespace MarketStrom.UIComponents.Pages
             ToastService.ShowError("Please Submit Valid Details!!");
         }
 
+        private void ResetStockData()
+        {
+            Order.Quantity = null;
+            Order.Kg = null;
+            Order.Price = 0;
+            Order.Labour = null;
+            Order.Comission = null;
+            Order.Fare = null;
+            Order.ComissionAmount = null;
+            Order.LabourAmount = null;
+        }
+
+        public void OnQuantityChange(object value)
+        {
+
+        }
+
         public Order Order { get; set; } = new();
         public List<Person> Suppliers { get; set; } = new();
         public List<Category> Categories { get; set; } = new();
@@ -77,6 +95,8 @@ namespace MarketStrom.UIComponents.Pages
                 _selectedSubCategory = value;
                 Order.IsByQty = _selectedSubCategory.Name.ToLower().Contains("quantity");
                 Order.IsByWeight = _selectedSubCategory.Name.ToLower().Contains("weight");
+                if (String.IsNullOrEmpty(Id))
+                    ResetStockData();
             }
         }
 
@@ -90,9 +110,6 @@ namespace MarketStrom.UIComponents.Pages
             set
             {
                 _selectedCategory = value;
-                Order.IsPotato = _selectedCategory.Name.ToLower().Contains("potato");
-                Order.IsOnion = _selectedCategory.Name.ToLower().Contains("onion");
-                Order.IsGarlic = _selectedCategory.Name.ToLower().Contains("garlic");
                 SelectedSubCategoy = _selectedCategory?.SubCategories.FirstOrDefault();
             }
         }
@@ -105,6 +122,21 @@ namespace MarketStrom.UIComponents.Pages
             {
                 _selectedSupplier = value;
                 Order.PersonId = _selectedSupplier.Id;
+            }
+        }
+
+        private int? _quantity;
+        public int? Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                Order.Quantity = value;
+                if (Order.IsByQty)
+                {
+                    Order.Kg = SelectedCategoy.DefaultWeight * _quantity;
+                }
             }
         }
     }

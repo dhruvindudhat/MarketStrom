@@ -2,6 +2,12 @@
 @using Blazorise.Components
 @using UIComponents.Models
 
+<style>
+    .modal {
+        --bs-modal-width: 800px !important;
+    }
+</style>
+
 <div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -36,13 +42,17 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="category" class="col-sm-3 col-form-label padding-top-nill fw-bold">Category</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="categoryName" value="@(AvailableStock.CategoryName)" readonly />
+                                            <div class="row col-sm-6">
+                                                <label for="category" class="col-sm-6 col-form-label padding-top-nill fw-bold">Category</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control" id="categoryName" value="@(AvailableStock.CategoryName)" readonly />
+                                                </div>
                                             </div>
-                                            <label for="subcategory" class="col-sm-3 col-form-label padding-top-nill fw-bold">SubCategory</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="subCategoryName" value="@(AvailableStock.SubCategoryName)" readonly />
+                                            <div class="row col-sm-6">
+                                                <label for="subcategory" class="col-sm-6 col-form-label padding-top-nill fw-bold">SubCategory</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control" id="subCategoryName" value="@(AvailableStock.SubCategoryName)" readonly />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -54,12 +64,12 @@
                                                 <div class="container">
                                                     <div class="row">
                                                         <div class="col-8 p-0">
-                                                            <InputNumber class="form-control" id="quantity" @bind-Value=@SellOrderDetails.Quantity placeholder="Quantity (Pic)" />
+                                                            <InputNumber class="form-control" id="quantity" @bind-Value=@Quantity placeholder="Quantity (Pic)" />
                                                         </div>
-                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.Quantity != null) ? "/" + @AvailableStock.Quantity : "")</label>
+                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.AvailableQuantity != null) ? "/" + @AvailableStock.AvailableQuantity : "")</label>
                                                     </div>
                                                 </div>
-                                                <ValidationMessage For="@(() => SellOrderDetails.Quantity)" />
+                                                <ValidationMessage For="@(() => Quantity)" />
                                             </div>
                                         </div>
                                     </div>
@@ -73,20 +83,10 @@
                                                         <div class="col-8  p-0">
                                                             <InputNumber class="form-control" id="kg" @bind-Value=@SellOrderDetails.Kg placeholder="Weight (Kg)" />
                                                         </div>
-                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.Kg != null) ? "/" + @AvailableStock.Kg : "")</label>
+                                                        <label class="col-4 fs-4 pt-1">@((AvailableStock.AvailableWeight != null) ? "/" + @AvailableStock.AvailableWeight : "")</label>
                                                     </div>
                                                 </div>
                                                 <ValidationMessage For="@(() => SellOrderDetails.Kg)" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group row">
-                                            <label for="labour" class="col-sm-3 col-form-label padding-top-nill fw-bold">Labour</label>
-                                            <div class="col-sm-6">
-                                                <InputNumber class="form-control" id="price" @bind-Value=@SellOrderDetails.Labour placeholder="Commission/Labour (Rs)" />
-                                                <ValidationMessage For="@(() => SellOrderDetails.Labour)" />
                                             </div>
                                         </div>
                                     </div>
@@ -101,8 +101,44 @@
                                         </div>
                                     </div>
 
+
+                                    @if (SellOrderDetails.IsByQty)  //Enable for Quantity based deals
+                                    {
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <div class="row col-sm-6">
+                                                    <label for="labour" class="col-sm-4 col-form-label padding-top-nill fw-bold">Labour</label>
+                                                    <div class="col-sm-8">
+                                                        <InputNumber class="form-control" id="price" @bind-Value=@SellOrderDetails.Labour placeholder="(Per Qty)" />
+                                                        <ValidationMessage For="@(() => SellOrderDetails.Labour)" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 row">
+                                                    <label for="labourAmount" class="col-sm-4 col-form-label padding-top-nill fw-bold">Amount</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="labourAmount" value="@(SellOrderDetails.LabourAmount + " Rs")" readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
                                     <div class="row">
-                                        <label class="text-danger">@ErrorMsg</label>
+                                        <div class="form-group row">
+                                            <div class="row col-sm-6">
+                                                <label for="comission" class="col-sm-4 col-form-label padding-top-nill fw-bold">Commission</label>
+                                                <div class="col-sm-8">
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@SellOrderDetails.Comission placeholder="(Percentage)" />
+                                                    <ValidationMessage For="@(() => SellOrderDetails.Comission)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 row">
+                                                <label for="comissionAmount" class="col-sm-4 col-form-label padding-top-nill fw-bold">Amount</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="commissionAmount" value="@(SellOrderDetails.ComissionAmount + " Rs")" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -113,6 +149,12 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="row">
+                                        <label class="text-danger">@ErrorMsg</label>
+                                    </div>
+
                                     <div class="float-right mt-3">
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>

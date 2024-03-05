@@ -2,6 +2,12 @@
 @using Blazorise.Components
 @using UIComponents.Models
 
+<style>
+    .modal {
+        --bs-modal-width: 800px !important;
+    }
+</style>
+
 <div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -23,7 +29,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill">Order Number</label>
+                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill fw-bold">Order Number</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" id="totalAmount" value="@(Order.OrderNumber)" readonly />
                                             </div>
@@ -32,7 +38,7 @@
 
                                     <div class="row pt-2">
                                         <div class="form-group row">
-                                            <label for="supplier" class="col-sm-3 col-form-label padding-top-nill">Supplier Name</label>
+                                            <label for="supplier" class="col-sm-3 col-form-label padding-top-nill fw-bold">Supplier Name</label>
                                             <div class="col-sm-6">
                                                 <Autocomplete TItem="Person" TValue="Person" Placeholder="Type to search..." Data="@Suppliers"
                                                               TextField="@(( item ) => item.FirstName + " " + item.LastName)" ValueField="@(( item ) => item)"
@@ -44,45 +50,49 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group row col-12">
-                                            <label for="category" class="col-sm-3 col-form-label">Category</label>
-                                            <div class="col-sm-4">
-                                                <DropdownList TItem="Category" TValue="Category"
-                                                              Data="@Categories"
-                                                              TextField="@((item)=>item.Name)"
-                                                              ValueField="@((item)=>item)"
-                                                              Color="Blazorise.Color.Secondary"
-                                                @bind-SelectedValue="@SelectedCategoy">
-                                                    @SelectedCategoy.Name
-                                                </DropdownList>
+                                        <div class="form-group row">
+                                            <div class="row col-sm-6">
+                                                <label for="category" class="col-sm-4 col-form-label fw-bold">Category</label>
+                                                <div class="col-sm-8">
+                                                    <DropdownList TItem="Category" TValue="Category"
+                                                                  Data="@Categories"
+                                                                  TextField="@((item)=>item.Name)"
+                                                                  ValueField="@((item)=>item)"
+                                                                  Color="Blazorise.Color.Secondary"
+                                                    @bind-SelectedValue="@SelectedCategoy">
+                                                        @SelectedCategoy.Name
+                                                    </DropdownList>
+                                                </div>
                                             </div>
-                                            <label for="subcategory" class="col-sm-2 col-form-label ">SubCategory</label>
-                                            <div class="col-sm-3">
-                                                <DropdownList TItem="Models.SubCategory" TValue="Models.SubCategory"
-                                                              Data="@SelectedCategoy.SubCategories"
-                                                              TextField="@((item)=>item.Name)"
-                                                              ValueField="@((item)=>item)"
-                                                              Color="Blazorise.Color.Secondary"
-                                                @bind-SelectedValue="@SelectedSubCategoy">
-                                                    @SelectedSubCategoy.Name
-                                                </DropdownList>
+                                            <div class="row col-sm-6">
+                                                <label for="subcategory" class="col-sm-6 col-form-label fw-bold">SubCategory</label>
+                                                <div class="col-sm-6">
+                                                    <DropdownList TItem="Models.SubCategory" TValue="Models.SubCategory"
+                                                                  Data="@SelectedCategoy.SubCategories"
+                                                                  TextField="@((item)=>item.Name)"
+                                                                  ValueField="@((item)=>item)"
+                                                                  Color="Blazorise.Color.Secondary"
+                                                    @bind-SelectedValue="@SelectedSubCategoy">
+                                                        @SelectedSubCategoy.Name
+                                                    </DropdownList>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="quantity" class="col-sm-3 col-form-label padding-top-nill">Quantity</label>
+                                            <label for="quantity" class="col-sm-3 col-form-label padding-top-nill fw-bold">Quantity</label>
                                             <div class="col-sm-6">
-                                                <InputNumber class="form-control" id="quantity" @bind-Value=@Order.Quantity placeholder="Quantity (Pic)" />
-                                                <ValidationMessage For="@(() => Order.Quantity)" />
+                                                <InputNumber class="form-control" id="quantity" @bind-Value=@Quantity placeholder="Quantity (Pic)" />
+                                                <ValidationMessage For="@(() => Quantity)" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="kg" class="col-sm-3 col-form-label padding-top-nill">Weight</label>
+                                            <label for="kg" class="col-sm-3 col-form-label padding-top-nill fw-bold">Weight</label>
                                             <div class="col-sm-6">
                                                 @if (Order.IsByQty)
                                                 {
@@ -99,7 +109,7 @@
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="price" class="col-sm-3 col-form-label padding-top-nill">Price</label>
+                                            <label for="price" class="col-sm-3 col-form-label padding-top-nill fw-bold">Price</label>
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price (Rs)" />
                                                 <ValidationMessage For="@(() => Order.Price)" />
@@ -107,35 +117,55 @@
                                         </div>
                                     </div>
 
-                                    @if (Order.IsByQty)  //Enable for Quantity based deals
-                                    {
-                                        <div class="row">
-                                            <div class="form-group row">
-                                                <label for="labour" class="col-sm-3 col-form-label padding-top-nill">Labour</label>
-                                                <div class="col-sm-6">
-                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="Labour (Rs)" />
-                                                    <ValidationMessage For="@(() => Order.Labour)" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
-                                    @if (Order.IsByWeight && (Order.IsGarlic || Order.IsOnion)) //For onion and garlic only in deals with weight
-                                    {
-                                        <div class="row">
-                                            <div class="form-group row">
-                                                <label for="comission" class="col-sm-3 col-form-label padding-top-nill">Commission</label>
-                                                <div class="col-sm-6">
-                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Comission placeholder="Commission (Percentage)" />
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <div class="row col-sm-6">
+                                                <label for="comission" class="col-sm-4 col-form-label padding-top-nill fw-bold">Commission</label>
+                                                <div class="col-sm-8">
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Comission placeholder="(Percentage)" />
                                                     <ValidationMessage For="@(() => Order.Comission)" />
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 row">
+                                                <label for="comissionAmount" class="col-sm-4 col-form-label padding-top-nill fw-bold">Amount</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="commissionAmount" value="@(Order.ComissionAmount == null ? "" : Order.ComissionAmount + " Rs")" readonly />
+                                                </div>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
 
                                     <div class="row">
                                         <div class="form-group row">
-                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill">Total Amount</label>
+                                            <div class="row col-sm-6">
+                                                <label for="labour" class="col-sm-4 col-form-label padding-top-nill fw-bold">Labour</label>
+                                                <div class="col-sm-8">
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Labour placeholder="(Per Qty)" />
+                                                    <ValidationMessage For="@(() => Order.Labour)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 row">
+                                                <label for="labourAmount" class="col-sm-4 col-form-label padding-top-nill fw-bold">Amount</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="labourAmount" value="@(Order.LabourAmount == null ? "" : Order.LabourAmount + " Rs")" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="fare" class="col-sm-3 col-form-label padding-top-nill fw-bold">Fare</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@Order.Fare placeholder="Fare (Rs)" />
+                                                <ValidationMessage For="@(() => Order.Fare)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="totoalAmount" class="col-sm-3 col-form-label padding-top-nill fw-bold">Total Amount</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" id="totalAmount" value="@(Order.TotalAmount + " Rs")" readonly />
                                             </div>

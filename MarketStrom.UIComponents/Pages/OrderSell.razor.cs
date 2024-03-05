@@ -22,17 +22,23 @@ namespace MarketStrom.UIComponents.Pages
 
         protected override void OnParametersSet()
         {
+
+            SellOrderDetails.IsByQty = AvailableStock.SubCategoryName.ToLower().Contains("quantity");
+            SellOrderDetails.IsByWeight = AvailableStock.SubCategoryName.ToLower().Contains("weight");
             Customers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
+            Categories = DatabaseService.GetAllCategory();
+            SelectedCategoy = Categories.Where(o => o.SubCategories.Where(o => o.Id == AvailableStock.SubCategoryId).FirstOrDefault() != null).FirstOrDefault();
+
         }
 
         public async Task SellOrder()
         {
-            if (SellOrderDetails.Quantity > AvailableStock.Quantity)
+            if (SellOrderDetails.Quantity > AvailableStock.AvailableQuantity)
             {
                 ErrorMsg = "Max Sell Quantity Is Same As Available Sell Quantity!!";
                 return;
             }
-            else if (SellOrderDetails.Kg > AvailableStock.Kg)
+            else if (SellOrderDetails.Kg > AvailableStock.AvailableWeight)
             {
                 ErrorMsg = "Max Sell Weight Is Same As Available Sell Weight!!";
                 return;
@@ -41,6 +47,7 @@ namespace MarketStrom.UIComponents.Pages
             {
                 ErrorMsg = "";
             }
+            SellOrderDetails.SellOrderId = AvailableStock.Id;
             SellOrderDetails.SubCategoryId = AvailableStock.SubCategoryId;
             SellOrderDetails.CreatedOn = DateTime.Now;
             SellOrderDetails.TotalAmount = -1 * SellOrderDetails.TotalAmount;
@@ -58,6 +65,7 @@ namespace MarketStrom.UIComponents.Pages
             }
             else
             {
+                ResetValues();
                 StateHasChanged();
             }
         }
@@ -67,8 +75,23 @@ namespace MarketStrom.UIComponents.Pages
             //   ToastService.ShowError("Please Submit Valid Details!!");
         }
 
+        public void ResetValues()
+        {
+            Quantity = null;
+            SellOrderDetails.Kg = null;
+            SellOrderDetails.Price = 0;
+            SellOrderDetails.Labour = null;
+            SellOrderDetails.LabourAmount = null;
+            SellOrderDetails.Comission = null;
+            SellOrderDetails.ComissionAmount = null;
+            SellOrderDetails.TotalAmount = 0;
+            SellOrderDetails.Fare = null;
+        }
+
         public List<Person> Customers { get; set; } = new();
         public Order SellOrderDetails { get; set; } = new();
+        public List<Category> Categories { get; set; } = new();
+        public Category? SelectedCategoy { get; set; }
 
         private Person? _selectedCustomer;
         public Person? SelectedCustomer
@@ -78,6 +101,21 @@ namespace MarketStrom.UIComponents.Pages
             {
                 _selectedCustomer = value;
                 SellOrderDetails.PersonId = _selectedCustomer.Id;
+            }
+        }
+
+        private int? _quantity;
+        public int? Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                SellOrderDetails.Quantity = value;
+                if (SellOrderDetails.IsByQty)
+                {
+                    SellOrderDetails.Kg = SelectedCategoy.DefaultWeight * _quantity;
+                }
             }
         }
 

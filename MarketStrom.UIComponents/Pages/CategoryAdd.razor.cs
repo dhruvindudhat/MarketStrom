@@ -25,6 +25,14 @@ namespace MarketStrom.UIComponents.Pages
                 int id = Int32.Parse(Id);
                 Category = DatabaseService.GetCategory(id);
             }
+            else
+            {
+                Category.SubCategories = new List<Models.SubCategory>()
+            {
+                new Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Quantity"},
+                new Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Weight"},
+            };
+            }
             base.OnParametersSet();
         }
 

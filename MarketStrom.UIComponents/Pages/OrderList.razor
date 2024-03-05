@@ -23,12 +23,14 @@
                         <thead>
                             <tr class="text-center">
                                 <th>Sr. No.</th>
+                                <th>Order No.</th>
                                 <th>Supplier</th>
-                                <th>Item</th>
+                                <th>Category</th>
                                 <th>Quantity</th>
                                 <th>Weight (Kg)</th>
                                 <th>Price</th>
                                 <th>Labour</th>
+                                <th>Commission</th>
                                 <th>Total Amount (Rs)</th>
                                 <th>Actions</th>
                             </tr>
@@ -40,12 +42,14 @@
                                 {
                                     <tr id="@("row"+data.Id)" class="text-center">
                                         <td>@serialNumber</td>
+                                        <td>@data.OrderNumber</td>
                                         <td>@data.PersonName</td>
-                                        <td>@data.SubCategoryName</td>
+                                        <td>@data.CategoryName</td>
                                         <td>@(data.Quantity == null ? "-" : data.Quantity)</td>
                                         <td>@(data.Kg == null ? "-" : data.Kg)</td>
                                         <td>@data.Price</td>
-                                        <td>@(data.Labour == null ? "-" : data.Labour)</td>
+                                        <td>@(data.LabourAmount == null ? "-" : data.LabourAmount)</td>
+                                        <td>@(data.ComissionAmount == null ? "-" : data.ComissionAmount)</td>
                                         <td>@data.TotalAmount</td>
                                         <td>
                                             <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddOrder(data.Id)">
