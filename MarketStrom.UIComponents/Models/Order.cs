@@ -134,7 +134,7 @@ namespace MarketStrom.UIComponents.Models
             if (Fare != null)
                 TotalAmount = TotalAmount + Fare.Value;
 
-            TotalAmount = Math.Round(TotalAmount, 2);
+            TotalAmount = Math.Round(TotalAmount, 0);
         }
 
         [Ignore]

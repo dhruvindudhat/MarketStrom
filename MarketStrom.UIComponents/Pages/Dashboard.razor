@@ -14,7 +14,7 @@
                     <div class="row card-body text-center pb-0">
                         <h4><strong> @order.CategoryName  </strong></h4>
                         <h5><strong>(@order.SubCategoryName)</strong></h5>
-                        <h5>@((order.SubCategoryName.ToLower().Contains("quantity")) ? (order.Quantity + "/" + order.AvailableQuantity) : (order.Kg + "/" + order.AvailableWeight)) (Balance)</h5>
+                        <h5>@((order.Quantity + "/" + order.AvailableQuantity)) (B)</h5>
                     </div>
                     <div class="text-center pb-3">
                         <button class="col-6 btn btn-danger btn-rounded btn-md" @onclick="() => {SellOrder(order);}">Sell</button>

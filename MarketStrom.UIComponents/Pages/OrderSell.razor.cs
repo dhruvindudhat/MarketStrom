@@ -19,7 +19,6 @@ namespace MarketStrom.UIComponents.Pages
         [Inject]
         public IToastService ToastService { get; set; }
 
-
         protected override void OnParametersSet()
         {
 
@@ -32,17 +31,17 @@ namespace MarketStrom.UIComponents.Pages
         }
 
         public async Task SellOrder()
-        {
+        {         
             if (SellOrderDetails.Quantity > AvailableStock.AvailableQuantity)
             {
                 ErrorMsg = "Max Sell Quantity Is Same As Available Sell Quantity!!";
                 return;
             }
-            else if (SellOrderDetails.Kg > AvailableStock.AvailableWeight)
-            {
-                ErrorMsg = "Max Sell Weight Is Same As Available Sell Weight!!";
-                return;
-            }
+            //else if (SellOrderDetails.Kg > AvailableStock.AvailableWeight)
+            //{
+            //    ErrorMsg = "Max Sell Weight Is Same As Available Sell Weight!!";
+            //    return;
+            //}
             else
             {
                 ErrorMsg = "";
@@ -64,7 +63,7 @@ namespace MarketStrom.UIComponents.Pages
                 ToastService.ShowSuccess("All Stock Sell Successfully!!");
             }
             else
-            {
+            {                
                 ResetValues();
                 StateHasChanged();
             }

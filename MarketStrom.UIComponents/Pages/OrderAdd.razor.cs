@@ -63,7 +63,7 @@ namespace MarketStrom.UIComponents.Pages
 
         private void ResetStockData()
         {
-            Order.Quantity = null;
+            Quantity = null;
             Order.Kg = null;
             Order.Price = 0;
             Order.Labour = null;
@@ -71,11 +71,6 @@ namespace MarketStrom.UIComponents.Pages
             Order.Fare = null;
             Order.ComissionAmount = null;
             Order.LabourAmount = null;
-        }
-
-        public void OnQuantityChange(object value)
-        {
-
         }
 
         public Order Order { get; set; } = new();
@@ -133,7 +128,7 @@ namespace MarketStrom.UIComponents.Pages
             {
                 _quantity = value;
                 Order.Quantity = value;
-                if (Order.IsByQty)
+                if (Order.IsByQty && Order.Quantity != null)
                 {
                     Order.Kg = SelectedCategoy.DefaultWeight * _quantity;
                 }
