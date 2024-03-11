@@ -65,5 +65,15 @@ namespace MarketStrom.UIComponents.Services
             var result = await modalReference.Result;
             return result;
         }
+
+        public async Task<ModalResult> PurchaseOrderPriceDialog(int orderId)
+        {
+            ModalOptions options = new ModalOptions { UseCustomLayout = true };
+            ModalParameters parameters = new ModalParameters();
+            parameters.Add(nameof(PurchasePriceDialog.OrderId), orderId);
+            var modalReference = _modelService.Show<PurchasePriceDialog>(string.Empty, parameters, options);
+            var result = await modalReference.Result;
+            return result;
+        }
     }
 }

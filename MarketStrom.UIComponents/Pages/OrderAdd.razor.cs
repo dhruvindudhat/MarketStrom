@@ -31,6 +31,7 @@ namespace MarketStrom.UIComponents.Pages
                 SelectedCategoy = Categories.Where(o => o.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault() != null).First();
                 SelectedSubCategoy = SelectedCategoy.SubCategories.Where(o => o.Id == Order.SubCategoryId).FirstOrDefault();
                 Quantity = Order.Quantity;
+                SelectedRadioValue = Order.IsForSale ? "forsale" : "byorder";
             }
             else
             {
@@ -132,6 +133,19 @@ namespace MarketStrom.UIComponents.Pages
                 {
                     Order.Kg = SelectedCategoy.DefaultWeight * _quantity;
                 }
+            }
+        }
+        private string _selectedRadioValue = "byorder";
+        public string SelectedRadioValue
+        {
+            get { return _selectedRadioValue; }
+            set
+            {
+                _selectedRadioValue = value;
+                if (_selectedRadioValue == "forsale")
+                    Order.IsForSale = true;
+                else
+                    Order.IsForSale = false;
             }
         }
     }

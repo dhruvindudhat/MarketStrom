@@ -120,6 +120,12 @@ namespace MarketStrom.UIComponents.Services
             return _db.GetWithChildren<Order>(id);
         }
 
+        public OrderDTO GetOrderWithDetails(int id)
+        {
+            string query = $"Select o.*,sc.name as SubCategoryName FROM `Order` o INNER JOIN SubCategory sc ON sc.Id = o.SubCategoryId WHERE O.Id =" + id;
+            return _db.Query<OrderDTO>(query).FirstOrDefault();
+        }
+
         public int GetLastOrderNumber()
         {
             string query = $"SELECT id From `Order` ORDER BY Id DESC LIMIT 1;";
@@ -146,7 +152,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<OrderDTO> GetAvailableOrders()
         {
-            string query = $"SELECT o.Id, o.SubCategoryId,sc.Name AS SubCategoryName, c.name AS CategoryName,SUM(s.Quantity) AS SoldQuantity,o.Quantity,o.Kg,SUM(s.Kg) AS SoldWeight FROM `Order` o LEFT JOIN `Order` s ON s.SellOrderId = o.Id INNER JOIN SubCategory sc ON sc.Id = o.SubCategoryId INNER JOIN Category c ON c.Id = sc.CategoryId WHERE o.SellOrderId IS NULL GROUP BY o.Id, o.SubCategoryId, o.Price Having SUM(s.Quantity) IS NULL OR SUM(s.Quantity) *(-1) != o.Quantity;";
+            string query = $"SELECT o.Id, o.SubCategoryId,o.IsForSale,sc.Name AS SubCategoryName, c.name AS CategoryName,SUM(s.Quantity) AS SoldQuantity,o.Quantity,o.Kg,SUM(s.Kg) AS SoldWeight FROM `Order` o LEFT JOIN `Order` s ON s.SellOrderId = o.Id INNER JOIN SubCategory sc ON sc.Id = o.SubCategoryId INNER JOIN Category c ON c.Id = sc.CategoryId WHERE o.SellOrderId IS NULL GROUP BY o.Id, o.SubCategoryId, o.Price Having SUM(s.Quantity) IS NULL OR SUM(s.Quantity) *(-1) != o.Quantity;";
             return _db.Query<OrderDTO>(query);
         }
 

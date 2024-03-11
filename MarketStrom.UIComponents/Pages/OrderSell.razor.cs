@@ -18,6 +18,9 @@ namespace MarketStrom.UIComponents.Pages
         public NavigationManager NavigationManager { get; set; }
         [Inject]
         public IToastService ToastService { get; set; }
+        [Inject]
+        public ModelDialogService ModelDialogService { get; set; }
+
 
         protected override void OnParametersSet()
         {
@@ -31,7 +34,7 @@ namespace MarketStrom.UIComponents.Pages
         }
 
         public async Task SellOrder()
-        {         
+        {
             if (SellOrderDetails.Quantity > AvailableStock.AvailableQuantity)
             {
                 ErrorMsg = "Max Sell Quantity Is Same As Available Sell Quantity!!";
@@ -46,6 +49,10 @@ namespace MarketStrom.UIComponents.Pages
             {
                 ErrorMsg = "";
             }
+            bool isForSale = AvailableStock.IsForSale;
+            int orderId = AvailableStock.Id;
+            SellOrderDetails.OrderNumber = (DatabaseService.GetLastOrderNumber() + 1001).ToString();
+            SellOrderDetails.IsForSale = isForSale;
             SellOrderDetails.SellOrderId = AvailableStock.Id;
             SellOrderDetails.SubCategoryId = AvailableStock.SubCategoryId;
             SellOrderDetails.CreatedOn = DateTime.Now;
@@ -58,12 +65,19 @@ namespace MarketStrom.UIComponents.Pages
             AvailableStock = DatabaseService.GetAvailableOrders().Where(o => o.SubCategoryId == SellOrderDetails.SubCategoryId).FirstOrDefault();
             if (AvailableStock == null)
             {
-                await ModalSubmit();
+                if (isForSale)
+                {
+                    await ModalSubmit();
+                    await ModelDialogService.PurchaseOrderPriceDialog(orderId);
+                }
+                else
+                    await ModalSubmit();
+
                 NavigationManager.NavigateTo("/");
                 ToastService.ShowSuccess("All Stock Sell Successfully!!");
             }
             else
-            {                
+            {
                 ResetValues();
                 StateHasChanged();
             }

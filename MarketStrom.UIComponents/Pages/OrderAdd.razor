@@ -64,6 +64,7 @@
                                                     </DropdownList>
                                                 </div>
                                             </div>
+
                                             <div class="row col-sm-6">
                                                 <label for="subcategory" class="col-sm-6 col-form-label fw-bold">SubCategory</label>
                                                 <div class="col-sm-6">
@@ -79,6 +80,23 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if (String.IsNullOrEmpty(Id)) @*NOT AVAILABLE FOR EDIT MODE*@
+                                    {
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <label for="subcategory" class="col-sm-3 col-form-label fw-bold">Purchase Type</label>
+                                                <div class="col-sm-6 d-flex align-items-center">
+                                                    <Blazorise.RadioGroup TValue="string" Name="OrderCategory" Class="d-flex align-items-center" @bind-CheckedValue="@SelectedRadioValue">
+                                                        <Blazorise.Radio Value="@("byorder")" />
+                                                        <label class="mr-2 fw-bold" style="margin-bottom:0!important">By Order</label>
+                                                        <Blazorise.Radio Value="@("forsale")" Class="ms-2 " />
+                                                        <label class="fw-bold" style="margin-bottom:0!important">For Sale</label>
+                                                    </Blazorise.RadioGroup>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
 
                                     <div class="row">
                                         <div class="form-group row">
@@ -111,8 +129,15 @@
                                         <div class="form-group row">
                                             <label for="price" class="col-sm-3 col-form-label padding-top-nill fw-bold">Price</label>
                                             <div class="col-sm-6">
-                                                <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price (Rs)" />
-                                                <ValidationMessage For="@(() => Order.Price)" />
+                                                @if (Order.IsForSale)
+                                                {
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price (Rs)" readonly />
+                                                }
+                                                else
+                                                {
+                                                    <InputNumber class="form-control" id="price" @bind-Value=@Order.Price placeholder="Price (Rs)" />
+                                                    <ValidationMessage For="@(() => Order.Price)" />
+                                                }
                                             </div>
                                         </div>
                                     </div>

@@ -22,9 +22,20 @@ namespace MarketStrom.UIComponents.Models
 
         public string OrderNumber { get; set; }
 
+        private bool _isForSale;
+        public bool IsForSale
+        {
+            get { return _isForSale; }
+            set
+            {
+                _isForSale = value;
+                CalculateTotalAmount();
+            }
+        }
+
         private double _price;
         [Required]
-        [Range(0.1, double.MaxValue, ErrorMessage = "Price must be above 0.")]
+        //[Range(0.1, double.MaxValue, ErrorMessage = "Price must be above 0.")]
         public double Price
         {
             get { return _price; }
@@ -115,7 +126,10 @@ namespace MarketStrom.UIComponents.Models
             if (Comission != null && Price > 0)
             {
                 ComissionAmount = Math.Round(TotalAmount * (Comission.Value / 100), 2);  //TotalAmount Percentage
-                TotalAmount = TotalAmount + ComissionAmount.Value;
+                if (IsForSale)
+                    TotalAmount = TotalAmount - ComissionAmount.Value;
+                else
+                    TotalAmount = TotalAmount + ComissionAmount.Value;
             }
             else
             {
@@ -125,14 +139,22 @@ namespace MarketStrom.UIComponents.Models
             if (Labour != null && Quantity != null)
             {
                 LabourAmount = Math.Round(Labour.Value * Quantity.Value, 2);
-                TotalAmount = TotalAmount + LabourAmount.Value;
+                if (IsForSale)
+                    TotalAmount = TotalAmount - LabourAmount.Value;
+                else
+                    TotalAmount = TotalAmount + LabourAmount.Value;
             }
             else
             {
                 LabourAmount = null;
             }
             if (Fare != null)
-                TotalAmount = TotalAmount + Fare.Value;
+            {
+                if (IsForSale)
+                    TotalAmount = TotalAmount - Fare.Value;
+                else
+                    TotalAmount = TotalAmount + Fare.Value;
+            }
 
             TotalAmount = Math.Round(TotalAmount, 0);
         }
