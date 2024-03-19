@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using MarketStrom.UIComponents.Enums;
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.ComponentModel.DataAnnotations;
 
@@ -106,6 +107,8 @@ namespace MarketStrom.UIComponents.Models
         public double? ComissionAmount { get; set; }
         public double? LabourAmount { get; set; }
 
+        public PaymentStatus PaymentStatus { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public void CalculateTotalAmount()
@@ -126,7 +129,7 @@ namespace MarketStrom.UIComponents.Models
             if (Comission != null && Price > 0)
             {
                 ComissionAmount = Math.Round(TotalAmount * (Comission.Value / 100), 2);  //TotalAmount Percentage
-                if (IsForSale)
+                if (IsForSale && SellOrderId == null)
                     TotalAmount = TotalAmount - ComissionAmount.Value;
                 else
                     TotalAmount = TotalAmount + ComissionAmount.Value;
@@ -139,7 +142,7 @@ namespace MarketStrom.UIComponents.Models
             if (Labour != null && Quantity != null)
             {
                 LabourAmount = Math.Round(Labour.Value * Quantity.Value, 2);
-                if (IsForSale)
+                if (IsForSale && SellOrderId == null)
                     TotalAmount = TotalAmount - LabourAmount.Value;
                 else
                     TotalAmount = TotalAmount + LabourAmount.Value;
@@ -150,7 +153,7 @@ namespace MarketStrom.UIComponents.Models
             }
             if (Fare != null)
             {
-                if (IsForSale)
+                if (IsForSale && SellOrderId == null)
                     TotalAmount = TotalAmount - Fare.Value;
                 else
                     TotalAmount = TotalAmount + Fare.Value;

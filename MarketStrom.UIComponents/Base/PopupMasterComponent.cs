@@ -47,6 +47,12 @@ namespace MarketStrom.UIComponents.Base
             await BlazoredModal.CloseAsync(ModalResult.Ok(true));
         }
 
+        public async Task ModalSubmitWithAmount(double amount)
+        {
+            //Return ModelData as True to identify "Yes" Button Clicked
+            await BlazoredModal.CloseAsync(ModalResult.Ok(amount));
+        }
+
         /// <summary>
         /// Set Response as No and close dialog
         /// </summary>

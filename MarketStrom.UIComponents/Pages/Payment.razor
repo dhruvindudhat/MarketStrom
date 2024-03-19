@@ -1,0 +1,46 @@
+﻿@inherits Base.PopupMasterComponent
+
+<PageTitle>Payment</PageTitle>
+
+<div class="modal fade show d-block" id="contactModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0 m-0">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12 grid-margin stretch-card card p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <button type="button" class="close closebtn btn-lg p-0" aria-label="Close" @onclick=ModalCancel>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <EditForm Model="@PaidAmount" OnValidSubmit="SavePayment" OnInvalidSubmit="InvalidSubmission">
+                                    <DataAnnotationsValidator />
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">Payment</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="fare" class="col-sm-3 col-form-label padding-top-nill fw-bold">Amount</label>
+                                            <div class="col-sm-6">
+                                                <InputNumber class="form-control" id="price" @bind-Value=@PaidAmount placeholder="Fare (Rs)" />
+                                                <ValidationMessage For="@(() => PaidAmount)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        <button type="button" class="btn btn-light" @onclick=@ModalCancel>Cancel</button>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

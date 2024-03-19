@@ -168,6 +168,12 @@ namespace MarketStrom.UIComponents.Services
             return _db.GetAllWithChildren<Person>().Where(o => o.IsDeleted == false).ToList();
         }
 
+        public List<OrderDTO> GetAllPurchaseOrderByPerson(int personId)
+        {
+            string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL and `Order`.PersonId =" + personId;
+            return _db.Query<OrderDTO>(query);
+        }
+
         public void Dispose()
         {
             _db.Close();

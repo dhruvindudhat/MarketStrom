@@ -24,9 +24,9 @@ namespace MarketStrom.UIComponents.Pages
 
         protected override void OnParametersSet()
         {
-
             SellOrderDetails.IsByQty = AvailableStock.SubCategoryName.ToLower().Contains("quantity");
             SellOrderDetails.IsByWeight = AvailableStock.SubCategoryName.ToLower().Contains("weight");
+            SellOrderDetails.SellOrderId = AvailableStock.Id;
             Customers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
             Categories = DatabaseService.GetAllCategory();
             SelectedCategoy = Categories.Where(o => o.SubCategories.Where(o => o.Id == AvailableStock.SubCategoryId).FirstOrDefault() != null).FirstOrDefault();
@@ -53,7 +53,6 @@ namespace MarketStrom.UIComponents.Pages
             int orderId = AvailableStock.Id;
             SellOrderDetails.OrderNumber = (DatabaseService.GetLastOrderNumber() + 1001).ToString();
             SellOrderDetails.IsForSale = isForSale;
-            SellOrderDetails.SellOrderId = AvailableStock.Id;
             SellOrderDetails.SubCategoryId = AvailableStock.SubCategoryId;
             SellOrderDetails.CreatedOn = DateTime.Now;
             SellOrderDetails.TotalAmount = -1 * SellOrderDetails.TotalAmount;
