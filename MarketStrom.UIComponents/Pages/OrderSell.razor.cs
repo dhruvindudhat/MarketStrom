@@ -112,7 +112,8 @@ namespace MarketStrom.UIComponents.Pages
             set
             {
                 _selectedCustomer = value;
-                SellOrderDetails.PersonId = _selectedCustomer.Id;
+                if (_selectedCustomer != null)
+                    SellOrderDetails.PersonId = _selectedCustomer.Id;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using MarketStrom.UIComponents.DTO;
+using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
@@ -29,6 +30,7 @@ namespace MarketStrom.UIComponents.Services
             _db.CreateTable<Order>();
             _db.CreateTable<SubCategory>();
             _db.CreateTable<Login>();
+            _db.CreateTable<PaymentHistory>();
         }
 
         #region Person
@@ -131,6 +133,11 @@ namespace MarketStrom.UIComponents.Services
             string query = $"SELECT id From `Order` ORDER BY Id DESC LIMIT 1;";
             return _db.ExecuteScalar<int>(query);
         }
+
+        public void SetOrderStatusPaid(int orderId, PaymentStatus status)
+        {
+            _db.Execute($"UPDATE `Order` SET PaymentStatus = {(int)status} WHERE Id = {orderId}");
+        }
         #endregion
 
         #region User
@@ -158,6 +165,27 @@ namespace MarketStrom.UIComponents.Services
 
         #endregion
 
+
+        #region Payment
+
+        public void InsertPaymentOrder(PaymentHistory payment)
+        {
+            _db.Insert(payment);
+        }
+
+        public List<PaymentHistory> GetAllWithoutFullPaymentOrders(int personId)
+        {
+            string query = $"SELECT * FROM PaymentHistory WHERE PaymentHistory.PersonId =" + personId;
+            return _db.Query<PaymentHistory>(query);
+        }
+
+        public void UpdatePaymentOrder(PaymentHistory paymentOrder)
+        {
+            _db.Update(paymentOrder);
+        }
+
+        #endregion
+
         public void DeleteRecord(int id, string table)
         {
             _db.Execute($"UPDATE {table} SET IsDeleted = 1 WHERE Id ={id};"); //SOFT DELETE RECORD
@@ -170,7 +198,7 @@ namespace MarketStrom.UIComponents.Services
 
         public List<OrderDTO> GetAllPurchaseOrderByPerson(int personId)
         {
-            string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL and `Order`.PersonId =" + personId;
+            string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL AND `Order`.PaymentStatus = 0 AND `Order`.PersonId =" + personId;
             return _db.Query<OrderDTO>(query);
         }
 

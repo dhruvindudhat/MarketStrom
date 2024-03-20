@@ -75,5 +75,14 @@ namespace MarketStrom.UIComponents.Services
             var result = await modalReference.Result;
             return result;
         }
+
+        public async Task<ModalResult> PaymentDialog()
+        {
+            ModalOptions options = new ModalOptions { UseCustomLayout = true };
+            ModalParameters parameters = new ModalParameters();
+            var modalReference = _modelService.Show<Payment>(string.Empty, parameters, options);
+            var result = await modalReference.Result;
+            return result;
+        }
     }
 }
