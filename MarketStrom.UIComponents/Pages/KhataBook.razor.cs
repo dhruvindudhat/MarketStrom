@@ -27,11 +27,16 @@ namespace MarketStrom.UIComponents.Pages
                 _selectedPerson = value;
                 if (_selectedPerson != null)
                 {
-                    PurchaseOrders = DatabaseService.GetAllPurchaseOrderByPerson(_selectedPerson.Id);
+                    SellOrders = DatabaseService.GetAllSellOrderByPerson(_selectedPerson.Id);
+                    PaymentHistory = DatabaseService.GetAllPaymentOrders(_selectedPerson.Id);
+                    GroupedPaymentOrders = PaymentHistory.GroupBy(o => o.OrderIds).ToList();
                 }
             }
         }
 
-        public List<OrderDTO> PurchaseOrders { get; set; }
+        public List<OrderDTO> SellOrders { get; set; }
+        public List<PaymentHistory> PaymentHistory { get; set; }
+
+        public List<IGrouping<string, PaymentHistory>> GroupedPaymentOrders { get; set; }
     }
 }

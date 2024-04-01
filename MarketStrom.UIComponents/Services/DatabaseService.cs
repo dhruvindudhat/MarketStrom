@@ -175,13 +175,19 @@ namespace MarketStrom.UIComponents.Services
 
         public List<PaymentHistory> GetAllWithoutFullPaymentOrders(int personId)
         {
-            string query = $"SELECT * FROM PaymentHistory WHERE PaymentHistory.PersonId =" + personId;
+            string query = $"SELECT * FROM PaymentHistory WHERE PaymentHistory.PersonId =" + personId + " AND PaymentHistory.IsFullPaymentCompleted = false;";
             return _db.Query<PaymentHistory>(query);
         }
 
         public void UpdatePaymentOrder(PaymentHistory paymentOrder)
         {
             _db.Update(paymentOrder);
+        }
+
+        public List<PaymentHistory> GetAllPaymentOrders(int personId)
+        {
+            string query = $"SELECT * FROM PaymentHistory WHERE PaymentHistory.PersonId =" + personId;
+            return _db.Query<PaymentHistory>(query);
         }
 
         #endregion
@@ -196,9 +202,15 @@ namespace MarketStrom.UIComponents.Services
             return _db.GetAllWithChildren<Person>().Where(o => o.IsDeleted == false).ToList();
         }
 
-        public List<OrderDTO> GetAllPurchaseOrderByPerson(int personId)
+        public List<OrderDTO> GetAllPendingSellOrderByPerson(int personId)
         {
             string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL AND `Order`.PaymentStatus = 0 AND `Order`.PersonId =" + personId;
+            return _db.Query<OrderDTO>(query);
+        }
+
+        public List<OrderDTO> GetAllSellOrderByPerson(int personId)
+        {
+            string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL AND `Order`.PersonId =" + personId;
             return _db.Query<OrderDTO>(query);
         }
 

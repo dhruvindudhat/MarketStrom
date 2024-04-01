@@ -3,7 +3,7 @@
     public enum PaymentMode
     {
         Cash,
-        Card,
-        Online
+        RTGS,
+        GPay
     }
 }

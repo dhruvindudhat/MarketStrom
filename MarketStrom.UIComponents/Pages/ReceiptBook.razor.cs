@@ -96,7 +96,7 @@ namespace MarketStrom.UIComponents.Pages
                 _selectedPerson = value;
                 if (_selectedPerson != null)
                 {
-                    PendingOrders = DatabaseService.GetAllPurchaseOrderByPerson(_selectedPerson.Id);
+                    PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(_selectedPerson.Id);
                     CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
 
                     double communitiveBalance = 0;
