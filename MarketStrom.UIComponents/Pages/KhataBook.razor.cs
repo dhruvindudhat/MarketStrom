@@ -29,14 +29,16 @@ namespace MarketStrom.UIComponents.Pages
                 {
                     SellOrders = DatabaseService.GetAllSellOrderByPerson(_selectedPerson.Id);
                     PaymentHistory = DatabaseService.GetAllPaymentOrders(_selectedPerson.Id);
-                    GroupedPaymentOrders = PaymentHistory.GroupBy(o => o.OrderIds).ToList();
+                    GroupedPaymentOrders = PaymentHistory.Where(o => !string.IsNullOrEmpty(o.OrderIds)).GroupBy(o => o.OrderIds).ToList();
+                    PendingPaymentOrders = PaymentHistory.Where(o => string.IsNullOrEmpty(o.OrderIds)).ToList();
                 }
             }
         }
 
         public List<OrderDTO> SellOrders { get; set; }
         public List<PaymentHistory> PaymentHistory { get; set; }
-
+        public List<PaymentHistory> PendingPaymentOrders { get; set; } //Order which is not map with communitive balance
         public List<IGrouping<string, PaymentHistory>> GroupedPaymentOrders { get; set; }
+
     }
 }

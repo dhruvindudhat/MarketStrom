@@ -27,8 +27,8 @@
                         <table class="table expandable-table table-bordered mt-5">
                             <thead>
                                 <tr class="text-center">
-                                    <th style="background-color: #f0ad4e;">Deposit</th>
                                     <th style="background-color: #f0ad4e;">Credit</th>
+                                    <th style="background-color: #f0ad4e;">Debit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,11 +58,9 @@
                                                         @foreach (var order in paymentOrder)
                                                         {
                                                             <tr>
-                                                                @*<td>@serialNumber</td>*@
                                                                 <td>@order.PaidAmount</td>
                                                                 <td>@order.ReceivedDate.ToString("dd-MM-yyyy")</td>
                                                             </tr>
-                                                            @*serialNumber++;*@
                                                         }
 
                                                     </tbody>
@@ -120,6 +118,53 @@
                                     </tr>
                                     index++;
                                 }
+
+                                <tr style="border: 2px solid;">
+                                    <td>
+                                        <table id="pendingPaymentOrders" class="table table-bordered expandable-table">
+                                            <tbody>
+                                                @foreach (var order in PendingPaymentOrders)
+                                                {
+                                                    <tr>
+                                                        <td>@order.PaidAmount</td>
+                                                        <td>@order.ReceivedDate.ToString("dd-MM-yyyy")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        @*Unmatched Payment Orders*@
+                                    </td>
+                                    <td>
+                                        <table id="pendingPaymentOrders" class="table table-bordered expandable-table">
+                                            <tbody>
+                                                @foreach (var order in SellOrders.Where(o => o.PaymentStatus == Enums.PaymentStatus.Pending).ToList())
+                                                {
+                                                    <tr>
+                                                        <td>@order.TotalAmount</td>
+                                                        <td>@order.CategoryName</td>
+                                                        <td>
+                                                            @(
+                                                                order.Quantity == null ? "-" : order.Quantity
+                                                                )
+                                                        </td>
+                                                        <td>
+                                                            @(
+                                                                order.Kg == null ? "-" : order.Kg
+                                                                )
+                                                        </td>
+                                                        <td>@order.OrderNumber</td>
+                                                        <td>
+                                                            @(
+                                                                order.CreatedOn.ToString("dd-MM-yyyy")
+                                                                )
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        @*Pending to Pay Sell Orders*@
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     }

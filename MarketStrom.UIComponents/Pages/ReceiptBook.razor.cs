@@ -68,7 +68,7 @@ namespace MarketStrom.UIComponents.Pages
 
                         //ADD PAYMENT ORDER WITH SELLORDERS WHICH ARE PAID WITH THIS FULL PAYMENT
                         string orderIds = string.Join(",", pendingSellOrders);
-                        orderIds = orderIds + "," +  matchedAmount.Key;
+                        orderIds = orderIds + "," + matchedAmount.Key;
                         paymentOrder.IsFullPaymentCompleted = true;
                         paymentOrder.OrderIds = orderIds;
                         DatabaseService.InsertPaymentOrder(paymentOrder);
@@ -81,6 +81,7 @@ namespace MarketStrom.UIComponents.Pages
                             DatabaseService.UpdatePaymentOrder(pendingPaymentOrder);
                         }
                     }
+                    GetPendingOrders();
                 }
             }
         }
@@ -96,16 +97,21 @@ namespace MarketStrom.UIComponents.Pages
                 _selectedPerson = value;
                 if (_selectedPerson != null)
                 {
-                    PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(_selectedPerson.Id);
-                    CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
-
-                    double communitiveBalance = 0;
-                    foreach (var order in PendingOrders)
-                    {
-                        communitiveBalance += order.TotalAmount;
-                        CommunitiveBalance[order.Id] = communitiveBalance;
-                    }
+                    GetPendingOrders();
                 }
+            }
+        }
+
+        private void GetPendingOrders()
+        {
+            PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(_selectedPerson.Id);
+            CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
+
+            double communitiveBalance = 0;
+            foreach (var order in PendingOrders)
+            {
+                communitiveBalance += order.TotalAmount;
+                CommunitiveBalance[order.Id] = communitiveBalance;
             }
         }
 
