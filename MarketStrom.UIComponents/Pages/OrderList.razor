@@ -32,6 +32,7 @@
                                 <th>Labour</th>
                                 <th>Commission</th>
                                 <th>Total Amount (Rs)</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@
                                         <td>@(data.LabourAmount == null ? "-" : data.LabourAmount)</td>
                                         <td>@(data.ComissionAmount == null ? "-" : data.ComissionAmount)</td>
                                         <td>@data.TotalAmount</td>
+                                        <td>@data.PaymentStatus</td>
                                         <td>
                                             <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddOrder(data.Id)">
                                                 <i class="ti-pencil m-0"></i>

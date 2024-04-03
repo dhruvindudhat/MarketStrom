@@ -12,7 +12,7 @@
                 <div class="row mt-3">
                     <div class="row">
                         <div class="col-6 d-flex align-items-center">
-                            <label for="person" class="fw-bold me-3 col-3">Person Name</label>
+                            <label for="person" class="fw-bold me-3 col-4">Person Name</label>
                             <div class="col-6">
                                 <Autocomplete TItem="Person" TValue="Person" Placeholder="Type To Search..." Data="@AllPerson"
                                               TextField="@((item) => item.FirstName + " " + item.LastName)" ValueField="@((item) => item)"
@@ -20,9 +20,12 @@
                                 </Autocomplete>
                             </div>
                         </div>
-                        <div class="col-6 d-flex justify-content-end align-items-center">
-                            <button class="btn btn-warning" @onclick="PaymentDialogOpen">Payment</button>
-                        </div>
+                        @if (SelectedPerson != null)
+                        {
+                            <div class="col-6 d-flex justify-content-end align-items-center">
+                                <button class="btn btn-warning" @onclick="PaymentDialogOpen">Payment</button>
+                            </div>
+                        }
                     </div>
                     @if (SelectedPerson != null)
                     {
@@ -62,7 +65,7 @@
                                                     <td>@data.Price</td>
                                                     <td>@data.OrderNumber</td>
                                                     <td>@(data.CreatedOn.ToString("dd-MM-yyyy"))</td>
-                                                    <td>@(Math.Round((DateTime.Today - data.CreatedOn).TotalDays, 0)) Days</td>
+                                                    <td>@(Math.Round((DateTime.Today.Date - data.CreatedOn.Date).TotalDays, 0)) Days</td>
                                                     <td>@cumulativeBalance</td>
                                                 </tr>
                                                 serialNumber++;

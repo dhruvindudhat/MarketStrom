@@ -1,4 +1,6 @@
 ﻿@inherits Base.PopupMasterComponent
+@using Blazorise.Components
+@using MarketStrom.UIComponents.Enums;
 
 <PageTitle>Payment</PageTitle>
 
@@ -27,6 +29,22 @@
                                             <div class="col-sm-6">
                                                 <InputNumber class="form-control" id="price" @bind-Value=@PaidAmount placeholder="Fare (Rs)" />
                                                 <ValidationMessage For="@(() => PaidAmount)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group row">
+                                            <label for="fare" class="col-sm-3 col-form-label fw-bold">Payment Mode</label>
+                                            <div class="col-sm-6">
+                                                <DropdownList TItem="PaymentMode" TValue="PaymentMode"
+                                                              Data="@PaymentModes"
+                                                              TextField="@(( item ) => item.ToString())"
+                                                              ValueField="@(( item ) => item)"
+                                                              Color="Blazorise.Color.Secondary"
+                                                @bind-SelectedValue="@SelectedPaymentMode">
+                                                    @SelectedPaymentMode
+                                                </DropdownList>
                                             </div>
                                         </div>
                                     </div>

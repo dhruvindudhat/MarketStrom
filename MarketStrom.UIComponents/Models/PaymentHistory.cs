@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using MarketStrom.UIComponents.Enums;
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,5 +22,7 @@ namespace MarketStrom.UIComponents.Models
         public bool IsFullPaymentCompleted { get; set; }
 
         public DateTime ReceivedDate { get; set; }
+
+        public PaymentMode PaymentMode { get; set; }
     }
 }

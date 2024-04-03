@@ -25,13 +25,15 @@ namespace MarketStrom.UIComponents.Pages
             {
                 var result = await ModelDialogService.PaymentDialog();
 
-                if (result.Data is double)
+                if (result.Data is PaymentDetails)
                 {
+                    PaymentDetails data = (PaymentDetails)result.Data;
                     PaymentHistory paymentOrder = new PaymentHistory()
                     {
                         PersonId = SelectedPerson.Id,
-                        PaidAmount = (double)result.Data,
+                        PaidAmount = data.PaidAmount,
                         ReceivedDate = DateTime.Now,
+                        PaymentMode = data.SelectedPaymentMode,
                         IsFullPaymentCompleted = false,
                     };
 
@@ -58,13 +60,13 @@ namespace MarketStrom.UIComponents.Pages
                         //GET LIST OF ORDERID UPTO MATCH THE COMMUNITIVEBALANCE WITH PAID PAYMENT
                         var pendingSellOrders = CommunitiveBalance.TakeWhile(kv => kv.Value != matchedAmount.Value).Select(kv => kv.Key).ToList();
 
+                        //SET ACTUAL MATCHED SELLORDER TO PAID
+                        pendingSellOrders.Add(matchedAmount.Key);
                         //CHANGE STATUS OF ORDERS TO PAID FROM PENDING
                         foreach (var sellOrder in pendingSellOrders)
                         {
                             DatabaseService.SetOrderStatusPaid(sellOrder, PaymentStatus.Paid);
                         }
-                        //SET ACTUAL MATCHED SELLORDER TO PAID
-                        DatabaseService.SetOrderStatusPaid(matchedAmount.Key, PaymentStatus.Paid);
 
                         //ADD PAYMENT ORDER WITH SELLORDERS WHICH ARE PAID WITH THIS FULL PAYMENT
                         string orderIds = string.Join(",", pendingSellOrders);

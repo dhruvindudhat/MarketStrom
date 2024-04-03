@@ -2,7 +2,7 @@
 {
     public enum PaymentMode
     {
-        Cash,
+        Cash = 1,
         RTGS,
         GPay
     }

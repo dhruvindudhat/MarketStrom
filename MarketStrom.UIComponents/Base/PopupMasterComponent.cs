@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
+using MarketStrom.UIComponents.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace MarketStrom.UIComponents.Base
@@ -47,7 +48,7 @@ namespace MarketStrom.UIComponents.Base
             await BlazoredModal.CloseAsync(ModalResult.Ok(true));
         }
 
-        public async Task ModalSubmitWithAmount(double amount)
+        public async Task ModalSubmitWithData(PaymentDetails amount)
         {
             //Return ModelData as True to identify "Yes" Button Clicked
             await BlazoredModal.CloseAsync(ModalResult.Ok(amount));
