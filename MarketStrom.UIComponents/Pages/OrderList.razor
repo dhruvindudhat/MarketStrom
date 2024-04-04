@@ -9,9 +9,10 @@
                     <p class="card-title">Purchase Order List</p>
                     <div class="d-flex align-items-center">
                         <div class="card card-green">
-                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddOrder(0)">
-                                <i class="ti-plus"></i>
-                            </div>
+                            <button class="btn btn-primary btn-lg text-white" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddOrder(0)">
+                                <i class="mdi mdi-plus"></i>
+                                Add
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -19,7 +20,7 @@
                     int serialNumber = 1;
                 }
                 <div class="table-responsive pt-3">
-                    <table id="doctorList" class="table expandable-table">
+                    <table id="doctorList" class="table table-striped expandable-table">
                         <thead>
                             <tr class="text-center">
                                 <th>Sr. No.</th>
@@ -52,12 +53,12 @@
                                         <td>@(data.LabourAmount == null ? "-" : data.LabourAmount)</td>
                                         <td>@(data.ComissionAmount == null ? "-" : data.ComissionAmount)</td>
                                         <td>@data.TotalAmount</td>
-                                        <td>@data.PaymentStatus</td>
+                                        <td><label class="@(data.PaymentStatus == Enums.PaymentStatus.Pending ? "badge badge-warning" : "badge badge-success")">@data.PaymentStatus</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddOrder(data.Id)">
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-1 mx-2" @onclick="() => AddOrder(data.Id)">
                                                 <i class="ti-pencil m-0"></i>
                                             </button>
-                                            <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteOrder(data.Id)">
+                                            <button type="button" class="btn btn-icon btn-outline-danger p-1" @onclick="() => DeleteOrder(data.Id)">
                                                 <i class="ti-trash m-0"></i>
                                             </button>
                                         </td>

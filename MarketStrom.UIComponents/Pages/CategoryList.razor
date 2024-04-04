@@ -8,9 +8,10 @@
                     <p class="card-title">Category List</p>
                     <div class="d-flex align-items-center">
                         <div class="card card-green">
-                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddCategory(0)">
-                                <i class="ti-plus"></i>
-                            </div>
+                            <button class="btn btn-primary btn-lg text-white" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddCategory(0)">
+                                <i class="mdi mdi-plus"></i>
+                                Add
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -18,7 +19,7 @@
                     int serialNumber = 1;
                 }
                 <div class="table-responsive pt-3">
-                    <table id="categoryList" class="table expandable-table">
+                    <table id="categoryList" class="table expandable-table table-striped">
                         <thead>
                             <tr>
                                 <th>Sr. No.</th>
@@ -35,7 +36,7 @@
                                         <td>@serialNumber</td>
                                         <td>@data.Name</td>
                                         <td>
-                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddCategory(data.Id)">
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-1 mx-2" @onclick="() => AddCategory(data.Id)">
                                                 <i class="ti-pencil m-0"></i>
                                             </button>
                                             @*<button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCategory(data)">

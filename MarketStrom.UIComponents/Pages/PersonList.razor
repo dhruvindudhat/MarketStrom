@@ -8,9 +8,10 @@
                     <p class="card-title">@PersonRole List</p>
                     <div class="d-flex align-items-center">
                         <div class="card card-green">
-                            <div class="card-body text-center border-radius-10" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddPerson(0)">
-                                <i class="ti-plus"></i>
-                            </div>
+                            <button class="btn btn-primary btn-lg text-white" style="padding:0.5rem;border-radius:inherit;" @onclick="() => AddPerson(0)">
+                                <i class="mdi mdi-account-plus"></i>
+                                Add
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -18,7 +19,7 @@
                     int serialNumber = 1;
                 }
                 <div class="table-responsive pt-3">
-                    <table id="personList" class="table expandable-table">
+                    <table id="personList" class="table table-striped expandable-table">
                         <thead>
                             <tr>
                                 <th>Sr. No.</th>
@@ -39,10 +40,10 @@
                                         <td>@data.MobileNo</td>
                                         <td>@data.City</td>
                                         <td>
-                                            <button type="button" class="btn btn-icon btn-outline-primary p-0 ml-2 mr-2" @onclick="() => AddPerson(data.Id)">
+                                            <button type="button" class="btn btn-icon btn-outline-primary p-1 mx-2" @onclick="() => AddPerson(data.Id)">
                                                 <i class="ti-pencil m-0"></i>
                                             </button>
-                                            <button type="button" class="btn btn-icon btn-outline-danger p-0 ml-5" @onclick="() => DeleteCustomer(data.Id)">
+                                            <button type="button" class="btn btn-icon btn-outline-danger p-1" @onclick="() => DeleteCustomer(data.Id)">
                                                 <i class="ti-trash m-0"></i>
                                             </button>
                                         </td>
