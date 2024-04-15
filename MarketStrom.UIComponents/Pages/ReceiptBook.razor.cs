@@ -70,7 +70,6 @@ namespace MarketStrom.UIComponents.Pages
 
                         //ADD PAYMENT ORDER WITH SELLORDERS WHICH ARE PAID WITH THIS FULL PAYMENT
                         string orderIds = string.Join(",", pendingSellOrders);
-                        orderIds = orderIds + "," + matchedAmount.Key;
                         paymentOrder.IsFullPaymentCompleted = true;
                         paymentOrder.OrderIds = orderIds;
                         DatabaseService.InsertPaymentOrder(paymentOrder);

@@ -15,11 +15,11 @@
     <PackageReference Include="BCrypt.Net" Version="0.1.0" />
     <PackageReference Include="Blazored.Modal" Version="7.1.0" />
     <PackageReference Include="Blazored.Toast" Version="4.1.0" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.4.3" />
-    <PackageReference Include="Blazorise.Components" Version="1.4.3" />
-    <PackageReference Include="Blazorise.DataGrid" Version="1.4.3" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.4.3" />
-    <PackageReference Include="Blazorise.Splitter" Version="1.4.3" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Components" Version="1.5.1" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.28" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
