@@ -7,6 +7,10 @@
     .flatpickr-calendar.static {
         top: auto !important;
     }
+
+    .td-bgcolor {
+        background-color: #f2f2f2 !important;
+    }
 </style>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
@@ -35,7 +39,7 @@
                     </div>
                     @if (SelectedPerson != null)
                     {
-                        <table class="table table-striped expandable-table table-bordered mt-5">
+                        <table class="table expandable-table table-bordered mt-5">
                             <thead>
                                 <tr class="text-center">
                                     <th style="background-color: #f0ad4e;">Credit</th>
@@ -65,7 +69,7 @@
                                     if (isInDateRange)
                                     {
                                         <tr>
-                                            <td class="align-top">
+                                            <td class="align-top td-bgcolor">
                                                 @if (paymentId.Length > 0)
                                                 {
                                                     <table id="sellOrders" class="table table-bordered expandable-table">
@@ -93,7 +97,7 @@
                                                     </table>
                                                 }
                                             </td>
-                                            <td class="align-top">
+                                            <td class="align-top td-bgcolor">
                                                 <table id="paymentOrders" class="table table-bordered expandable-table">
                                                     @if (index == 1)
                                                     {
@@ -161,7 +165,7 @@
                                 }
 
                                 <tr style="border: 2px solid;">
-                                    <td class="align-top">
+                                    <td class="align-top td-bgcolor">
                                         <table id="pendingPaymentOrders" class="table table-bordered expandable-table">
                                             @if (GroupedPaymentOrders.Count == 0)
                                             {
@@ -186,7 +190,7 @@
                                         </table>
                                         @*Unmatched Payment Orders*@
                                     </td>
-                                    <td class="align-top">
+                                    <td class="align-top td-bgcolor">
                                         <table id="pendingPaymentOrders" class="table table-bordered expandable-table">
                                             @if (GroupedPaymentOrders.Count == 0)
                                             {

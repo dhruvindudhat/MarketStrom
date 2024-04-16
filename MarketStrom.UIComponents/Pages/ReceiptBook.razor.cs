@@ -1,4 +1,5 @@
-﻿using MarketStrom.UIComponents.DTO;
+﻿using MarketStrom.UIComponents.Constants;
+using MarketStrom.UIComponents.DTO;
 using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
@@ -17,6 +18,8 @@ namespace MarketStrom.UIComponents.Pages
         protected override void OnParametersSet()
         {
             AllPerson = DatabaseService.GetAllPerson();
+            if (GuideContstants.ReceiptBookSelectedPerson != 0)
+                SelectedPerson = AllPerson.Where(o => o.Id == GuideContstants.ReceiptBookSelectedPerson).FirstOrDefault();
         }
 
         public async Task PaymentDialogOpen()
@@ -99,6 +102,7 @@ namespace MarketStrom.UIComponents.Pages
                 if (_selectedPerson != null)
                 {
                     GetPendingOrders();
+                    GuideContstants.ReceiptBookSelectedPerson = _selectedPerson.Id;
                 }
             }
         }

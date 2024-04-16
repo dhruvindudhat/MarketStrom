@@ -19,9 +19,9 @@
                     int serialNumber = 1;
                 }
                 <div class="table-responsive pt-3">
-                    <table id="personList" class="table table-striped expandable-table">
+                    <table id="personList" class="table table-striped expandable-table table-bordered">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>Sr. No.</th>
                                 <th>Person Name</th>
                                 <th>Mobile No.</th>
@@ -34,7 +34,7 @@
                             {
                                 @foreach (var data in AllPerson)
                                 {
-                                    <tr id="@("row"+data.Id)">
+                                    <tr id="@("row"+data.Id)" class="text-center">
                                         <td>@serialNumber</td>
                                         <td>@data.FirstName  @data.LastName</td>
                                         <td>@data.MobileNo</td>

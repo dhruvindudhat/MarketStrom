@@ -1,4 +1,5 @@
-﻿using MarketStrom.UIComponents.DTO;
+﻿using MarketStrom.UIComponents.Constants;
+using MarketStrom.UIComponents.DTO;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,8 @@ namespace MarketStrom.UIComponents.Pages
         protected override void OnParametersSet()
         {
             AllPerson = DatabaseService.GetAllPerson();
+            if (GuideContstants.KhataBookSelectedPerson != 0)
+                SelectedPerson = AllPerson.Where(o => o.Id == GuideContstants.KhataBookSelectedPerson).FirstOrDefault();
         }
 
         public List<Person> AllPerson { get; set; }
@@ -31,6 +34,7 @@ namespace MarketStrom.UIComponents.Pages
                     PaymentHistory = DatabaseService.GetAllPaymentOrders(_selectedPerson.Id);
                     GroupedPaymentOrders = PaymentHistory.Where(o => !string.IsNullOrEmpty(o.OrderIds)).GroupBy(o => o.OrderIds).ToList();
                     PendingPaymentOrders = PaymentHistory.Where(o => string.IsNullOrEmpty(o.OrderIds)).ToList();
+                    GuideContstants.KhataBookSelectedPerson = _selectedPerson.Id;
                 }
             }
         }
