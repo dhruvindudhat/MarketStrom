@@ -61,7 +61,10 @@ namespace MarketStrom.UIComponents.Pages
             if (SellOrderDetails.Kg != null)
                 SellOrderDetails.Kg = -1 * SellOrderDetails.Kg;
             DatabaseService.InsertOrder(SellOrderDetails);
-            AvailableStock = DatabaseService.GetAvailableOrders().Where(o => o.SubCategoryId == SellOrderDetails.SubCategoryId).FirstOrDefault();
+            if (isForSale)
+                AvailableStock = DatabaseService.GetAvailableOrders().Where(o => o.SubCategoryId == SellOrderDetails.SubCategoryId && o.IsForSale).FirstOrDefault();
+            else
+                AvailableStock = DatabaseService.GetAvailableOrders().Where(o => o.SubCategoryId == SellOrderDetails.SubCategoryId).FirstOrDefault();
             if (AvailableStock == null)
             {
                 if (isForSale)

@@ -18,6 +18,37 @@ namespace MarketStrom.UIComponents.Pages
         protected override void OnParametersSet()
         {
             AllPerson = DatabaseService.GetAllPerson();
+            FinancialData.Clear();
+
+            foreach (var person in AllPerson)
+            {
+                GetPendingOrders(person.Id);
+                PersonFinance finance = new PersonFinance()
+                {
+                    Id = person.Id,
+                    City = person.City,
+                    CreatedBy = person.CreatedBy,
+                    CreatedOn = person.CreatedOn,
+                    FirstName = person.FirstName,
+                    IsDeleted = person.IsDeleted,
+                    IsDeletedBy = person.IsDeletedBy,
+                    LastName = person.LastName,
+                    MobileNo = person.MobileNo,
+                    Role = person.Role,
+                    UpdatedBy = person.UpdatedBy,
+                    UpdatedOn = person.UpdatedOn,
+                    PaymentDueDays = PendingOrders.Count > 0 ? PendingOrders.Min(o => o.CreatedOn) : DateTime.Now
+                };
+                var commulitiveBal = GetCommunitiveBalance();
+                var untracePaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(finance.Id);
+                double untracePayment = 0;
+                foreach (var payment in untracePaymentOrders)
+                {
+                    untracePayment = untracePayment + payment.PaidAmount;
+                }
+                finance.FinalAmount = commulitiveBal - (decimal)untracePayment;
+                FinancialData.Add(finance);
+            }
             if (GuideContstants.ReceiptBookSelectedPerson != 0)
                 SelectedPerson = AllPerson.Where(o => o.Id == GuideContstants.ReceiptBookSelectedPerson).FirstOrDefault();
         }
@@ -85,7 +116,8 @@ namespace MarketStrom.UIComponents.Pages
                             DatabaseService.UpdatePaymentOrder(pendingPaymentOrder);
                         }
                     }
-                    GetPendingOrders();
+                    GetPendingOrders(SelectedPerson.Id);
+                    StateHasChanged();
                 }
             }
         }
@@ -101,15 +133,33 @@ namespace MarketStrom.UIComponents.Pages
                 _selectedPerson = value;
                 if (_selectedPerson != null)
                 {
-                    GetPendingOrders();
+                    GetPendingOrders(_selectedPerson.Id);
                     GuideContstants.ReceiptBookSelectedPerson = _selectedPerson.Id;
+                    var commulitiveBal = GetCommunitiveBalance();
+                    PendingPaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(_selectedPerson.Id);
+                    double untracePayment = 0;
+                    foreach (var order in PendingPaymentOrders)
+                    {
+                        untracePayment = untracePayment + order.PaidAmount;
+                    }
+                    PendingToPayAmount = commulitiveBal - (decimal)untracePayment;
                 }
             }
         }
 
-        private void GetPendingOrders()
+        private decimal GetCommunitiveBalance()
         {
-            PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(_selectedPerson.Id);
+            double CommunitiveBalance = 0;
+            foreach (var order in PendingOrders)
+            {
+                CommunitiveBalance = CommunitiveBalance + order.TotalAmount;
+            }
+            return (decimal)CommunitiveBalance;
+        }
+
+        private void GetPendingOrders(int personId)
+        {
+            PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(personId);
             CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
 
             double communitiveBalance = 0;
@@ -120,7 +170,15 @@ namespace MarketStrom.UIComponents.Pages
             }
         }
 
+        public void PersonSelected(int personId)
+        {
+            SelectedPerson = AllPerson.Where(o => o.Id == personId).FirstOrDefault();
+        }
+
         public Dictionary<int, double> CommunitiveBalance { get; set; }
         public List<OrderDTO> PendingOrders { get; set; }
+        public List<PersonFinance> FinancialData { get; set; } = new();
+        public decimal PendingToPayAmount { get; set; }
+        public List<PaymentHistory> PendingPaymentOrders { get; set; }
     }
 }

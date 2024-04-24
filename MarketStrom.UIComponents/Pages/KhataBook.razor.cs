@@ -72,6 +72,5 @@ namespace MarketStrom.UIComponents.Pages
         public List<PaymentHistory> PaymentHistory { get; set; }
         public List<PaymentHistory> PendingPaymentOrders { get; set; } //Order which is not map with communitive balance
         public List<IGrouping<string, PaymentHistory>> GroupedPaymentOrders { get; set; }
-
     }
 }

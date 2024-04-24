@@ -25,11 +25,8 @@ namespace MarketStrom.UIComponents.Pages
         {
             var result = await ModelDialogService.SellOrderDialog(order);
 
-            if (result.Confirmed)
-            {
-                AvailableOrders = DatabaseService.GetAvailableOrders();
-                StateHasChanged();
-            }
+            AvailableOrders = DatabaseService.GetAvailableOrders();
+            StateHasChanged();
         }
         public List<OrderDTO> AvailableOrders { get; set; } = new();
     }
