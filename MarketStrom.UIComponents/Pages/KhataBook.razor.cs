@@ -1,5 +1,6 @@
 ﻿using MarketStrom.UIComponents.Constants;
 using MarketStrom.UIComponents.DTO;
+using MarketStrom.UIComponents.Enums;
 using MarketStrom.UIComponents.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
@@ -14,7 +15,7 @@ namespace MarketStrom.UIComponents.Pages
 
         protected override void OnParametersSet()
         {
-            AllPerson = DatabaseService.GetAllPerson();
+            AllPerson = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
             if (GuideContstants.KhataBookSelectedPerson != 0)
                 SelectedPerson = AllPerson.Where(o => o.Id == GuideContstants.KhataBookSelectedPerson).FirstOrDefault();
         }

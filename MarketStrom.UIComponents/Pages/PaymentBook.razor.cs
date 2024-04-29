@@ -7,20 +7,19 @@ using Microsoft.AspNetCore.Components;
 
 namespace MarketStrom.UIComponents.Pages
 {
-    public partial class ReceiptBook
+    public partial class PaymentBook
     {
         [Inject]
         public DatabaseService DatabaseService { get; set; }
 
         [Inject]
         public ModelDialogService ModelDialogService { get; set; }
-
         protected override void OnParametersSet()
         {
-            AllPerson = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
+            AllSuppliers = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Supplier).ToList();
             FinancialData.Clear();
 
-            foreach (var person in AllPerson)
+            foreach (var person in AllSuppliers)
             {
                 GetPendingOrders(person.Id);
                 PersonFinance finance = new PersonFinance()
@@ -49,8 +48,31 @@ namespace MarketStrom.UIComponents.Pages
                 finance.FinalAmount = commulitiveBal - (decimal)untracePayment;
                 FinancialData.Add(finance);
             }
-            if (GuideContstants.ReceiptBookSelectedPerson != 0)
-                SelectedPerson = AllPerson.Where(o => o.Id == GuideContstants.ReceiptBookSelectedPerson).FirstOrDefault();
+            //if (GuideContstants.ReceiptBookSelectedPerson != 0)
+            //    SelectedPerson = AllSuppliers.Where(o => o.Id == GuideContstants.ReceiptBookSelectedPerson).FirstOrDefault();
+        }
+
+        private decimal GetCommunitiveBalance()
+        {
+            double CommunitiveBalance = 0;
+            foreach (var order in PendingOrders)
+            {
+                CommunitiveBalance = CommunitiveBalance + order.TotalAmount;
+            }
+            return (decimal)CommunitiveBalance;
+        }
+
+        private void GetPendingOrders(int personId)
+        {
+            PendingOrders = DatabaseService.GetAllPendingPurchaseOrderByPerson(personId);
+            CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
+
+            double communitiveBalance = 0;
+            foreach (var order in PendingOrders)
+            {
+                communitiveBalance += order.TotalAmount;
+                CommunitiveBalance[order.Id] = communitiveBalance;
+            }
         }
 
         public async Task PaymentDialogOpen()
@@ -122,7 +144,10 @@ namespace MarketStrom.UIComponents.Pages
             }
         }
 
-        public List<Person> AllPerson { get; set; }
+        public void PersonSelected(int personId)
+        {
+            SelectedPerson = AllSuppliers.Where(o => o.Id == personId).FirstOrDefault();
+        }
 
         private Person? _selectedPerson;
         public Person? SelectedPerson
@@ -147,34 +172,8 @@ namespace MarketStrom.UIComponents.Pages
             }
         }
 
-        private decimal GetCommunitiveBalance()
-        {
-            double CommunitiveBalance = 0;
-            foreach (var order in PendingOrders)
-            {
-                CommunitiveBalance = CommunitiveBalance + order.TotalAmount;
-            }
-            return (decimal)CommunitiveBalance;
-        }
 
-        private void GetPendingOrders(int personId)
-        {
-            PendingOrders = DatabaseService.GetAllPendingSellOrderByPerson(personId);
-            CommunitiveBalance = new Dictionary<int, double>(); //ADD COMMUNITIVE BALANCE WITH ORDER ID
-
-            double communitiveBalance = 0;
-            foreach (var order in PendingOrders)
-            {
-                communitiveBalance += order.TotalAmount;
-                CommunitiveBalance[order.Id] = communitiveBalance;
-            }
-        }
-
-        public void PersonSelected(int personId)
-        {
-            SelectedPerson = AllPerson.Where(o => o.Id == personId).FirstOrDefault();
-        }
-
+        public List<Person> AllSuppliers { get; set; }
         public Dictionary<int, double> CommunitiveBalance { get; set; }
         public List<OrderDTO> PendingOrders { get; set; }
         public List<PersonFinance> FinancialData { get; set; } = new();
