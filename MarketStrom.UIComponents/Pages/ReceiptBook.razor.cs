@@ -117,6 +117,7 @@ namespace MarketStrom.UIComponents.Pages
                         }
                     }
                     GetPendingOrders(SelectedPerson.Id);
+                    PendingPaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(_selectedPerson.Id);
                     StateHasChanged();
                 }
             }
