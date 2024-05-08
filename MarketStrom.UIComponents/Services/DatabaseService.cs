@@ -220,6 +220,13 @@ namespace MarketStrom.UIComponents.Services
             return _db.Query<OrderDTO>(query);
         }
 
+        public List<OrderDTO> GetAllSellOrderByPersonAndDate(int personId, DateTime date)
+        {
+            string dateStr = date.ToString("yyyy-MM-dd");
+            string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.PaymentStatus,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,(`Order`.Quantity * -1) AS Quantity, (`Order`.Kg * -1) AS Kg,`Order`.Labour,`Order`.Comission,(`Order`.Fare * -1) AS Fare,(`Order`.TotalAmount * -1) As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NOT NULL AND `Order`.PersonId =" + personId + $" AND strftime('%Y-%m-%d', `Order`.CreatedOn / 10000000 - 62135596800, 'unixepoch') = '{dateStr}' AND `Order`.PaymentStatus = 0";
+            return _db.Query<OrderDTO>(query);
+        }
+
         public List<OrderDTO> GetAllPurchaseOrderByPerson(int personId)
         {
             string query = $"SELECT `Order`.Id,`Order`.SubCategoryId,`Order`.SellOrderId,`Order`.PaymentStatus,`Order`.OrderNumber,`Order`.IsForSale,`Order`.Price,`Order`.Quantity AS Quantity, `Order`.Kg AS Kg,`Order`.Labour,`Order`.Comission,`Order`.Fare,`Order`.TotalAmount As TotalAmount,`Order`.ComissionAmount,`Order`.LabourAmount,`Order`.CreatedOn, SubCategory.Name AS SubCategoryName, Category.Name AS CategoryName,Person.FirstName || ' ' || Person.LastName AS PersonName FROM `Order` INNER JOIN SubCategory  ON `Order`.SubCategoryId = SubCategory.Id INNER JOIN Category  ON Category.Id = SubCategory.CategoryId LEFT JOIN Person ON Person.Id = `Order`.PersonId  where `Order`.SellOrderId IS NULL AND `Order`.PersonId =" + personId;

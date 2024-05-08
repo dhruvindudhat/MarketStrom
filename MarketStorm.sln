@@ -8,6 +8,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketStorm.Desktop", "Mark
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketStrom.UIComponents", "MarketStrom.UIComponents\MarketStrom.UIComponents.csproj", "{DE4B2321-6B0E-408F-936C-0836476E431E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketStorm.Report", "MarketStorm.Report\MarketStorm.Report.csproj", "{4F9D6791-AF17-4C66-B78E-0020EE42830B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{DE4B2321-6B0E-408F-936C-0836476E431E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4B2321-6B0E-408F-936C-0836476E431E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4B2321-6B0E-408F-936C-0836476E431E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F9D6791-AF17-4C66-B78E-0020EE42830B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9D6791-AF17-4C66-B78E-0020EE42830B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F9D6791-AF17-4C66-B78E-0020EE42830B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9D6791-AF17-4C66-B78E-0020EE42830B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

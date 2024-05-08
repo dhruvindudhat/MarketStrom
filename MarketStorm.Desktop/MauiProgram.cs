@@ -3,6 +3,7 @@ using Blazored.Toast;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using MarketStorm.Report;
 using MarketStrom.UIComponents.Services;
 
 namespace MarketStorm.Desktop
@@ -25,9 +26,9 @@ namespace MarketStorm.Desktop
 #endif
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddScoped<ModelDialogService>();
+            builder.Services.AddTransient<ReportController>();
             builder.Services.AddBlazoredToast();
             builder.Services.AddBlazoredModal();
-            //builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();
         }
