@@ -1,8 +1,7 @@
-﻿using MarketStrom.UIComponents.Base;
-using MarketStrom.UIComponents.Models;
+﻿using MarketStrom.DataModels.Models;
+using MarketStrom.UIComponents.Base;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
-using System.ComponentModel.DataAnnotations;
 
 namespace MarketStrom.UIComponents.Pages
 {

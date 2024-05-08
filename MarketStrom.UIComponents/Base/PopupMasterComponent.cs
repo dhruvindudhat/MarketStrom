@@ -1,6 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace MarketStrom.UIComponents.Base

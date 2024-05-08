@@ -2,7 +2,7 @@
 @using Blazorise.Splitter
 @using Blazorise.Components
 @using Blazorise;
-@using MarketStrom.UIComponents.Models;
+@using MarketStrom.DataModels.Models;
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
@@ -46,112 +46,112 @@
                                         var paymentId = paymentOrder.Key.Split(',');
                                         var sellorder = SellOrders.Where(o => o.Id == int.Parse(paymentId.First())).FirstOrDefault();
                                         bool isInDateRange = sellorder == null ? false : true;
-                                      @*  if (_dateRange != null && sellorder != null)
-                                        {
-                                            if (_dateRange.Count > 1)
-                                            {
-                                                isInDateRange = sellorder.CreatedOn.Date >= _dateRange[0].Value.Date && sellorder.CreatedOn.Date <= _dateRange[1].Value.Date;
-                                            }
-                                            else
-                                            {
-                                                isInDateRange = sellorder.CreatedOn.Date == _dateRange[0].Value.Date;
-                                            }
-                                        }
-                                        if (isInDateRange)
-                                        {*@
-                                            <tr>
-                                                <td class="align-top td-bgcolor">
-                                                    @if (paymentId.Length > 0)
-                                                    {
-                                                        <table id="sellOrders" class="table table-bordered expandable-table">
-                                                            @if (index == 1)
-                                                            {
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Amount</th>
-                                                                        <th>Payment Mode</th>
-                                                                        <th>Received Date</th>
-                                                                    </tr>
-                                                                </thead>
-                                                            }
-
-                                                            <tbody>
-                                                                @foreach (var order in paymentOrder)
-                                                                {
-                                                                    <tr>
-                                                                        <td>@order.PaidAmount</td>
-                                                                        <td>@order.PaymentMode</td>
-                                                                        <td>@order.ReceivedDate.ToString("dd-MM-yyyy")</td>
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
-                                                </td>
-                                                <td class="align-top td-bgcolor">
-                                                    <table id="paymentOrders" class="table table-bordered expandable-table">
+                                        @*  if (_dateRange != null && sellorder != null)
+                                {
+                                if (_dateRange.Count > 1)
+                                {
+                                isInDateRange = sellorder.CreatedOn.Date >= _dateRange[0].Value.Date && sellorder.CreatedOn.Date <= _dateRange[1].Value.Date;
+                                }
+                                else
+                                {
+                                isInDateRange = sellorder.CreatedOn.Date == _dateRange[0].Value.Date;
+                                }
+                                }
+                                if (isInDateRange)
+                                {*@
+                                        <tr>
+                                            <td class="align-top td-bgcolor">
+                                                @if (paymentId.Length > 0)
+                                                {
+                                                    <table id="sellOrders" class="table table-bordered expandable-table">
                                                         @if (index == 1)
                                                         {
                                                             <thead>
                                                                 <tr>
                                                                     <th>Amount</th>
-                                                                    <th>Category Name</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>Kg</th>
-                                                                    <th>Order No.</th>
-                                                                    <th>Date</th>
+                                                                    <th>Payment Mode</th>
+                                                                    <th>Received Date</th>
                                                                 </tr>
                                                             </thead>
                                                         }
-                                                        <tbody>
-                                                            @foreach (var Id in paymentId)
-                                                            {
-                                                                if (!string.IsNullOrEmpty(Id))
-                                                                {
-                                                                    var order = SellOrders.Where(o => o.Id == int.Parse(Id)).FirstOrDefault();
-                                                                    bool isInRange = order == null ? false : true;
-                                                                   @* if (_dateRange != null && order != null)
-                                                                    {
-                                                                        if (_dateRange.Count > 1)
-                                                                        {
-                                                                            isInRange = order.CreatedOn.Date >= _dateRange[0].Value.Date && order.CreatedOn.Date <= _dateRange[1].Value.Date;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            isInRange = order.CreatedOn.Date == _dateRange[0].Value.Date;
-                                                                        }
-                                                                    }
-                                                                    if (order != null && isInRange)
-                                                                    {*@
-                                                                        <tr>
 
-                                                                            <td>@order.TotalAmount</td>
-                                                                            <td>@order.CategoryName</td>
-                                                                            <td>
-                                                                                @(
-                                                                                    order.Quantity == null ? "-" : order.Quantity
-                                                                                    )
-                                                                            </td>
-                                                                            <td>
-                                                                                @(
-                                                                                    order.Kg == null ? "-" : order.Kg
-                                                                                    )
-                                                                            </td>
-                                                                            <td>@order.OrderNumber</td>
-                                                                            <td>
-                                                                                @(
-                                                                                    order.CreatedOn.ToString("dd-MM-yyyy")
-                                                                                    )
-                                                                            </td>
-                                                                        </tr>
-                                                                    @*}*@
-                                                                }
+                                                        <tbody>
+                                                            @foreach (var order in paymentOrder)
+                                                            {
+                                                                <tr>
+                                                                    <td>@order.PaidAmount</td>
+                                                                    <td>@order.PaymentMode</td>
+                                                                    <td>@order.ReceivedDate.ToString("dd-MM-yyyy")</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
-                                                </td>
-                                            </tr>
-                                            index++;
+                                                }
+                                            </td>
+                                            <td class="align-top td-bgcolor">
+                                                <table id="paymentOrders" class="table table-bordered expandable-table">
+                                                    @if (index == 1)
+                                                    {
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Amount</th>
+                                                                <th>Category Name</th>
+                                                                <th>Quantity</th>
+                                                                <th>Kg</th>
+                                                                <th>Order No.</th>
+                                                                <th>Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                    }
+                                                    <tbody>
+                                                        @foreach (var Id in paymentId)
+                                                        {
+                                                            if (!string.IsNullOrEmpty(Id))
+                                                            {
+                                                                var order = SellOrders.Where(o => o.Id == int.Parse(Id)).FirstOrDefault();
+                                                                bool isInRange = order == null ? false : true;
+                                                                @* if (_dateRange != null && order != null)
+                                                {
+                                                if (_dateRange.Count > 1)
+                                                {
+                                                isInRange = order.CreatedOn.Date >= _dateRange[0].Value.Date && order.CreatedOn.Date <= _dateRange[1].Value.Date;
+                                                }
+                                                else
+                                                {
+                                                isInRange = order.CreatedOn.Date == _dateRange[0].Value.Date;
+                                                }
+                                                }
+                                                if (order != null && isInRange)
+                                                {*@
+                                                                <tr>
+
+                                                                    <td>@order.TotalAmount</td>
+                                                                    <td>@order.CategoryName</td>
+                                                                    <td>
+                                                                        @(
+                                                                            order.Quantity == null ? "-" : order.Quantity
+                                                                            )
+                                                                    </td>
+                                                                    <td>
+                                                                        @(
+                                                                            order.Kg == null ? "-" : order.Kg
+                                                                            )
+                                                                    </td>
+                                                                    <td>@order.OrderNumber</td>
+                                                                    <td>
+                                                                        @(
+                                                                            order.CreatedOn.ToString("dd-MM-yyyy")
+                                                                            )
+                                                                    </td>
+                                                                </tr>
+                                                                @*}*@
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        index++;
                                         @*}*@
                                     }
 
@@ -197,7 +197,7 @@
                                                     </thead>
                                                 }
                                                 <tbody>
-                                                    @foreach (var order in SellOrders.Where(o => o.PaymentStatus == Enums.PaymentStatus.Pending).ToList())
+                                                    @foreach (var order in SellOrders.Where(o => o.PaymentStatus == DataModels.Enums.PaymentStatus.Pending).ToList())
                                                     {
                                                         <tr>
                                                             <td>@order.TotalAmount</td>

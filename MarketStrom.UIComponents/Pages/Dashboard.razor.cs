@@ -1,4 +1,4 @@
-﻿using MarketStrom.UIComponents.DTO;
+﻿using MarketStrom.DataModels.DTO;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 

@@ -1,6 +1,6 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
-using MarketStrom.UIComponents.DTO;
+using MarketStrom.DataModels.DTO;
 using MarketStrom.UIComponents.Pages;
 
 namespace MarketStrom.UIComponents.Services

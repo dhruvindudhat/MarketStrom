@@ -1,6 +1,6 @@
 ﻿@inherits Base.PopupMasterComponent
 @using Blazorise.Components
-@using UIComponents.Models
+@using DataModels.Models
 
 <style>
     .modal {
@@ -68,7 +68,7 @@
                                             <div class="row col-sm-6">
                                                 <label for="subcategory" class="col-sm-6 col-form-label fw-bold">SubCategory</label>
                                                 <div class="col-sm-6">
-                                                    <DropdownList TItem="Models.SubCategory" TValue="Models.SubCategory"
+                                                    <DropdownList TItem="DataModels.Models.SubCategory" TValue="DataModels.Models.SubCategory"
                                                                   Data="@SelectedCategoy.SubCategories"
                                                                   TextField="@((item)=>item.Name)"
                                                                   ValueField="@((item)=>item)"

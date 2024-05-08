@@ -113,7 +113,7 @@ namespace MarketStorm.Report.Services
             style.Font.Italic = true;
 
             style = document.Styles.AddStyle(ReportStyleNames.Title, StyleNames.Normal);
-            style.Font.Size = document.Styles[StyleNames.Normal].Font.Size + 6;
+            style.Font.Size = document.Styles[StyleNames.Normal].Font.Size + 10;
             style.Font.Bold = true;
             style.ParagraphFormat.Alignment = ParagraphAlignment.Center;
 

@@ -1,6 +1,6 @@
-﻿using MarketStrom.UIComponents.Models;
+﻿using MarketStrom.DataModels.Models;
 
-namespace MarketStrom.UIComponents.DTO
+namespace MarketStrom.DataModels.DTO
 {
     public class OrderDTO : Order
     {

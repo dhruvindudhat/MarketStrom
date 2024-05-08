@@ -1,6 +1,6 @@
 ﻿using MarketStrom.UIComponents.Base;
-using MarketStrom.UIComponents.Enums;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Enums;
+using MarketStrom.DataModels.Models;
 
 namespace MarketStrom.UIComponents.Pages
 {

@@ -1,7 +1,7 @@
 ﻿@page "/SellBillBook"
 @using Blazorise.Components
 @using Blazorise;
-@using MarketStrom.UIComponents.Models;
+@using MarketStrom.DataModels.Models;
 
 
 <style>
@@ -35,7 +35,10 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex align-items-center">
-                            <button class="btn btn-warning" @onclick=BillGenerate>Generate Bill</button>
+                          @*  @if (SelectedDate != null && SelectedPerson != null && SellOrders.Count > 0)
+                            {*@
+                                <button class="btn btn-warning" @onclick=BillGenerate>Generate Bill</button>
+                            @*}*@
                         </div>
                     </div>
                     @{

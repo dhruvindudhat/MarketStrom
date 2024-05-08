@@ -3,8 +3,8 @@ using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace MarketStrom.UIComponents.Models
-{   
+namespace MarketStrom.DataModels.Models
+{
     public class Order
     {
         [PrimaryKey, AutoIncrement]

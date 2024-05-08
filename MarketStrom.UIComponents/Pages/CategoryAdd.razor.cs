@@ -1,5 +1,5 @@
 ﻿using Blazored.Toast.Services;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -27,10 +27,10 @@ namespace MarketStrom.UIComponents.Pages
             }
             else
             {
-                Category.SubCategories = new List<Models.SubCategory>()
+                Category.SubCategories = new List<DataModels.Models.SubCategory>()
             {
-                new Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Quantity"},
-                new Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Weight"},
+                new DataModels.Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Quantity"},
+                new DataModels.Models.SubCategory(){Category = Category,CategoryId = Category.Id,Name = "By Weight"},
             };
             }
             base.OnParametersSet();
@@ -57,10 +57,10 @@ namespace MarketStrom.UIComponents.Pages
 
         public void AddDefaultSubCategory()
         {
-            Category.SubCategories.Add(new Models.SubCategory());
+            Category.SubCategories.Add(new DataModels.Models.SubCategory());
         }
 
-        public void DeleteSubCategory(Models.SubCategory subcategory)
+        public void DeleteSubCategory(DataModels.Models.SubCategory subcategory)
         {
             Category.SubCategories.Remove(subcategory);
         }

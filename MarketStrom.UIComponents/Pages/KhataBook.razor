@@ -2,7 +2,7 @@
 @using Blazorise.Splitter
 @using Blazorise.Components
 @using Blazorise;
-@using MarketStrom.UIComponents.Models;
+@using MarketStrom.DataModels.Models;
 <style>
     .flatpickr-calendar.static {
         top: auto !important;
@@ -206,7 +206,7 @@
                                                 </thead>
                                             }
                                             <tbody>
-                                                @foreach (var order in SellOrders.Where(o => o.PaymentStatus == Enums.PaymentStatus.Pending).ToList())
+                                                @foreach (var order in SellOrders.Where(o => o.PaymentStatus == DataModels.Enums.PaymentStatus.Pending).ToList())
                                                 {
                                                     <tr>
                                                         <td>@order.TotalAmount</td>

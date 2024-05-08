@@ -53,7 +53,7 @@
                                         <td>@(data.LabourAmount == null ? "-" : data.LabourAmount)</td>
                                         <td>@(data.ComissionAmount == null ? "-" : data.ComissionAmount)</td>
                                         <td>@data.TotalAmount</td>
-                                        <td><label class="@(data.PaymentStatus == Enums.PaymentStatus.Pending ? "badge badge-warning" : "badge badge-success")">@data.PaymentStatus</label></td>
+                                        <td><label class="@(data.PaymentStatus == DataModels.Enums.PaymentStatus.Pending ? "badge badge-warning" : "badge badge-success")">@data.PaymentStatus</label></td>
                                         <td>
                                             <button type="button" class="btn btn-icon btn-outline-primary p-1 mx-2" @onclick="() => AddOrder(data.Id)">
                                                 <i class="ti-pencil m-0"></i>

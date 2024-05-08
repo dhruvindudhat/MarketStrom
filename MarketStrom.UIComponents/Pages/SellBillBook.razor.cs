@@ -1,8 +1,8 @@
 ﻿using MarketStorm.Report;
 using MarketStrom.UIComponents.Constants;
-using MarketStrom.UIComponents.DTO;
-using MarketStrom.UIComponents.Enums;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.DTO;
+using MarketStrom.DataModels.Enums;
+using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -23,7 +23,7 @@ namespace MarketStrom.UIComponents.Pages
 
         private void BillGenerate()
         {
-            ReportController.OpenPDFReport();
+            ReportController.OpenPDFReport(SellOrders);
         }
 
         private Person? _selectedPerson;

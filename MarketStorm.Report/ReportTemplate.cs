@@ -9,8 +9,8 @@ namespace MarketStorm.Report
     {
         public virtual IPDFPage CreateContent(Document document)
         {
-            DefineHeader(document.LastSection.Headers.Primary);
-            DefineFooter(document.LastSection.Footers.Primary);
+            RemoveHeader(document.LastSection.Headers.Primary);
+            RemoveFooter(document.LastSection.Footers.Primary);
 
             return this;
         }
@@ -37,10 +37,13 @@ namespace MarketStorm.Report
 
         }
 
-        protected void DefineHeader(HeaderFooter primary)
+        protected void RemoveHeader(HeaderFooter primary)
         {
-
-
+            primary = null;
+        }
+        protected void RemoveFooter(HeaderFooter primary)
+        {
+            primary = null;
         }
 
     }

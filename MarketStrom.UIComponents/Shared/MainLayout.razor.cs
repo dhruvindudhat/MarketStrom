@@ -1,5 +1,5 @@
 ﻿using Blazored.Toast.Services;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;

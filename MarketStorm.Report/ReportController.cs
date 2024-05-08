@@ -1,5 +1,6 @@
 ﻿using MarketStorm.Report.Reports;
 using MarketStorm.Report.Services;
+using MarketStrom.DataModels.DTO;
 using PdfSharp.Fonts;
 using System.Diagnostics;
 
@@ -13,7 +14,7 @@ namespace MarketStorm.Report
                 GlobalFontSettings.FontResolver = new FileFontResolver();
         }
 
-        public void OpenPDFReport()
+        public void OpenPDFReport(List<OrderDTO> sellOrders)
         {
             PDFReportService pdfReport = new PDFReportService();
             string tempfile = Path.GetTempFileName();

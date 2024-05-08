@@ -1,6 +1,6 @@
-﻿using MarketStrom.UIComponents.DTO;
-using MarketStrom.UIComponents.Enums;
-using MarketStrom.UIComponents.Models;
+﻿using MarketStrom.DataModels.DTO;
+using MarketStrom.DataModels.Enums;
+using MarketStrom.DataModels.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 

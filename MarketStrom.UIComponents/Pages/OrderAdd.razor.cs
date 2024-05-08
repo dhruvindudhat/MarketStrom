@@ -1,6 +1,6 @@
 ﻿using Blazored.Toast.Services;
-using MarketStrom.UIComponents.Enums;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Enums;
+using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -79,8 +79,8 @@ namespace MarketStrom.UIComponents.Pages
         public List<Category> Categories { get; set; } = new();
         public List<SubCategory> SubCategories { get; set; } = new();
 
-        private Models.SubCategory? _selectedSubCategory;
-        public Models.SubCategory? SelectedSubCategoy
+        private DataModels.Models.SubCategory? _selectedSubCategory;
+        public DataModels.Models.SubCategory? SelectedSubCategoy
         {
             get
             {

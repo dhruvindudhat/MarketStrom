@@ -1,4 +1,4 @@
-﻿namespace MarketStrom.UIComponents.Enums
+﻿namespace MarketStrom.DataModels.Enums
 {
     public enum Role
     {

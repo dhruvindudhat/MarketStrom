@@ -1,6 +1,6 @@
 ﻿using Blazored.Toast.Services;
-using MarketStrom.UIComponents.Enums;
-using MarketStrom.UIComponents.Models;
+using MarketStrom.DataModels.Enums;
+using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
 
