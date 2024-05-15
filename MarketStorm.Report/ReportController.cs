@@ -14,13 +14,13 @@ namespace MarketStorm.Report
                 GlobalFontSettings.FontResolver = new FileFontResolver();
         }
 
-        public void OpenPDFReport(List<OrderDTO> sellOrders)
+        public void OpenPDFReport(List<OrderDTO> soldOrders)
         {
             PDFReportService pdfReport = new PDFReportService();
             string tempfile = Path.GetTempFileName();
             File.Move(tempfile, Path.ChangeExtension(tempfile, "pdf"));
             tempfile = Path.ChangeExtension(tempfile, "pdf");
-            DemoReport demo = new DemoReport();
+            DemoReport demo = new DemoReport() { SoldOrders = soldOrders };
             pdfReport.InsertPage(demo);
             pdfReport.GenerateAndSave(tempfile);
             ProcessStart(tempfile);
