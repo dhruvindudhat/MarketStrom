@@ -5,6 +5,7 @@ using MarketStrom.DataModels.Enums;
 using MarketStrom.DataModels.Models;
 using MarketStrom.UIComponents.Services;
 using Microsoft.AspNetCore.Components;
+using MarketStorm.DataModels.Models;
 
 namespace MarketStrom.UIComponents.Pages
 {
@@ -20,10 +21,19 @@ namespace MarketStrom.UIComponents.Pages
             AllPerson = DatabaseService.GetAllPerson().Where(o => o.Role == (int)Role.Customer).ToList();
         }
 
-
         private void BillGenerate()
         {
-            ReportController.OpenPDFReport(SellOrders);
+            SellBillInformation info = new SellBillInformation()
+            {
+                PersonName = _selectedPerson.FirstName + " " + _selectedPerson.LastName,
+                CompanyName = "JALARAM TRADING CO",
+                Address = "SHOP NO G 1 MARKETING YARD HAPA JAMNAGAR",
+                MobileNumber = "MO 9723489567 / 9714000260 / 9913166453",
+                BankName = "BANK OF INDIA",
+                AccountNumber = "325630110000070",
+                IFSCCode = "BKID0003256"
+            };
+            ReportController.GenerateSellBill(SellOrders, info);
         }
 
         private Person? _selectedPerson;

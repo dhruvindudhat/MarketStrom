@@ -1,4 +1,5 @@
-﻿using MarketStorm.Report.Reports;
+﻿using MarketStorm.DataModels.Models;
+using MarketStorm.Report.Reports;
 using MarketStorm.Report.Services;
 using MarketStrom.DataModels.DTO;
 using PdfSharp.Fonts;
@@ -14,13 +15,13 @@ namespace MarketStorm.Report
                 GlobalFontSettings.FontResolver = new FileFontResolver();
         }
 
-        public void OpenPDFReport(List<OrderDTO> soldOrders)
+        public void GenerateSellBill(List<OrderDTO> soldOrders, SellBillInformation sellBillInfo)
         {
             PDFReportService pdfReport = new PDFReportService();
             string tempfile = Path.GetTempFileName();
             File.Move(tempfile, Path.ChangeExtension(tempfile, "pdf"));
             tempfile = Path.ChangeExtension(tempfile, "pdf");
-            DemoReport demo = new DemoReport() { SoldOrders = soldOrders };
+            SellBill demo = new SellBill() { SoldOrders = soldOrders, SellBillInformation = sellBillInfo };
             pdfReport.InsertPage(demo);
             pdfReport.GenerateAndSave(tempfile);
             ProcessStart(tempfile);

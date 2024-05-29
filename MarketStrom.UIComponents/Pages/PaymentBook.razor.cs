@@ -140,6 +140,7 @@ namespace MarketStrom.UIComponents.Pages
                     }
                     GetPendingOrders(SelectedPerson.Id);
                     PendingPaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(_selectedPerson.Id);
+                    CalculatePendingToPaymentAmount();
                     StateHasChanged();
                 }
             }
@@ -148,6 +149,18 @@ namespace MarketStrom.UIComponents.Pages
         public void PersonSelected(int personId)
         {
             SelectedPerson = AllSuppliers.Where(o => o.Id == personId).FirstOrDefault();
+        }
+
+        private void CalculatePendingToPaymentAmount()
+        {
+            var commulitiveBal = GetCommunitiveBalance();
+            PendingPaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(_selectedPerson.Id);
+            double untracePayment = 0;
+            foreach (var order in PendingPaymentOrders)
+            {
+                untracePayment = untracePayment + order.PaidAmount;
+            }
+            PendingToPayAmount = commulitiveBal - (decimal)untracePayment;
         }
 
         private Person? _selectedPerson;
@@ -161,18 +174,10 @@ namespace MarketStrom.UIComponents.Pages
                 {
                     GetPendingOrders(_selectedPerson.Id);
                     GuideContstants.ReceiptBookSelectedPerson = _selectedPerson.Id;
-                    var commulitiveBal = GetCommunitiveBalance();
-                    PendingPaymentOrders = DatabaseService.GetAllWithoutFullPaymentOrders(_selectedPerson.Id);
-                    double untracePayment = 0;
-                    foreach (var order in PendingPaymentOrders)
-                    {
-                        untracePayment = untracePayment + order.PaidAmount;
-                    }
-                    PendingToPayAmount = commulitiveBal - (decimal)untracePayment;
+                    CalculatePendingToPaymentAmount();
                 }
             }
         }
-
 
         public List<Person> AllSuppliers { get; set; }
         public Dictionary<int, double> CommunitiveBalance { get; set; }

@@ -35,10 +35,10 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex align-items-center">
-                          @*  @if (SelectedDate != null && SelectedPerson != null && SellOrders.Count > 0)
-                            {*@
+                            @if (SelectedPerson != null)
+                            {
                                 <button class="btn btn-warning" @onclick=BillGenerate>Generate Bill</button>
-                            @*}*@
+                            }
                         </div>
                     </div>
                     @{

@@ -1,4 +1,5 @@
-﻿using MarketStorm.Report.Services;
+﻿using MarketStorm.DataModels.Models;
+using MarketStorm.Report.Services;
 using MarketStrom.DataModels.DTO;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
@@ -6,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace MarketStorm.Report.Reports
 {
-    public class DemoReport : ReportTemplate, IPDFPage
+    public class SellBill : ReportTemplate, IPDFPage
     {
         public override IPDFPage CreateContent(Document document)
         {
@@ -37,10 +38,10 @@ namespace MarketStorm.Report.Reports
 
             //HEADING DETAILS
             Row row = headerTable.AddRow();
-            row.Cells[7].MergeDown = 3;
+            row.Cells[7].MergeDown = 4;
             Cell cell = row.Cells[0];
             cell.MergeRight = 6;
-            cell.AddParagraph("JALARAM TRADING CO");
+            cell.AddParagraph(SellBillInformation.CompanyName);
             cell.Format.Alignment = ParagraphAlignment.Center;
             cell.VerticalAlignment = VerticalAlignment.Center;
             cell.Format.Font.Size = 12;
@@ -57,24 +58,24 @@ namespace MarketStorm.Report.Reports
             row = headerTable.AddRow();
             cell = row.Cells[0];
             cell.MergeRight = 6;
-            cell.AddParagraph(" SHOP NO G 1 MARKETING YARD HAPA JAMNAGAR");
+            cell.AddParagraph(SellBillInformation.Address);
             cell.Format.Alignment = ParagraphAlignment.Center;
             cell.Borders.Bottom.Visible = false;
 
             row = headerTable.AddRow();
             cell = row.Cells[0];
             cell.MergeRight = 6;
-            cell.AddParagraph(" MO 9723489567 / 9714000260 / 9913166453");
+            cell.AddParagraph(SellBillInformation.MobileNumber);
             cell.Format.Alignment = ParagraphAlignment.Center;
 
 
             row = headerTable.AddRow();
             cell = row.Cells[0];
             cell.MergeRight = 6;
-            cell.AddParagraph(" Mr. INDULAL JAGJIVAN");
+            cell.AddParagraph("To. " + SellBillInformation.PersonName);
+            cell.Format.Font.Size = 11;
             cell.Style = ReportStyleNames.Bold;
             cell.Format.Alignment = ParagraphAlignment.Left;
-
 
             //ADD DETAILED ORDERS HEADERS
             row = headerTable.AddRow();
@@ -149,7 +150,7 @@ namespace MarketStorm.Report.Reports
                     totallabour += soldOrder.LabourAmount != null ? soldOrder.LabourAmount.Value : 0;
                 }
 
-                int BlankRowCount = 6 - SoldOrders.Count;
+                int BlankRowCount = 9 - SoldOrders.Count;
                 if (BlankRowCount > 0)
                 {
                     for (int i = 0; i < BlankRowCount; i++)
@@ -212,15 +213,15 @@ namespace MarketStorm.Report.Reports
                 //cell.Style = ReportStyleNames.Bold;
                 Paragraph? bankName = cell.AddParagraph();
                 bankName.AddFormattedText("Bank Name : ", TextFormat.Bold);
-                bankName.AddFormattedText("BANK OF INDIA", TextFormat.Italic);
+                bankName.AddFormattedText(SellBillInformation.BankName, TextFormat.Italic);
 
                 Paragraph? accNo = cell.AddParagraph();
                 accNo.AddFormattedText("Bank A\\c. No : ", TextFormat.Bold);
-                accNo.AddFormattedText("325630110000070", TextFormat.Italic);
+                accNo.AddFormattedText(SellBillInformation.AccountNumber, TextFormat.Italic);
 
                 Paragraph? ifscCode = cell.AddParagraph();
                 ifscCode.AddFormattedText("IFSC CODE : ", TextFormat.Bold);
-                ifscCode.AddFormattedText("BKID0003256", TextFormat.Italic);
+                ifscCode.AddFormattedText(SellBillInformation.IFSCCode, TextFormat.Italic);
 
                 cell = row.Cells[6];
                 cell.MergeRight = 1;
@@ -242,5 +243,6 @@ namespace MarketStorm.Report.Reports
         }
 
         public List<OrderDTO> SoldOrders { get; set; }
+        public SellBillInformation SellBillInformation { get; set; }
     }
 }
